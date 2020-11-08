@@ -1,0 +1,12 @@
+# ${XDG_CONFIG_HOME}/systemd/user/mbsync.timer
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Mailbox sync
+
+[Timer]
+OnStartupSec=15m
+OnUnitActiveSec=30m
+
+[Install]
+WantedBy=timers.target

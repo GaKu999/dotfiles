@@ -1,0 +1,28 @@
+# ${XDG_CONFIG_HOME}/systemd/user/polybar.service
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Highly customizable X11 bar
+Documentation=https://github.com/polybar/polybar/wiki/
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/polybar --quiet default
+ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
+
+Restart=on-failure
+RestartSec=5
+
+LockPersonality=true
+NoNewPrivileges=true
+ProtectProc=invisible
+ProtectSystem=full
+RestrictSUIDSGID=true
+
+MemoryHigh=100M
+MemoryMax=150M
+TasksMax=100
+
+[Install]
+WantedBy=graphical-session.target

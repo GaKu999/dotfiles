@@ -1,0 +1,25 @@
+# ${XDG_CONFIG_HOME}/mutt/local
+# vim:ft=muttrc:fenc=utf-8:
+
+unalias *
+source  /etc/Mutt.alias
+
+unset pgp_sign_as
+unset crypt_autosign
+
+set realname  = "GaKu999"
+set from      = "gaku@localhost"
+set signature = "fortune -s |"
+
+set mbox_type = "mbox"
+set spoolfile = "+LOCAL/INBOX"
+set postponed = "+LOCAL/DRAFT"
+set record    = "+LOCAL/SENT"
+set trash     = "+LOCAL/TRASH"
+
+set sendmail = "sendmail -oi -t"
+
+bind index S noop
+
+macro index S "<save-message>+LOCAL/ARCHIVE<enter>" "archive message"
+macro index d "<save-message>+LOCAL/TRASH<enter>"   "mark message as trash"

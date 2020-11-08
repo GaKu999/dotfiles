@@ -1,0 +1,37 @@
+# ${XDG_CONFIG_HOME}/mako/config
+# vim:ft=dosini:fenc=utf-8:
+
+anchor=top-right
+layer=overlay
+max-visible=8
+
+output=eDP-1
+
+sort=-priority
+sort=-time
+
+icons=0
+
+font=monospace 16
+markup=1
+
+actions=0
+
+background-color=#151515cc
+border-color=#90a959cc
+text-color=#90a959ff
+
+border-size=2
+margin=2
+padding=0
+
+default-timeout=15000
+ignore-timeout=1
+
+height=1024
+width=512
+
+format=<b>%s</b>\n%b
+
+[urgency=critical]
+border-color=#f4bf75cc

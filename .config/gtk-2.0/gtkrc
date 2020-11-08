@@ -1,0 +1,30 @@
+# ${XDG_CONFIG_HOME}/gtk-2.0/gtkrc
+# vim:ft=gtkrc:fenc=utf-8:noet:ts=3:sw=3:
+
+gtk-application-prefer-dark-theme=1
+gtk-button-images=0
+gtk-cursor-theme-name="Adwaita"
+gtk-cursor-theme-size=36
+gtk-decoration-layout=""
+gtk-enable-event-sounds=0
+gtk-enable-input-feedback-sounds=0
+gtk-enable-primary-paste=1
+gtk-font-name="serif 16"
+gtk-icon-theme-name="Adwaita"
+gtk-key-theme-name="Default"
+gtk-menu-images=0
+gtk-sound-theme-name="none"
+gtk-theme-name="Adwaita"
+gtk-xft-antialias=1
+gtk-xft-dpi=96
+gtk-xft-hinting=1
+gtk-xft-hintstyle="hintslight"
+gtk-xft-rgba="rgb"
+
+style "ToolTip"
+{
+	bg[NORMAL] = "#151515"
+	fg[NORMAL] = "#d0d0d0"
+}
+widget "gtk-tooltip"  style "ToolTip"
+widget "gtk-tooltips" style "ToolTip"

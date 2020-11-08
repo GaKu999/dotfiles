@@ -1,0 +1,43 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/mkpkg
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${USER:?}
+
+. /usr/share/makepkg/integrity/verify_signature.sh
+. /usr/share/makepkg/util/config.sh
+. /usr/share/makepkg/util/message.sh
+
+colorize
+load_makepkg_config
+
+: ${PKGDEST:?}
+
+if (("${#}")); then
+	for dir in "${@}"; do
+		cd "${dir}"
+		mapfile -t pkgs < <(makepkg --packagelist)
+		cd "${OLDPWD:?}"
+		packages+=("${pkgs[@]}")
+	done
+else
+	mapfile -t packages < <(makepkg --packagelist)
+fi
+(("${#packages[@]}")) || exit 1
+
+for package in "${packages[@]}"; do
+	if [[ -s "${package}.sig" ]]; then
+		status_file="$(mktemp)"
+		gpg --quiet --batch --status-file "${status_file}" --verify "${package}.sig" "${package}" 2>/dev/null
+
+		success=0
+		parse_gpg_statusfile "${status_file}"
+		rm -- "${status_file}"
+		((success)) && continue
+		warning "mkpkg: ${package}: stale signature"
+	fi
+	rm -- "${package}.sig"
+	gpg --detach-sign -- "${package}"
+done
+
+repo-add --sign --remove --verify "${PKGDEST}/${USER}.db.tar.zst" "${packages[@]}"

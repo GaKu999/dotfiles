@@ -1,0 +1,27 @@
+# ${XDG_CONFIG_HOME}/systemd/user/mpd-notify.service
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Music Player Daemon notifier
+BindsTo=mpd.service
+PartOf=graphical-session.target
+After=graphical-session.target mpd.service
+
+[Service]
+ExecStart=%h/.local/bin/mpd-notify
+
+Restart=on-failure
+RestartSec=5
+
+StandardInput=null
+StandardOutput=null
+StandardError=null
+
+LockPersonality=true
+NoNewPrivileges=true
+ProtectProc=invisible
+ProtectSystem=full
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,25 @@
+# ${XDG_CONFIG_HOME}/tmux/environment
+# vim:ft=tmux:fenc=utf-8:noet:ts=3:sw=3:
+
+set -g update-environment ''
+
+set -ag update-environment SSH_AGENT_PID
+set -ag update-environment SSH_ASKPASS
+set -ag update-environment SSH_AUTH_SOCK
+set -ag update-environment SSH_CONNECTION
+
+set -ag update-environment DISPLAY
+set -ag update-environment WAYLAND_DISPLAY
+set -ag update-environment XAUTHORITY
+
+set -ag update-environment SWAYSOCK
+
+set -ag update-environment CLUTTER_BACKEND
+set -ag update-environment DESKTOP_SESSION
+set -ag update-environment GDK_BACKEND
+set -ag update-environment QT_QPA_PLATFORM
+set -ag update-environment SDL_VIDEODRIVER
+set -ag update-environment XDG_SESSION_TYPE
+set -ag update-environment WINIT_UNIX_BACKEND
+
+set -ag update-environment WINIT_X11_SCALE_FACTOR

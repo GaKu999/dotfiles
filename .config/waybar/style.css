@@ -1,0 +1,183 @@
+/*** ${XDG_CONFIG_HOME}/waybar/style.css
+	* vim:ft=css:fenc=utf-8:noet:ts=3:sw=3:
+	*/
+
+* {
+	background-color:    transparent;
+	border-bottom:       2px solid transparent;
+	border-radius:       0;
+	border:              none;
+	box-shadow:          inherit;
+	color:               #f5f5f5;
+	font-family:         sans-serif;
+	font-size:           16px;
+	margin:              0px 2px;
+	min-height:          27px;
+	padding:             0px 0px;
+	transition-duration: .5s;
+	transition-property: background-color;
+}
+
+tooltip,
+window {
+	background-color: rgba(21, 21, 21, 0.8);
+}
+
+#window {
+	color: #90a959;
+}
+
+#workspaces button:hover {
+	border-bottom: 2px solid #75b5aa;
+}
+
+#workspaces button.focused {
+	border-bottom: 2px solid #90a959;
+}
+
+#workspaces button.urgent {
+	border-bottom: 2px solid #f4bf75;
+}
+
+#mode {
+	border-bottom: 2px solid #f5b5aa;
+}
+
+#clock {
+	color: #75b5aa;
+}
+
+#cpu {
+	color: #aa759f;
+}
+
+#cpu.medium {
+	color: #f4bf75;
+}
+
+#cpu.high {
+	color: #ac4142;
+}
+
+#custom-mails {
+	color: #aa759f;
+}
+
+#custom-separator {
+	color: #505050;
+}
+
+#custom-updates {
+	color: #aa759f;
+}
+
+#backlight {
+	color: #aa759f;
+}
+
+#battery {
+	color: #aa759f;
+}
+
+#battery.critical,
+#battery.low {
+	color: #ac4142;
+}
+
+#battery.medium {
+	color: #f4bf75;
+}
+
+#battery.charging,
+#battery.full {
+	color: #90a959;
+}
+
+#bluetooth {
+	color: #90a959;
+}
+
+#bluetooth.disabled {
+	color: #ac4142;
+}
+
+#disk {
+	color: #aa759f;
+}
+
+#disk.medium {
+	color: #f4bf75;
+}
+
+#disk.high {
+	color: #ac4142;
+}
+
+#idle_inhibitor {
+	color: #90a959;
+}
+
+#idle_inhibitor.activated {
+	color: #aa759f;
+}
+
+#memory {
+	color: #aa759f;
+}
+
+#memory.medium {
+	color: #f4bf75;
+}
+
+#memory.high {
+	color: #ac4142;
+}
+
+#mpd {
+	color: #90a959;
+}
+
+#mpd.disconnected {
+	color: #ac4142;
+}
+
+#mpd.stopped {
+	color: #f4bf75;
+}
+
+#mpd.paused {
+	color: #505050;
+}
+
+#network {
+	color: #90a959;
+}
+
+#network.disabled {
+	color: #505050;
+}
+
+#network.disconnected,
+#network.linked {
+	color: #ac4142;
+}
+
+#pulseaudio {
+	color: #90a959;
+}
+
+#pulseaudio.output.sink-muted {
+	color: #ac4142;
+}
+
+#pulseaudio.input.source-muted {
+	color: #ac4142;
+}
+
+#temperature {
+	color: #f4bf75;
+}
+
+#temperature.critical {
+	color: #ac4142;
+}

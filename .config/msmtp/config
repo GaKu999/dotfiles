@@ -1,0 +1,24 @@
+# ${XDG_CONFIG_HOME}/msmtp/config
+# vim:ft=conf:fenc=utf-8:
+
+defaults
+auth           on
+syslog         on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+
+account      gmail-public
+host         smtp.gmail.com
+port         587
+user         g4ku999
+from         g4ku999@gmail.com
+passwordeval "pass google.com/public/msmtp | head -n 1"
+
+account      gmail-private
+host         smtp.gmail.com
+port         587
+user         #REDACTED
+from         #REDACTED
+passwordeval "pass google.com/private/msmtp | head -n 1"
+
+account default : gmail-public

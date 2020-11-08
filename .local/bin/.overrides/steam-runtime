@@ -1,0 +1,5 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/.overrides/steam-runtime
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+exec steam-native "${@}"

@@ -1,0 +1,57 @@
+# ${XDG_CONFIG_HOME}/ncmpcpp/config
+# vim:ft=conf:fenc=utf-8:
+
+lyrics_directory  = ~/Music/.lyrics
+mpd_music_dir     = ~/Music
+ncmpcpp_directory = ~/.config/ncmpcpp
+
+mpd_host = ~/.local/run/mpd/socket
+mpd_port = 6600
+
+visualizer_color       = blue:b, cyan:b, green:b, yellow:b, red:b, magenta:b
+visualizer_data_source = ~/.local/run/mpd/fifo
+visualizer_in_stereo   = yes
+visualizer_look        = ⬤█
+visualizer_output_name = FIFO
+visualizer_type        = wave_filled
+
+system_encoding = UTF-8
+
+autocenter_mode              = yes
+browser_display_mode         = columns
+centered_cursor              = yes
+colors_enabled               = yes
+playlist_display_mode        = columns
+playlist_editor_display_mode = columns
+progressbar_look             = ■■■
+search_engine_display_mode   = columns
+user_interface               = alternative
+
+media_library_primary_tag = genre
+
+external_editor    = vim
+use_console_editor = yes
+
+active_window_border           = green
+alternative_ui_separator_color = green
+color1                         = white
+color2                         = white
+empty_tag_color                = black:b
+header_window_color            = green
+main_window_color              = yellow
+player_state_color             = green:b
+progressbar_color              = black:b
+progressbar_elapsed_color      = green:b
+state_flags_color              = green:b
+state_line_color               = green:b
+statusbar_color                = green
+statusbar_time_color           = cyan:b
+volume_color                   = green:b
+window_border_color            = green
+
+current_item_inactive_column_prefix = $(red)
+current_item_inactive_column_suffix = $(end)
+current_item_prefix                 = $(red)$b
+current_item_suffix                 = $/b$(end)
+selected_item_prefix                = $r
+selected_item_suffix                = $/r

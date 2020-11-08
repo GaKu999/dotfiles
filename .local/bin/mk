@@ -1,0 +1,30 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/mk
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+. /usr/share/makepkg/util/config.sh
+load_makepkg_config
+
+_usage() {
+	echo 'Usage: mk [-h|--help] [-l|--list] LANG BINARY SOURCE...'
+	exit "${1:-0}"
+}
+
+case "${1}" in
+c)
+	: ${2:?} ${3:?}
+	gcc -Wall -Wextra ${CFLAGS} ${LDFLAGS} "${@:3}" -o "${2}" || exit "${?}"
+	strip ${STRIP_BINARY} "${2}"
+;;
+cxx)
+	: ${2:?} ${3:?}
+	g++ -Wall -Wextra ${CXXFLAGS} ${LDFLAGS} "${@:3}" -o "${2}" || exit "${?}"
+	strip ${STRIP_BINARY} "${2}"
+;;
+-l|--list)
+	langs=(c cxx)
+	printf '%s\n' "${langs[@]}"
+;;
+-h|--help) _usage ;;
+*) _usage 2 ;;
+esac

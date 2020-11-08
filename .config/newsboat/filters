@@ -1,0 +1,4 @@
+# ${XDG_CONFIG_HOME}/newsboat/filters
+# vim:ft=conf:fenc=utf-8:
+
+define-filter "recent articles" "age between 0:7"

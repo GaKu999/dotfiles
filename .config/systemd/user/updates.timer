@@ -1,0 +1,12 @@
+# ${XDG_CONFIG_HOME}/systemd/user/updates.timer
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=System update checker
+
+[Timer]
+OnStartupSec=30m
+OnUnitActiveSec=1h
+
+[Install]
+WantedBy=timers.target

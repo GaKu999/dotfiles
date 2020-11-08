@@ -1,0 +1,45 @@
+"!/hint/vim
+" ${XDG_CONFIG_HOME}/vifm/colors/default.vifm
+" vim:ft=vim:fenc=utf-8:noet:ts=3:sw=3:
+
+highlight clear
+
+highlight AuxWin      cterm=none    ctermfg=none  ctermbg=none
+highlight Border      cterm=none    ctermfg=green ctermbg=none
+highlight CmdLine     cterm=bold    ctermfg=green ctermbg=none
+highlight CmpMismatch cterm=bold    ctermfg=red   ctermbg=none
+highlight CurrLine    cterm=bold    ctermfg=red   ctermbg=none
+highlight ErrorMsg    cterm=bold    ctermfg=red   ctermbg=none
+highlight JobLine     cterm=bold    ctermfg=white ctermbg=none
+highlight LineNr      cterm=none    ctermfg=none  ctermbg=none
+highlight OddLine     cterm=none    ctermfg=none  ctermbg=none
+highlight OtherLine   cterm=none    ctermfg=none  ctermbg=none
+highlight OtherWin    cterm=none    ctermfg=none  ctermbg=none
+highlight Selected    cterm=reverse ctermfg=none  ctermbg=none
+highlight StatusLine  cterm=bold    ctermfg=green ctermbg=none
+highlight SuggestBox  cterm=bold    ctermfg=none  ctermbg=none
+highlight TabLine     cterm=none    ctermfg=none  ctermbg=none
+highlight TabLineSel  cterm=none    ctermfg=none  ctermbg=none
+highlight TopLine     cterm=none    ctermfg=green ctermbg=none
+highlight TopLineSel  cterm=bold    ctermfg=green ctermbg=none
+highlight WildMenu    cterm=bold    ctermfg=white ctermbg=none
+highlight Win         cterm=none    ctermfg=white ctermbg=none
+
+highlight Directory   cterm=bold ctermfg=blue    ctermbg=none
+highlight Link        cterm=none ctermfg=yellow  ctermbg=none
+highlight BrokenLink  cterm=bold ctermfg=black   ctermbg=none
+highlight HardLink    cterm=bold ctermfg=white   ctermbg=none
+highlight Socket      cterm=none ctermfg=magenta ctermbg=none
+highlight Device      cterm=none ctermfg=yellow  ctermbg=none
+highlight Fifo        cterm=none ctermfg=yellow  ctermbg=none
+highlight Executable  cterm=bold ctermfg=green   ctermbg=none
+
+highlight User1 cterm=none ctermfg=none ctermbg=none
+highlight User2 cterm=none ctermfg=none ctermbg=none
+highlight User3 cterm=none ctermfg=none ctermbg=none
+highlight User4 cterm=none ctermfg=none ctermbg=none
+highlight User5 cterm=none ctermfg=none ctermbg=none
+highlight User6 cterm=none ctermfg=none ctermbg=none
+highlight User7 cterm=none ctermfg=none ctermbg=none
+highlight User8 cterm=none ctermfg=none ctermbg=none
+highlight User9 cterm=none ctermfg=none ctermbg=none

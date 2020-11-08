@@ -1,0 +1,13 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/vtclip
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${TERM:?}
+
+if (("${#}")); then
+	content="$(echo -n "${@}" | base64)"
+else
+	content="$(base64)"
+fi
+
+printf '\033]52;c;%s\033' "${content}"

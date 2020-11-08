@@ -1,0 +1,44 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/wrapper
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+if [[ "${0##*/}" == wrapper ]]; then
+	: ${1:?}
+	name="${1}"
+	shift
+else
+	name="${0##*/}"
+	path=/bin/
+fi
+
+args_file="${XDG_CONFIG_HOME:-${HOME}/.config}/wrapper/${name}.conf"
+bwrap_args_file="${XDG_CONFIG_HOME:-${HOME}/.config}/wrapper/bwrap/${name}.conf"
+systemd_args_file="${XDG_CONFIG_HOME:-${HOME}/.config}/wrapper/systemd/${name}.conf"
+
+mapfile -t args < <(. "${args_file}" 2>/dev/null)
+
+if [[ -r "${bwrap_args_file}" ]]; then
+	. "${XDG_LIB_DIR:-${HOME}/.local/lib}/bash/bwrap.bash" || exit "${?}"
+	mapfile -t bwrap_args < <(. "${bwrap_args_file}")
+fi
+
+mapfile -t systemd_args < <(. "${systemd_args_file}" 2>/dev/null)
+
+if (("${#systemd_args[@]}")); then
+	if ! systemctl --user is-active "${name}" >/dev/null 2>&1; then
+		if (("${#bwrap_args[@]}")); then
+			exec systemd-run --user --collect --unit "${name}" ${systemd_args[@]} -- bwrap ${bwrap_args[@]} -- "${path}${name}" ${args[@]} "${@}"
+		else
+			exec systemd-run --user --collect --unit "${name}" ${systemd_args[@]} -- "${path}${name}" ${args[@]} "${@}"
+		fi
+	else
+		echo "wrapper: ${name}.service: already active" >&2
+		exit 1
+	fi
+elif (("${#bwrap_args[@]}")); then
+	exec bwrap ${bwrap_args[@]} -- "${path}${name}" ${args[@]} "${@}"
+else
+	exec "${path}${name}" ${args[@]} "${@}"
+fi

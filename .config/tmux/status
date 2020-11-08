@@ -1,0 +1,14 @@
+# ${XDG_CONFIG_HOME}/tmux/status
+# vim:ft=tmux:fenc=utf-8:noet:ts=3:sw=3:
+
+set -g status                       on
+set -g status-interval              60
+set -g status-justify               centre
+set -g status-keys                  vi
+set -g status-left                  "#[fg=magenta]#S#[fg=default] #[fg=white]•#[fg=default] "
+set -g status-left-length           0
+set -g status-right                 " #[fg=white]•#[fg=default] #[fg=cyan]#(date '+%H:%M')#[fg=default]"
+set -g status-right-length          0
+set -g window-status-current-format "#[fg=yellow]#P#[fg=default]:#T"
+set -g window-status-format         "#[fg=yellow]#P#[fg=default]:#T"
+set -g window-status-separator      " #[fg=white]•#[fg=default] "

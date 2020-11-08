@@ -1,0 +1,102 @@
+#!/hint/sh
+# ${XDG_CONFIG_HOME}/sh/functions
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+pacuns() {
+	expac --sync '%r %n %g' | awk '$3=="(null)" {print $1 "/" $2}'
+}
+
+extract() {
+	local cmd file r
+
+	for file; do
+		cmd=: r=1
+
+		if [ ! -r "${file}" ]; then
+			echo "extract: ${file}: Permission denied" >&2
+			continue
+		elif [ -d "${file}" ]; then
+			echo "extract: ${file}: Is a directory" >&2
+			continue
+		elif [ ! -s "${file}" ]; then
+			echo "extract: ${file}: Invalid or empty file" >&2
+			continue
+		fi
+
+		case "${file}" in
+		*.tar.*|*.t*) cmd='bsdtar --extract --verbose --file' ;;
+		*.7z) cmd='7z x' ;;
+		*.Z) cmd=uncompress ;;
+		*.bz2) cmd=bunzip2 ;;
+		*.exe) cmd=cabextract ;;
+		*.gz) cmd=gunzip ;;
+		*.rar) cmd='unrar x' ;;
+		*.xz) cmd=unxz ;;
+		*.zip) cmd=unzip ;;
+		*.zst) cmd=unzstd ;;
+		*)
+			echo "extract: ${file}: Unrecognized extension" >&2
+			continue
+		;;
+		esac
+
+		${cmd} "${file}"
+		r="${?}"
+	done
+	return "${r}"
+}
+
+dig() {
+	: ${1:?}
+	resolvectl -4 --type "${2:-A}" query -- "${1}" | awk 'NR==2; { print $4; exit }'
+}
+
+host() {
+	: ${1:?}
+	resolvectl query -- "${1}" | awk 'NR==2; { print $2; exit }'
+}
+
+calc() {
+	: ${*:?}
+	printf 'scale=3;%s\n' "${*}" | bc --mathlib
+}
+
+conv() {
+	: ${1:?} ${2:?}
+	units -- "${1}" "${2}" | awk 'NR==1 {print $2}'
+}
+
+tzdate() {
+	TZ="${1:-UTC}" date
+}
+
+tzls() {
+	echo Timezones
+	tree -C -l --noreport -- "/usr/share/zoneinfo" | tail --lines +2
+}
+
+nmls() {
+	nm --extern-only --print-file-name /usr/lib/lib*.a 2>/dev/null |
+	sed 's/\/usr\/lib\/\lib.*.a\:\(.*.o\):.* \(.*\)/\1 \2/' |
+	column --table
+}
+
+merge() {
+	: ${1:?} ${2:?}
+	diff --minimal --new-file --unified -- "${1}" "${2}" | patch -- "${1}"
+}
+
+cpf() {
+	: ${@:?}
+	cp -- "${@}" && cd -- "${_}"
+}
+
+mvf() {
+	: ${@:?}
+	mv -- "${@}" && cd -- "${_}"
+}
+
+template() {
+	: ${HOME:?} ${1:?}
+	vipe <"${XDG_TEMPLATES_DIR:-${HOME}/Templates}/${2:-txt}" >"${1}"
+}

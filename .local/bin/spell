@@ -1,0 +1,5 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/spell
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+echo "${@}" | aspell pipe

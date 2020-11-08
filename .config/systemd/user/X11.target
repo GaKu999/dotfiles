@@ -1,0 +1,9 @@
+# ${XDG_CONFIG_HOME}/systemd/user/X11.target
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Graphical session for X11
+Documentation=man:systemd.special(7)
+PartOf=graphical-session.target
+Requires=graphical-session-pre.target graphical-session.target
+After=graphical-session-pre.target graphical-session.target

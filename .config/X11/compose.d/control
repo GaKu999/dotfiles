@@ -1,0 +1,68 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/control
+# vim:ft=conf:fenc=utf-8:
+
+<Multi_key> <S> <H> : "\x0001" # 0001 : START OF HEADING
+<Multi_key> <S> <X> : "\x0002" # 0002 : START OF TEXT
+<Multi_key> <E> <X> : "\x0003" # 0003 : END OF TEXT
+<Multi_key> <E> <T> : "\x0004" # 0004 : END OF TRANSMISSION
+<Multi_key> <E> <Q> : "\x0005" # 0005 : ENQUIRY
+<Multi_key> <A> <K> : "\x0006" # 0006 : ACKNOWLEDGE
+<Multi_key> <B> <L> : "\x0007" # 0007 : BELL
+<Multi_key> <B> <S> : "\x0008" # 0008 : BACKSPACE
+<Multi_key> <H> <T> : "\x0009" # 0009 : CHARACTER TABULATION
+<Multi_key> <L> <F> : "\x000A" # 000A : LINE FEED (LF)
+<Multi_key> <N> <U> : "\x000A" # 000A : LINE FEED (LF)
+<Multi_key> <V> <T> : "\x000B" # 000B : LINE TABULATION
+<Multi_key> <F> <F> : "\x000C" # 000C : FORM FEED (FF)
+<Multi_key> <C> <R> : "\x000D" # 000D : CARRIAGE RETURN (CR)
+<Multi_key> <S> <O> : "\x000E" # 000E : SHIFT OUT
+<Multi_key> <S> <I> : "\x000F" # 000F : SHIFT IN
+<Multi_key> <D> <L> : "\x0010" # 0010 : DATA LINK ESCAPE
+<Multi_key> <D> <1> : "\x0011" # 0011 : DEVICE CONTROL ONE
+<Multi_key> <D> <2> : "\x0012" # 0012 : DEVICE CONTROL TWO
+<Multi_key> <D> <3> : "\x0013" # 0013 : DEVICE CONTROL THREE
+<Multi_key> <D> <4> : "\x0014" # 0014 : DEVICE CONTROL FOUR
+<Multi_key> <N> <K> : "\x0015" # 0015 : NEGATIVE ACKNOWLEDGE
+<Multi_key> <S> <Y> : "\x0016" # 0016 : SYNCHRONOUS IDLE
+<Multi_key> <E> <B> : "\x0017" # 0017 : END OF TRANSMISSION BLOCK
+<Multi_key> <C> <N> : "\x0018" # 0018 : CANCEL
+<Multi_key> <E> <M> : "\x0019" # 0019 : END OF MEDIUM
+<Multi_key> <S> <B> : "\x001A" # 001A : SUBSTITUTE
+<Multi_key> <E> <C> : "\x001B" # 001B : ESCAPE
+<Multi_key> <F> <S> : "\x001C" # 001C : INFORMATION SEPARATOR FOUR
+<Multi_key> <G> <S> : "\x001D" # 001D : INFORMATION SEPARATOR THREE
+<Multi_key> <R> <S> : "\x001E" # 001E : INFORMATION SEPARATOR TWO
+<Multi_key> <U> <S> : "\x001F" # 001F : INFORMATION SEPARATOR ONE
+<Multi_key> <D> <T> : "\x007F" # 007F : DELETE
+<Multi_key> <P> <A> : "\x0080" # 0080 : <control>
+<Multi_key> <H> <O> : "\x0081" # 0081 : <control>
+<Multi_key> <B> <H> : "\x0082" # 0082 : BREAK PERMITTED HERE
+<Multi_key> <N> <H> : "\x0083" # 0083 : NO BREAK HERE
+<Multi_key> <I> <N> : "\x0084" # 0084 : <control>
+<Multi_key> <N> <L> : "\x0085" # 0085 : NEXT LINE (NEL)
+<Multi_key> <S> <A> : "\x0086" # 0086 : START OF SELECTED AREA
+<Multi_key> <E> <S> : "\x0087" # 0087 : END OF SELECTED AREA
+<Multi_key> <H> <S> : "\x0088" # 0088 : CHARACTER TABULATION SET
+<Multi_key> <H> <J> : "\x0089" # 0089 : CHARACTER TABULATION WITH JUSTIFICATION
+<Multi_key> <V> <S> : "\x008A" # 008A : LINE TABULATION SET
+<Multi_key> <P> <D> : "\x008B" # 008B : PARTIAL LINE FORWARD
+<Multi_key> <P> <U> : "\x008C" # 008C : PARTIAL LINE BACKWARD
+<Multi_key> <R> <I> : "\x008D" # 008D : REVERSE LINE FEED
+<Multi_key> <S> <2> : "\x008E" # 008E : SINGLE SHIFT TWO
+<Multi_key> <S> <3> : "\x008F" # 008F : SINGLE SHIFT THREE
+<Multi_key> <D> <C> : "\x0090" # 0090 : DEVICE CONTROL STRING
+<Multi_key> <P> <1> : "\x0091" # 0091 : PRIVATE USE ONE
+<Multi_key> <P> <2> : "\x0092" # 0092 : PRIVATE USE TWO
+<Multi_key> <T> <S> : "\x0093" # 0093 : SET TRANSMIT STATE
+<Multi_key> <C> <C> : "\x0094" # 0094 : CANCEL CHARACTER
+<Multi_key> <M> <W> : "\x0095" # 0095 : MESSAGE WAITING
+<Multi_key> <S> <G> : "\x0096" # 0096 : START OF GUARDED AREA
+<Multi_key> <E> <G> : "\x0097" # 0097 : END OF GUARDED AREA
+<Multi_key> <S> <S> : "\x0098" # 0098 : START OF STRING
+<Multi_key> <G> <C> : "\x0099" # 0099 : TODO: WHAT IS THIS?
+<Multi_key> <S> <C> : "\x009A" # 009A : SINGLE CHARACTER INTRODUCER
+<Multi_key> <C> <I> : "\x009B" # 009B : CONTROL SEQUENCE INTRODUCER
+<Multi_key> <S> <T> : "\x009C" # 009C : STRING TERMINATOR
+<Multi_key> <O> <C> : "\x009D" # 009D : OPERATING SYSTEM COMMAND
+<Multi_key> <P> <M> : "\x009E" # 009E : PRIVACY MESSAGE
+<Multi_key> <A> <C> : "\x009F" # 009F : APPLICATION PROGRAM COMMAND

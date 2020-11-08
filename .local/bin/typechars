@@ -1,0 +1,14 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/typechars
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+(("${#}")) || IFS='' read -r chars
+
+if [[ -n "${WAYLAND_DISPLAY}" ]]; then
+	exec wtype -- "${chars:-"${@}"}"
+elif [[ -n "${DISPLAY}" ]]; then
+	exec xdotool -- "${chars:-"${@}"}"
+else
+	echo 'typechars: display unavailable' >&2
+	exit 1
+fi

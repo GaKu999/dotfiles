@@ -1,0 +1,5 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/sprunge
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+exec curl --form 'sprunge=<-' --no-progress-meter -- 'http://sprunge.us' # NO HTTPS

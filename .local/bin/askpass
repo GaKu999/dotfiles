@@ -1,0 +1,7 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/askpass
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${1:?}
+
+exec bemenu --prompt "${1}" --ff \#00000000 --hf \#00000000 --sf \#00000000 </dev/null

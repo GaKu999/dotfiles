@@ -1,0 +1,11 @@
+#!/bin/sh
+# ${XDG_CONFIG_HOME}/Wayland/clean
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+systemctl --user stop graphical-session.target
+
+for file in "${XDG_CONFIG_HOME:-${HOME}/.config}/Wayland/clean.d"/*.sh; do
+	. "${file}"
+done

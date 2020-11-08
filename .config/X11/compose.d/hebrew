@@ -1,0 +1,30 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/hebrew
+# vim:ft=conf:fenc=utf-8:
+
+<Multi_key> <A> <plus>    : "א" # 05D0 : ALEF
+<Multi_key> <B> <plus>    : "ב" # 05D1 : BET
+<Multi_key> <G> <plus>    : "ג" # 05D2 : GIMEL
+<Multi_key> <D> <plus>    : "ד" # 05D3 : DALET
+<Multi_key> <H> <plus>    : "ה" # 05D4 : HE
+<Multi_key> <W> <plus>    : "ו" # 05D5 : VAV
+<Multi_key> <Z> <plus>    : "ז" # 05D6 : ZAYIN
+<Multi_key> <X> <plus>    : "ח" # 05D7 : HET
+<Multi_key> <T> <j>       : "ט" # 05D8 : TET
+<Multi_key> <J> <plus>    : "י" # 05D9 : YOD
+<Multi_key> <K> <percent> : "ך" # 05DA : FINAL KAF
+<Multi_key> <K> <plus>    : "כ" # 05DB : KAF
+<Multi_key> <L> <plus>    : "ל" # 05DC : LAMED
+<Multi_key> <M> <percent> : "ם" # 05DD : FINAL MEM
+<Multi_key> <M> <plus>    : "מ" # 05DE : MEM
+<Multi_key> <N> <percent> : "ן" # 05DF : FINAL NUN
+<Multi_key> <N> <plus>    : "נ" # 05E0 : NUN
+<Multi_key> <S> <plus>    : "ס" # 05E1 : SAMEKH
+<Multi_key> <E> <plus>    : "ע" # 05E2 : AYIN
+<Multi_key> <P> <percent> : "ף" # 05E3 : FINAL PE
+<Multi_key> <P> <plus>    : "פ" # 05E4 : PE
+<Multi_key> <Z> <j>       : "ץ" # 05E5 : FINAL TSADI
+<Multi_key> <Z> <J>       : "צ" # 05E6 : TSADI
+<Multi_key> <Q> <plus>    : "ק" # 05E7 : QOF
+<Multi_key> <R> <plus>    : "ר" # 05E8 : RESH
+<Multi_key> <S> <h>       : "ש" # 05E9 : SHIN
+<Multi_key> <T> <plus>    : "ת" # 05EA : TAV

@@ -1,0 +1,11 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/termux
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${SHELL:?} ${TERMINAL:?}
+
+if ! tmux has -t termux >/dev/null 2>&1; then
+	exec ${TERMINAL} -e tmux new -s termux "${@:-${SHELL}}"
+else
+	exec ${TERMINAL} -e tmux new -t termux \; neww "${@:-${SHELL}}"
+fi

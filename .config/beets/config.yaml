@@ -1,0 +1,37 @@
+# ${XDG_CONFIG_HOME}/beets/config.yaml
+# vim:ft=yaml:fenc=utf-8:et:ts=2:sw=2:
+
+library:   ~/Music/.library.db
+directory: ~/Music
+
+plugins: acousticbrainz chroma edit embedart fetchart fromfilename info lastgenre lyrics mbsync mpdstats mpdupdate smartplaylist scrub
+
+artist_credit: no
+
+smartplaylist:
+  relative_to:  ~/Music
+  playlist_dir: ~/Music/.playlists
+
+  playlists:
+    - { name: all.m3u, query: '' }
+
+import:
+  bell:         yes
+  move:         yes
+  from_scratch: yes
+
+ui:
+  color: yes
+
+  colors:
+    action:               blue
+    action_default:       turquoise
+    text_error:           red
+    text_highlight:       red
+    text_highlight_minor: darkred
+    text_success:         green
+    text_warning:         yellow
+
+paths:
+  default:   $genre/$albumartist/$album/$track-$title
+  singleton: $genre/$artist/Singles/$title

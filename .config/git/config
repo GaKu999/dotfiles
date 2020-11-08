@@ -1,0 +1,27 @@
+# ${XDG_CONFIG_HOME}/git/config
+# vim:ft=gitconfig:fenc=utf-8:
+
+[user]
+name=GaKu999
+email=g4ku999@gmail.com
+
+[blame]
+date=format:%x
+
+[log]
+date=format:%x
+
+[format]
+numbered=auto
+
+[color]
+branch=yes
+diff=auto
+pager=yes
+status=auto
+
+[init]
+defaultBranch=main
+
+[pull]
+rebase=false

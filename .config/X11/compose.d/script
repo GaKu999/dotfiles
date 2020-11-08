@@ -1,0 +1,37 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/script
+# vim:ft=conf:fenc=utf-8:
+
+# SUPER
+<Multi_key>          <0> <S> : "⁰" # 2070 : ZERO
+<Multi_key>          <1> <S> : "¹" # 00B9 : ONE
+<Multi_key>          <2> <S> : "²" # 00B2 : TWO
+<Multi_key>          <3> <S> : "³" # 00B3 : THREE
+<Multi_key>          <4> <S> : "⁴" # 2074 : FOUR
+<Multi_key>          <5> <S> : "⁵" # 2075 : FIVE
+<Multi_key>          <6> <S> : "⁶" # 2076 : SIX
+<Multi_key>          <7> <S> : "⁷" # 2077 : SEVEN
+<Multi_key>          <8> <S> : "⁸" # 2078 : EIGHT
+<Multi_key>          <9> <S> : "⁹" # 2079 : NINE
+<Multi_key>       <plus> <S> : "⁺" # 207A : PLUS SIGN
+<Multi_key>      <minus> <S> : "⁻" # 207B : MINUS
+<Multi_key>      <equal> <S> : "⁼" # 207C : EQUALS SIGN
+<Multi_key>  <parenleft> <S> : "⁽" # 207D : LEFT PARENTHESIS
+<Multi_key> <parenright> <S> : "⁾" # 207E : RIGHT PARENTHESIS
+<Multi_key>          <n> <S> : "ⁿ" # 207F : LATIN SMALL LETTER N
+
+# SUB
+<Multi_key>          <0> <s> : "₀" # 2080 : ZERO
+<Multi_key>          <1> <s> : "₁" # 2081 : ONE
+<Multi_key>          <2> <s> : "₂" # 2082 : TWO
+<Multi_key>          <3> <s> : "₃" # 2083 : THREE
+<Multi_key>          <4> <s> : "₄" # 2084 : FOUR
+<Multi_key>          <5> <s> : "₅" # 2085 : FIVE
+<Multi_key>          <6> <s> : "₆" # 2086 : SIX
+<Multi_key>          <7> <s> : "₇" # 2087 : SEVEN
+<Multi_key>          <8> <s> : "₈" # 2088 : EIGHT
+<Multi_key>          <9> <s> : "₉" # 2089 : NINE
+<Multi_key>       <plus> <s> : "₊" # 208A : PLUS SIGN
+<Multi_key>      <minus> <s> : "₋" # 208B : MINUS
+<Multi_key>      <equal> <s> : "₌" # 208C : EQUALS SIGN
+<Multi_key>  <parenleft> <s> : "₍" # 208D : LEFT PARENTHESIS
+<Multi_key> <parenright> <s> : "₎" # 208E : RIGHT PARENTHESIS

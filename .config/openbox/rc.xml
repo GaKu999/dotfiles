@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ${XDG_CONFIG_HOME}/openbox/rc.xml
+	- vim:ft=xml:fenc=utf-8:noet:ts=3:sw=3:
+	-->
+<openbox_config xmlns="http://openbox.org/3.4/rc" xmlns:xi="http://w3.org/2001/XInclude">
+	<resistance>
+		<screen_edge_strength>20</screen_edge_strength>
+		<strength>10</strength>
+	</resistance>
+	<focus>
+		<focusDelay>500</focusDelay>
+		<focusLast>true</focusLast>
+		<focusNew>true</focusNew>
+		<followMouse>true</followMouse>
+		<raiseOnFocus>true</raiseOnFocus>
+		<underMouse>true</underMouse>
+	</focus>
+	<placement>
+		<center>true</center>
+		<monitor>active</monitor>
+		<policy>smart</policy>
+		<primaryMonitor>active</primaryMonitor>
+	</placement>
+	<theme>
+		<animateIconify>false</animateIconify>
+		<keepBorder>true</keepBorder>
+		<name>Default</name>
+		<titleLayout>L</titleLayout>
+		<font place="ActiveWindow">
+			<name>sans-serif</name>
+			<size>16</size>
+			<slant>normal</slant>
+			<weight>bold</weight>
+		</font>
+		<font place="InactiveWindow">
+			<name>sans-serif</name>
+			<size>16</size>
+			<slant>normal</slant>
+			<weight>bold</weight>
+		</font>
+		<font place="MenuHeader">
+			<name>sans-serif</name>
+			<size>16</size>
+			<slant>normal</slant>
+			<weight>normal</weight>
+		</font>
+		<font place="MenuItem">
+			<name>sans-serif</name>
+			<size>16</size>
+			<slant>normal</slant>
+			<weight>normal</weight>
+		</font>
+		<font place="OnScreenDisplay">
+			<name>sans-serif</name>
+			<size>16</size>
+			<slant>normal</slant>
+			<weight>bold</weight>
+		</font>
+	</theme>
+	<desktops>
+		<firstdesk>1</firstdesk>
+		<number>9</number>
+		<popupTime>0</popupTime>
+		<names>
+			<name>1</name>
+			<name>2</name>
+			<name>3</name>
+			<name>4</name>
+			<name>5</name>
+			<name>6</name>
+			<name>7</name>
+			<name>8</name>
+			<name>9</name>
+		</names>
+	</desktops>
+	<margins>
+		<top>4</top>
+		<bottom>4</bottom>
+		<left>4</left>
+		<right>4</right>
+	</margins>
+	<keyboard>
+		<keybind key="W-S-q">
+			<action name="Close"/>
+		</keybind>
+		<keybind key="W-S-c">
+			<action name="Reconfigure"/>
+		</keybind>
+		<keybind key="W-S-e">
+			<action name="Exit"><prompt>true</prompt></action>
+		</keybind>
+		<keybind key="W-j">
+			<action name="DirectionalCycleWindows"><dialog>false</dialog><direction>down</direction></action>
+		</keybind>
+		<keybind key="W-h">
+			<action name="DirectionalCycleWindows"><dialog>false</dialog><direction>left</direction></action>
+		</keybind>
+		<keybind key="W-l">
+			<action name="DirectionalCycleWindows"><dialog>false</dialog><direction>right</direction></action>
+		</keybind>
+		<keybind key="W-k">
+			<action name="DirectionalCycleWindows"><dialog>false</dialog><direction>up</direction></action>
+		</keybind>
+		<keybind key="W-Down">
+			<action name="DirectionalCycleWindows"><dialog>false</dialog><direction>down</direction></action>
+		</keybind>
+		<keybind key="W-Left">
+			<action name="DirectionalCycleWindows"><dialog>false</dialog><direction>left</direction></action>
+		</keybind>
+		<keybind key="W-Right">
+			<action name="DirectionalCycleWindows"><dialog>false</dialog><direction>right</direction></action>
+		</keybind>
+		<keybind key="W-Up">
+			<action name="DirectionalCycleWindows"><dialog>false</dialog><direction>up</direction></action>
+		</keybind>
+		<keybind key="W-S-j">
+			<action name="Unmaximize"/>
+			<action name="ToggleMaximize"><direction>horizontal</direction></action>
+			<action name="MoveResizeTo"><height>50%</height></action>
+			<action name="MoveToEdge"><direction>south</direction></action>
+		</keybind>
+		<keybind key="W-A-j">
+			<action name="Unmaximize"/>
+			<action name="MoveResizeTo"><width>50%</width><height>50%</height></action>
+			<action name="MoveToEdge"><direction>south</direction></action>
+		</keybind>
+		<keybind key="W-S-h">
+			<action name="Unmaximize"/>
+			<action name="ToggleMaximize"><direction>vertical</direction></action>
+			<action name="MoveResizeTo"><width>50%</width></action>
+			<action name="MoveToEdge"><direction>west</direction></action>
+		</keybind>
+		<keybind key="W-A-h">
+			<action name="Unmaximize"/>
+			<action name="MoveResizeTo"><width>50%</width><height>50%</height></action>
+			<action name="MoveToEdge"><direction>west</direction></action>
+		</keybind>
+		<keybind key="W-S-l">
+			<action name="Unmaximize"/>
+			<action name="ToggleMaximize"><direction>vertical</direction></action>
+			<action name="MoveResizeTo"><width>50%</width></action>
+			<action name="MoveToEdge"><direction>east</direction></action>
+		</keybind>
+		<keybind key="W-A-l">
+			<action name="Unmaximize"/>
+			<action name="MoveResizeTo"><width>50%</width><height>50%</height></action>
+			<action name="MoveToEdge"><direction>east</direction></action>
+		</keybind>
+		<keybind key="W-S-k">
+			<action name="Unmaximize"/>
+			<action name="ToggleMaximize"><direction>horizontal</direction></action>
+			<action name="MoveResizeTo"><height>50%</height></action>
+			<action name="MoveToEdge"><direction>north</direction></action>
+		</keybind>
+		<keybind key="W-A-k">
+			<action name="Unmaximize"/>
+			<action name="MoveResizeTo"><height>50%</height><width>50%</width></action>
+			<action name="MoveToEdge"><direction>north</direction></action>
+		</keybind>
+		<keybind key="W-S-Down">
+			<action name="Unmaximize"/>
+			<action name="ToggleMaximize"><direction>horizontal</direction></action>
+			<action name="MoveResizeTo"><height>50%</height></action>
+			<action name="MoveToEdge"><direction>south</direction></action>
+		</keybind>
+		<keybind key="W-A-Down">
+			<action name="Unmaximize"/>
+			<action name="MoveResizeTo"><width>50%</width><height>50%</height></action>
+			<action name="MoveToEdge"><direction>south</direction></action>
+		</keybind>
+		<keybind key="W-S-Left">
+			<action name="Unmaximize"/>
+			<action name="ToggleMaximize"><direction>vertical</direction></action>
+			<action name="MoveResizeTo"><width>50%</width></action>
+			<action name="MoveToEdge"><direction>west</direction></action>
+		</keybind>
+		<keybind key="W-A-Left">
+			<action name="Unmaximize"/>
+			<action name="MoveResizeTo"><width>50%</width><height>50%</height></action>
+			<action name="MoveToEdge"><direction>west</direction></action>
+		</keybind>
+		<keybind key="W-S-Right">
+			<action name="Unmaximize"/>
+			<action name="ToggleMaximize"><direction>vertical</direction></action>
+			<action name="MoveResizeTo"><width>50%</width></action>
+			<action name="MoveToEdge"><direction>east</direction></action>
+		</keybind>
+		<keybind key="W-A-Right">
+			<action name="Unmaximize"/>
+			<action name="MoveResizeTo"><width>50%</width><height>50%</height></action>
+			<action name="MoveToEdge"><direction>east</direction></action>
+		</keybind>
+		<keybind key="W-S-Up">
+			<action name="Unmaximize"/>
+			<action name="ToggleMaximize"><direction>horizontal</direction></action>
+			<action name="MoveResizeTo"><height>50%</height></action>
+			<action name="MoveToEdge"><direction>north</direction></action>
+		</keybind>
+		<keybind key="W-A-Up">
+			<action name="Unmaximize"/>
+			<action name="MoveResizeTo"><height>50%</height><width>50%</width></action>
+			<action name="MoveToEdge"><direction>north</direction></action>
+		</keybind>
+		<keybind key="W-1">
+			<action name="GoToDesktop"><to>1</to></action>
+		</keybind>
+		<keybind key="W-2">
+			<action name="GoToDesktop"><to>2</to></action>
+		</keybind>
+		<keybind key="W-3">
+			<action name="GoToDesktop"><to>3</to></action>
+		</keybind>
+		<keybind key="W-4">
+			<action name="GoToDesktop"><to>4</to></action>
+		</keybind>
+		<keybind key="W-5">
+			<action name="GoToDesktop"><to>5</to></action>
+		</keybind>
+		<keybind key="W-6">
+			<action name="GoToDesktop"><to>6</to></action>
+		</keybind>
+		<keybind key="W-7">
+			<action name="GoToDesktop"><to>7</to></action>
+		</keybind>
+		<keybind key="W-8">
+			<action name="GoToDesktop"><to>8</to></action>
+		</keybind>
+		<keybind key="W-9">
+			<action name="GoToDesktop"><to>9</to></action>
+		</keybind>
+		<keybind key="W-comma">
+			<action name="GoToDesktop"><to>previous</to></action>
+		</keybind>
+		<keybind key="W-period">
+			<action name="GoToDesktop"><to>next</to></action>
+		</keybind>
+		<keybind key="W-S-1">
+			<action name="SendToDesktop"><to>1</to></action>
+		</keybind>
+		<keybind key="W-S-2">
+			<action name="SendToDesktop"><to>2</to></action>
+		</keybind>
+		<keybind key="W-S-3">
+			<action name="SendToDesktop"><to>3</to></action>
+		</keybind>
+		<keybind key="W-S-4">
+			<action name="SendToDesktop"><to>4</to></action>
+		</keybind>
+		<keybind key="W-S-5">
+			<action name="SendToDesktop"><to>5</to></action>
+		</keybind>
+		<keybind key="W-S-6">
+			<action name="SendToDesktop"><to>6</to></action>
+		</keybind>
+		<keybind key="W-S-7">
+			<action name="SendToDesktop"><to>7</to></action>
+		</keybind>
+		<keybind key="W-S-8">
+			<action name="SendToDesktop"><to>8</to></action>
+		</keybind>
+		<keybind key="W-S-9">
+			<action name="SendToDesktop"><to>9</to></action>
+		</keybind>
+		<keybind key="W-S-0">
+			<action name="SendToDesktop"><to>10</to></action>
+		</keybind>
+		<keybind key="W-S-comma">
+			<action name="SendToDesktop"><to>previous</to></action>
+		</keybind>
+		<keybind key="W-S-period">
+			<action name="SendToDesktop"><to>next</to></action>
+		</keybind>
+		<keybind key="W-f">
+			<action name="ToggleFullscreen"></action>
+		</keybind>
+		<keybind key="W-S-f">
+			<action name="ToggleMaximize"></action>
+		</keybind>
+		<keybind key="W-C-S-space">
+			<action name="ToggleOmnipresent"></action>
+		</keybind>
+		<keybind key="W-S-minus">
+			<action name="ToggleShade"></action>
+		</keybind>
+		<keybind key="W-a">
+			<action name="FocusToBottom"></action>
+		</keybind>
+		<keybind key="W-d">
+			<action name="ToggleShowDesktop"></action>
+		</keybind>
+	</keyboard>
+	<mouse>
+		<doubleClickTime>500</doubleClickTime>
+		<dragThreshold>1</dragThreshold>
+		<screenEdgeWarpMouse>false</screenEdgeWarpMouse>
+		<screenEdgeWarpTime>400</screenEdgeWarpTime>
+		<context name="Frame">
+			<mousebind button="W-Left" action="Drag">
+				<action name="Move"/>
+			</mousebind>
+		</context>
+		<context name="Titlebar Top Right Bottom Left TLCorner TRCorner BRCorner BLCorner">
+			<mousebind button="Left" action="Click">
+				<action name="Unshade"/>
+				<action name="Focus"/>
+				<action name="Raise"/>
+			</mousebind>
+			<mousebind button="W-Left" action="Drag">
+				<action name="Move"/>
+			</mousebind>
+		</context>
+		<context name="Titlebar">
+			<mousebind button="Left" action="DoubleClick">
+				<action name="ToggleMaximize"/>
+			</mousebind>
+			<mousebind button="Up" action="Click">
+				<action name="if">
+					<shaded>false</shaded>
+					<then>
+						<action name="Shade"/>
+						<action name="FocusToBottom"/>
+						<action name="Unfocus"/>
+						<action name="Lower"/>
+					</then>
+				</action>
+			</mousebind>
+			<mousebind button="Down" action="Click">
+				<action name="if">
+					<shaded>true</shaded>
+					<then>
+						<action name="Unshade"/>
+						<action name="Raise"/>
+					</then>
+				</action>
+			</mousebind>
+		</context>
+		<context name="Top">
+			<mousebind button="Left" action="Drag">
+				<action name="Resize"><edge>top</edge></action>
+			</mousebind>
+		</context>
+		<context name="Left">
+			<mousebind button="Left" action="Drag">
+				<action name="Resize"><edge>left</edge></action>
+			</mousebind>
+		</context>
+		<context name="Right">
+			<mousebind button="Left" action="Drag">
+				<action name="Resize"><edge>right</edge></action>
+			</mousebind>
+		</context>
+		<context name="Bottom">
+			<mousebind button="Left" action="Drag">
+				<action name="Resize"><edge>bottom</edge></action>
+			</mousebind>
+		</context>
+		<context name="TRCorner BRCorner TLCorner BLCorner">
+			<mousebind button="Left" action="Drag">
+				<action name="Resize"/>
+			</mousebind>
+		</context>
+		<context name="Client">
+			<mousebind button="Left" action="Click">
+				<action name="Unshade"/>
+				<action name="Focus"/>
+				<action name="Raise"/>
+			</mousebind>
+			<mousebind button="W-Left" action="Drag">
+				<action name="Move"/>
+			</mousebind>
+		</context>
+		<context name="Desktop">
+			<mousebind button="Left" action="Click">
+				<action name="Focus"/>
+			</mousebind>
+		</context>
+	</mouse>
+</openbox_config>

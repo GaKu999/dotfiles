@@ -1,0 +1,20 @@
+# ${XDG_CONFIG_HOME}/systemd/user/updates.service
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=System update notifier
+
+[Service]
+Type=oneshot
+ExecStartPre=-%h/.local/bin/updates check
+ExecStart=%h/.local/bin/updates notify
+
+StandardInput=null
+StandardOutput=null
+StandardError=null
+
+LockPersonality=true
+NoNewPrivileges=true
+ProtectProc=invisible
+ProtectSystem=full
+RestrictSUIDSGID=true

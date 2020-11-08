@@ -1,0 +1,35 @@
+"!/hint/vim
+" ${XDG_CONFIG_HOME}/vifm/vifmrc
+" vim:ft=vim:fenc=utf-8:noet:ts=3:sw=3:
+
+colorscheme default
+
+set deleteprg=trash
+set fastrun
+set nofollowlinks
+set norunexec
+set notrash
+set sortnumbers
+set syscalls
+set vicmd=vim
+set vimhelp
+set wildmenu
+
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+
+set history=10000
+set undolevels=10000
+set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,phistory,fhistory,dirstack,registers,bookmarks,bmarks
+
+set scrolloff=999
+set statusline="%=%A %10u:%-7g %15s %20d"
+set suggestoptions=normal,visual,view,otherpane,keys,marks,registers
+set timefmt=%x\ %X
+set wildstyle=popup
+
+mark h ~/
+
+filetype * xdg-open

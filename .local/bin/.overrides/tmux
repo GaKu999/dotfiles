@@ -1,0 +1,8 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/.overrides/tmux
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+: ${XDG_RUNTIME_DIR:?}
+
+exec /bin/tmux -S "${XDG_RUNTIME_DIR}/tmux" -f "${XDG_CONFIG_HOME:-${HOME}/.config}/tmux/config" "${@}"

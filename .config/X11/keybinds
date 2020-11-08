@@ -1,0 +1,82 @@
+# ${XDG_CONFIG_HOME}/X11/keybinds
+# vim:ft=conf:fenc=utf-8:
+
+# List of modifiers:
+#   Release, Control, Shift, Mod1 (Alt), Mod2 (NumLock),
+#   Mod3 (CapsLock), Mod4 (Meta), Mod5 (Scroll).
+
+#keystate_capslock = enable
+#keystate_numlock = enable
+#keystate_scrolllock= enable
+
+"launchyctl task terminald"
+	Mod4 + Return
+
+"launchyctl alt terminald"
+	Mod4 + Mod1 + Return
+
+"launchyctl end terminald"
+	Mod4 + Shift + Return
+
+"terminal"
+	Mod4 + Control + Return
+
+"termux"
+	Mod4 + Control + Mod1 + Return
+
+"launchyctl task launcherd"
+	Menu
+
+"launchyctl end launcherd"
+	Shift + Menu
+
+"bemenu-run"
+	Mod1 + Menu
+
+"screenshot"
+	Print
+
+"passmenu"
+	Insert
+
+"passmenu -q"
+	Mod1 + Insert
+
+"passmenu -t"
+	Shift + Insert
+
+"light -A 5"
+	XF86MonBrightnessUp
+
+"light -U 5"
+	XF86MonBrightnessDown
+
+"pamixer --decrease 5"
+	XF86AudioLowerVolume
+
+"pamixer --toggle-mute"
+	XF86AudioMute
+
+"pamixer --increase 5"
+	XF86AudioRaiseVolume
+
+"mpc play"
+	XF86AudioPlay
+
+"mpc play"
+	c:208 # headphones
+
+"mpc pause"
+	Shift + XF86AudioPlay # BUG
+
+"mpc pause"
+	c:209 # headphones
+
+"mpc stop"
+	XF86AudioStop
+
+"mpc next"
+	XF86AudioNext
+
+"mpc prev"
+	XF86AudioPrev

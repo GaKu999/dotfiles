@@ -1,0 +1,105 @@
+# ${XDG_CONFIG_HOME}/tmux/keybinds
+# vim:ft=tmux:fenc=utf-8:noet:ts=3:sw=3:
+
+unbind -a
+unbind -T root -a
+unbind -T copy-mode-vi -a
+
+set -g prefix C-b
+
+bind C-L lockc \; locks
+
+bind : command-prompt
+
+bind M-l clearhist
+
+bind s set status
+
+bind d detach
+bind z suspendc
+
+bind x     confirm -p "kill-pane #P? [y/N]:" killp
+bind M-x   confirm -p "kill-window #W? [y/N]:" killw
+bind C-x   confirm -p "kill-session #S? [y/N]:" kill-session
+bind C-M-x confirm -p "kill-server? [y/N]:" kill-server
+
+bind R source "${HOME}/.config/tmux/config" \; display 'Config reloaded'
+
+bind M-h splitw -v
+bind M-v splitw -h
+
+bind n neww
+
+bind Z resize-pane -Z
+
+bind p pasteb
+
+bind P capturep -S -2000 \; saveb "${HOME}/.local/share/notes/tmux"
+
+bind j selectp -D
+bind h selectp -L
+bind k selectp -U
+bind l selectp -R
+
+bind Down  selectp -D
+bind Left  selectp -L
+bind Up    selectp -U
+bind Right selectp -R
+
+bind , selectw -p
+bind . selectw -n
+
+bind M-, switchc -p
+bind M-. switchc -n
+
+bind M-t splitw -p 50 -h top
+bind M-m command-prompt -p 'man:' 'neww man "%%"'
+
+bind Escape copy-mode
+
+bind -T copy-mode-vi Enter send -X cancel
+
+bind -T copy-mode-vi j send -X cursor-down
+bind -T copy-mode-vi h send -X cursor-left
+bind -T copy-mode-vi l send -X cursor-right
+bind -T copy-mode-vi k send -X cursor-up
+
+bind -T copy-mode-vi Down  send -X cursor-down
+bind -T copy-mode-vi Left  send -X cursor-left
+bind -T copy-mode-vi Right send -X cursor-right
+bind -T copy-mode-vi Up    send -X cursor-up
+
+bind -T copy-mode-vi : command-prompt -p goto: 'send -X goto-line "%%"'
+bind -T copy-mode-vi g send -X top-line
+bind -T copy-mode-vi G send -X bottom-line
+bind -T copy-mode-vi 0 send -X start-of-line
+bind -T copy-mode-vi $ send -X end-of-line
+
+bind -T copy-mode-vi % send -X next-matching-bracket
+
+bind -T copy-mode-vi \} send -X next-paragraph
+bind -T copy-mode-vi \{ send -X previous-paragraph
+
+bind -T copy-mode-vi w send -X next-word
+bind -T copy-mode-vi e send -X next-word-end
+bind -T copy-mode-vi b send -X previous-word
+
+bind -T copy-mode-vi W send -X next-space
+bind -T copy-mode-vi E send -X next-space-end
+bind -T copy-mode-vi B send -X previous-space
+
+bind -T copy-mode-vi Escape send -X clear-selection
+bind -T copy-mode-vi v      send -X begin-selection
+bind -T copy-mode-vi y      send -X copy-selection
+
+bind -T copy-mode-vi ? command-prompt -p ? 'send -X search-backward "%%"'
+bind -T copy-mode-vi / command-prompt -p / 'send -X search-forward "%%"'
+
+bind -T copy-mode-vi n send -X search-again
+bind -T copy-mode-vi N send -X search-reverse
+
+bind -T copy-mode-vi PageDown send -X page-down
+bind -T copy-mode-vi PageUp   send -X page-up
+
+bind -T copy-mode-vi WheelUpPane   selectp \; send -X -N 1 scroll-up
+bind -T copy-mode-vi WheelDownPane selectp \; send -X -N 1 scroll-down

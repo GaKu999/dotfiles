@@ -1,0 +1,45 @@
+# ${XDG_CONFIG_HOME}/sway/config
+# vim:ft=conf:fenc=utf-8:noet:ts=3:sw=3:
+
+set $up    k
+set $down  j
+set $left  h
+set $right l
+
+set $alt  mod1
+set $meta mod4
+
+default_orientation auto
+workspace_layout    default
+xwayland            force
+
+focus output eDP-1
+
+client.focused          #90a959cc #151515cc #90a959cc #75b5aacc #90a959cc
+client.focused_inactive #505050cc #151515cc #505050cc #00000000 #505050cc
+client.unfocused        #505050cc #151515cc #505050cc #00000000 #505050cc
+client.urgent           #f4bf75cc #151515cc #f4bf75cc #00000000 #f4bf75cc
+
+default_border pixel          2
+default_floating_border pixel 2
+
+floating_modifier $meta
+
+font pango:monospace 16
+
+force_display_urgency_hint 500
+
+titlebar_border_thickness 2
+
+gaps inner 4
+gaps outer 4
+
+smart_borders on
+smart_gaps    on
+
+title_align center
+
+workspace_auto_back_and_forth yes
+
+include /etc/sway/config.d/*.conf
+include ~/.config/sway/config.d/*.conf

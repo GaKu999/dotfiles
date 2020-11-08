@@ -1,0 +1,313 @@
+// ${XDG_CONFIG_HOME}/waybar/config
+// vim:ft=json:fenc=utf-8:noet:ts=3:sw=3:cms=//%s:
+
+[
+	{
+		"layer":  "top",
+		"output": "eDP-1",
+
+		"modules-left": [
+			"sway/workspaces",
+			"sway/mode"
+		],
+
+		"modules-center": [
+			"sway/window"
+		],
+
+		"modules-right": [
+			"mpd",
+			"custom/separator",
+			"custom/mails#new",
+			"custom/mails#cur",
+			"custom/updates",
+			"custom/separator",
+			"cpu",
+			"memory",
+			"disk",
+			"battery#bat0",
+			"custom/separator",
+			"temperature#zone0",
+			"temperature#zone1",
+			"custom/separator",
+			"network#wlan",
+			"custom/separator",
+			//"pulseaudio#bluetooth",
+			"pulseaudio#output",
+			//"pulseaudio#input",
+			"custom/separator",
+			"backlight",
+			"custom/separator",
+			"clock",
+			"custom/separator",
+			"idle_inhibitor"
+		],
+
+		"custom/separator": {
+			"tooltip": false,
+
+			"format": "•"
+		},
+
+		"custom/mails#new": {
+			"exec":          "mails new",
+			"exec-on-event": true,
+			"interval":      60,
+			"tooltip":       false,
+
+			"on-click":       "swaymsg exec 'terminal mutt'",
+			"on-click-right": "swaymsg exec 'mbsync --all'",
+
+			"format": " {}"
+		},
+
+		"custom/mails#cur": {
+			"exec":          "mails cur",
+			"exec-on-event": true,
+			"interval":      60,
+			"tooltip":       false,
+
+			"on-click":       "swaymsg exec 'terminal mutt'",
+			"on-click-right": "swaymsg exec 'mbsync --all'",
+
+			"format": " {}"
+		},
+
+		"custom/updates": {
+			"exec":          "updates count",
+			"exec-on-event": true,
+			"interval":      60,
+			"tooltip":       false,
+
+			"on-click":        "swaymsg exec 'updates notify'",
+			"on-click-right":  "swaymsg exec 'updates check'",
+			"on-click-middle": "swaymsg exec 'terminal updates update'",
+
+			"format": " {}"
+		},
+
+		"sway/workspaces": {
+			"all-outputs":    true,
+			"disable-scroll": true,
+			"tooltip":        false,
+
+			"format": "{name}"
+		},
+
+		"sway/mode": {
+			"tooltip": false,
+
+			"format": "<span style=\"italic\">{}</span>"
+		},
+
+		"sway/window": {
+			"tooltip": false,
+
+			"format": "<big>{}</big>"
+		},
+
+		"mpd": {
+			"on-click": "swaymsg exec 'terminal ncmpcpp'",
+
+			"tooltip-format":      "{artist} - {title}",
+			"format":              " {stateIcon}({elapsedTime:%M:%S}/{totalTime:%M:%S}) {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}",
+			"format-disconnected": " ",
+			"format-stopped":      "  {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}",
+			"consume-icons": {
+				"on": " "
+			},
+			"random-icons": {
+				"on": " "
+			},
+			"repeat-icons": {
+				"on": " "
+			},
+			"single-icons": {
+				"on": "₁"
+			},
+			"state-icons": {
+				"paused":  " ",
+				"playing": " "
+			}
+		},
+
+		"cpu": {
+			"on-click": "swaymsg exec 'terminal top'",
+
+			"states": {
+				"low":    25,
+				"medium": 50,
+				"high":   75
+			},
+
+			"format": " {usage}%"
+		},
+
+		"memory": {
+			"on-click": "swaymsg exec 'terminal top'",
+
+			"states": {
+				"low":    25,
+				"medium": 50,
+				"high":   75
+			},
+
+			"tooltip-format": "{used:0.1f}GiB/{total:0.1f}GiB",
+			"format":         " {percentage}%"
+		},
+
+		"disk": {
+			"on-click": "swaymsg exec 'terminal sudo iotop'",
+
+			"states": {
+				"low":    25,
+				"medium": 50,
+				"high":   75
+			},
+
+			"tooltip-format": "{used}/{total}",
+			"format":         " {percentage_used}%"
+		},
+
+		"battery#bat0": {
+			"on-click": "swaymsg exec 'terminal sudo powertop'",
+
+			"states": {
+				"full":     100,
+				"high":     80,
+				"medium":   60,
+				"low":      40,
+				"critical": 20
+			},
+
+			"format":          "{icon} {capacity}%",
+			"format-charging": "{icon} {capacity}%",
+			"format-plugged":  " {icon} {capacity}%",
+			"format-time":     "{H}:{M}",
+			"format-icons": [
+				"",
+				"",
+				"",
+				"",
+				""
+			]
+		},
+
+		"temperature#zone0": {
+			"critical-threshold": 100,
+			"thermal-zone":       0,
+			"tooltip":            false,
+
+			"format": "{icon} {temperatureC}℃",
+			"format-icons": [
+				"",
+				"",
+				"",
+				"",
+				""
+			]
+		},
+
+		"temperature#zone1": {
+			"critical-threshold": 80,
+			"thermal-zone":       1,
+			"tooltip":            false,
+
+			"format": "{icon} {temperatureC}℃",
+			"format-icons": [
+				"",
+				"",
+				"",
+				"",
+				""
+			]
+		},
+
+		"network#wlan": {
+			"interface": "wl*",
+
+			"on-click": "swaymsg exec 'terminal iwctl'",
+
+			"tooltip-format":      "Disconnected",
+			"tooltip-format-wifi": "{essid} : {frequency}MHz",
+			"format":              "",
+			"format-wifi":         " {signalStrength}%"
+		},
+
+		"pulseaudio#bluetooth": {
+			"tooltip": false,
+
+			"on-click-middle": "swaymsg exec 'terminal bluetoothctl'",
+
+			"format":                 "",
+			"format-bluetooth":       "",
+			"format-bluetooth-muted": ""
+		},
+
+		"pulseaudio#output": {
+			"tooltip": false,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-click":        "swaymsg exec 'pamixer --toggle-mute'",
+			"on-click-right":  "swaymsg exec 'terminal pulsemixer'",
+			"on-click-middle": "swaymsg exec 'terminal bluetoothctl'",
+			"on-scroll-up":    "swaymsg exec 'pamixer --increase 5'",
+			"on-scroll-down":  "swaymsg exec 'pamixer --decrease 5'",
+
+			"format":         "{icon} {volume}%",
+			"format-muted":   "",
+			"format-icons": {
+				"default": [
+					"",
+					"",
+					""
+				]
+			}
+		},
+
+		"pulseaudio#input": {
+			"tooltip": false,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-click":        "swaymsg exec 'pamixer --default-source --toggle-mute'",
+			"on-click-right":  "swaymsg exec 'terminal pulsemixer'",
+			"on-click-middle": "swaymsg exec 'terminal bluetoothctl'",
+			"on-scroll-up":    "swaymsg exec 'pamixer --default-source --increase 5'",
+			"on-scroll-down":  "swaymsg exec 'pamixer --default-source --decrease 5'",
+
+			"format":              "{format_source}",
+			"format-muted":        "{format_source}",
+			"format-source":       " {volume}%",
+			"format-source-muted": ""
+		},
+
+		"backlight": {
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-scroll-up":   "swaymsg exec 'light -A 5'",
+			"on-scroll-down": "swaymsg exec 'light -U 5'",
+
+			"format": "{icon} {percent}%",
+			"format-icons": [
+				"",
+				"",
+				""
+			]
+		},
+
+		"clock": {
+			"tooltip-format": "<big>{:%Y %B}</big>\n<tt><big>{calendar}</big></tt>",
+			"format":         "<big>{:%H:%M}</big>"
+		},
+
+		"idle_inhibitor": {
+			"tooltip": false,
+
+			"format": "{icon}",
+			"format-icons": {
+				"activated":   "",
+				"deactivated": ""
+			}
+		}
+	}
+]

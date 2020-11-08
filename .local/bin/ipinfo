@@ -1,0 +1,40 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/ipinfo
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+_import() {
+	: ${1:?}
+	. "${XDG_LIB_DIR:-${HOME}/.local/lib}/sh/${1}.sh" || exit "${?}"
+}
+
+_import colors
+_import escapes
+
+temp_file="$(mktemp)"
+trap 'rm -- "${temp_file}"' INT TERM EXIT
+
+_parse() {
+	jq --raw-output '[.ip,.hostname // .ip,.city,.region,.country,.loc,.org,.postal,.timezone] | @tsv'
+}
+
+_print() {
+	local ip hostname city region country loc org postal timezone
+	IFS="${HT}" read -r ip hostname city region country loc org postal timezone
+
+	cat <<EOF
+${BOLD}IPv4          :${RESET} ${ip}
+${BOLD}Host          :${RESET} ${hostname}
+${BOLD}City          :${RESET} ${city}
+${BOLD}Region        :${RESET} ${region}
+${BOLD}Country       :${RESET} ${country}
+${BOLD}Location      :${RESET} ${loc}
+${BOLD}Organization  :${RESET} ${org}
+${BOLD}Postal        :${RESET} ${postal}
+${BOLD}Timezone      :${RESET} ${timezone}
+EOF
+}
+
+curl --output "${temp_file}" --no-progress-meter -- "https://ipinfo.io/${1}" || exit "${?}"
+_parse <"${temp_file}" | _print

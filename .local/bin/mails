@@ -1,0 +1,31 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/mails
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+shopt -s globstar nullglob
+
+_usage() {
+	echo 'Usage: mails [-h|--help] all|cur|new'
+	exit "${1:-0}"
+}
+
+_count() {
+	: ${1:?}
+	maildir_inboxes=("${HOME}/.local/mail"/**/INBOX)
+	for inbox in "${maildir_inboxes[@]}"; do
+		case "${1}" in
+		all) mails+=("${inbox}"/{cur,new}/*) ;;
+		cur) mails+=("${inbox}/cur"/*) ;;
+		new) mails+=("${inbox}/new"/*) ;;
+		esac
+	done
+	echo "${#mails[@]}"
+}
+
+case "${1}" in
+all|cur|new) _count "${1}" ;;
+-h|--help) _usage ;;
+*) _usage 2 ;;
+esac

@@ -1,0 +1,5 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/ix
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+exec curl --form 'f:1=<-' --silent -- 'http://ix.io' # NO HTTPS

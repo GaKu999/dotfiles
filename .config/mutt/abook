@@ -1,0 +1,16 @@
+# ${XDG_CONFIG_HOME}/mutt/abook
+# vim:ft=muttrc:fenc=utf-8:
+
+set query_command = "abook --mutt-query '%s'"
+
+macro index a \
+	"<shell-escape>abook<enter> \
+	<shell-escape>abook -E mutt<enter> \
+	<enter-command>source $alias_file<enter>" \
+	"open abook"
+
+macro index \Ca \
+	"<pipe-message>abook --add-email-quiet<enter> \
+	<pipe-message>abook -E mutt<enter> \
+	<enter-command>source $alias_file<enter>" \
+	"create new alias from the actual message"

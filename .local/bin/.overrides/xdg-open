@@ -1,0 +1,66 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/.overrides/xdg-open
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+change=0
+prompt=0
+
+_usage() {
+	echo 'Usage: xdg-open [-h] [-c] [-p] FILE|URL|-'
+	exit "${1:-0}"
+}
+
+_apps() {
+	shopt -s nullglob
+
+	data_dirs="${XDG_DATA_DIRS:-${XDG_DATA_HOME:-${HOME}/.local/share}:/usr/local/share:/usr/share}"
+
+	for dir in ${data_dirs//:/ }; do
+		apps+=("${dir}"/applications/*.desktop)
+	done
+	apps=("${apps[@]##*/}")
+	apps=("${apps[@]%.desktop}")
+
+	! (("${#apps[@]}")) || printf '%s\n' "${apps[@]}" | sort --unique
+}
+
+while getopts ':hcp' arg; do
+	case "${arg}" in
+	c) change=1 ;;
+	p) prompt=1 ;;
+	h) _usage ;;
+	?) _usage 2 ;;
+	esac
+done
+shift "$((OPTIND - 1))"
+
+if (("${#}")); then
+	files=("${@}")
+else
+	files=(/dev/stdin)
+	opt=--by-content-only
+fi
+
+for file in "${files[@]}"; do
+	: ${file:?}
+	mimetype="$(mimeo ${opt} --swap --mimetype "${file}" | head --lines 1)"
+
+	if ((change)); then
+		handler="$(_apps | bemenu --prompt "Select handler for [${mimetype}]:")"
+		if [[ -n "${handler}" ]]; then
+			mimeo --prefer "${mimetype}" "${handler}.desktop"
+		else
+			mimeo --clear "${mimetype}"
+		fi
+	fi
+
+	if ((prompt)); then
+		choice "Open ${file} [${mimetype}]?:" || exit 0
+	fi
+
+	mimeo ${opt} "${file}"
+done
+
+sleep 0.5

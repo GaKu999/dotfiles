@@ -1,0 +1,62 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/clipboard
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+temp=0
+
+_usage() {
+	echo 'Usage: clipboard [-h|--help] [-t|--temp] set|get|clear'
+	exit "${1:-0}"
+}
+
+_clear() {
+	if [[ -n "${WAYLAND_DISPLAY}" ]]; then
+		wl-copy --clear
+	elif [[ -n "${DISPLAY}" ]]; then
+		xclip -selection clipboard </dev/null
+	else
+		echo 'clipboard: display unavailable' >&2
+		exit 1
+	fi
+}
+
+case "${1}" in
+-t|--temp) shift; temp=1 ;;
+-h|--help) _usage ;;
+esac
+
+case "${1}" in
+set)
+	shift
+	if [[ -n "${WAYLAND_DISPLAY}" ]]; then
+		if (("${#}")); then
+			wl-copy -- "${@}"
+		else
+			wl-copy
+		fi
+	elif [[ -n "${DISPLAY}" ]]; then
+		if (("${#}")); then
+			echo -n "${@}" | xclip -selection clipboard
+		else
+			xclip -selection clipboard
+		fi
+	else
+		echo 'clipboard: display unavailable' >&2
+		exit 1
+	fi
+;;
+get)
+	if [[ -n "${WAYLAND_DISPLAY}" ]]; then
+		wl-paste 2>/dev/null
+	elif [[ -n "${DISPLAY}" ]]; then
+		xclip -out -selection clipboard 2>/dev/null
+	else
+		echo 'clipboard: display unavailable' >&2
+		exit 1
+	fi
+;;
+clear) _clear ;;
+*) _usage 2 ;;
+esac
+
+! ((temp)) || (sleep 15; _clear) &

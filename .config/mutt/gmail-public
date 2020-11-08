@@ -1,0 +1,24 @@
+# ${XDG_CONFIG_HOME}/mutt/gmail-public
+# vim:ft=muttrc:fenc=utf-8:
+
+unalias *
+source  $alias_file
+
+set pgp_sign_as = "B6F1C3E092DA04BB7371D4F202471E1B7E9034B2"
+set crypt_autosign
+
+set realname  = "GaKu999"
+set from      = "g4ku999@gmail.com"
+set signature = "cat '`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/gmail-public-signature`'; fortune -s |"
+
+set mbox_type = "Maildir"
+set spoolfile = "+GMAIL/PUBLIC/INBOX"
+set postponed = "+GMAIL/PUBLIC/DRAFT"
+set trash     = "+GMAIL/PUBLIC/TRASH"
+unset record
+
+set sendmail = "msmtp -a gmail-public"
+
+macro index A "<save-message>+GMAIL/PUBLIC/ARCHIVE<enter>" "archive message"
+macro index S "<save-message>+GMAIL/PUBLIC/SPAM<enter>"    "mark message as spam"
+macro index d "<save-message>+GMAIL/PUBLIC/TRASH<enter>"   "mark message as trash"

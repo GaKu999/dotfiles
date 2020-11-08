@@ -1,0 +1,68 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/tube
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+ads=0
+download=0
+playlist=0
+worst=0
+
+_usage() {
+	echo 'Usage: tube [-adpw] [-E EXTENSION] [-F a[udio]|v[ideo]] [-R RESOLUTION] [-P PATH] [URL]'
+	exit "${1:-0}"
+}
+
+while getopts ':hE:F:R:P:adpw' arg; do
+	case "${arg}" in
+	E) extension="${OPTARG}" ;;
+	F)
+		case "${OPTARG}" in
+		[Aa]*) filter=audio ;;
+		[Vv]*) filter=video ;;
+		*) _usage 2 ;;
+		esac
+	;;
+	R) resolution="${OPTARG}" ;;
+	P) path="${OPTARG}" ;;
+	a) ads=1 ;;
+	d) download=1 ;;
+	p) playlist=1 ;;
+	w) worst=1 ;;
+	h) _usage ;;
+	?) _usage 2 ;;
+	esac
+done
+shift "$((OPTIND - 1))"
+
+if ((worst)); then
+	case "${filter}" in
+	audio) format='(worstvideo)' ;;
+	video) format='(worstaudio)' ;;
+	*) format='(worstvideo+worstaudio/worst)' ;;
+	esac
+else
+	case "${filter}" in
+	audio) format='(bestvideo)' ;;
+	video) format='(bestaudio)' ;;
+	*) format='(bestvideo+bestaudio/best)' ;;
+	esac
+fi
+
+format="${format}${extension:+[ext=${extension}]}${resolution:+[height<=${resolution}]}"
+url="${1:-$(clipboard get)}"
+: ${url:?}
+
+if ((download)); then
+	output='%(title)s.%(ext)s'
+
+	! ((ads)) || opts="${opts} --include-ads"
+	if ((playlist)); then
+		opts="${opts} --yes-playlist"
+		output="%(playlist_title)s/%(playlist_index)s-${output}"
+	fi
+
+	exec youtube-dl --ignore-errors ${opts} --format "${format}" --output "${path:-/tmp/ytdl}/${output}" -- "${url}"
+else
+	[[ -n "${filter}" ]] && opts="--${filter}=no"
+	exec mpv ${opts} --ytdl --ytdl-format="${format}" --profile=big-cache -- "${url}"
+fi

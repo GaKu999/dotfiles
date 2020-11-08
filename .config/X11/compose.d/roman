@@ -1,0 +1,27 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/roman
+# vim:ft=conf:fenc=utf-8:
+
+<Multi_key> <1> <R> : "Ⅰ" # 2160 : ONE
+<Multi_key> <2> <R> : "Ⅱ" # 2161 : TWO
+<Multi_key> <3> <R> : "Ⅲ" # 2162 : THREE
+<Multi_key> <4> <R> : "Ⅳ" # 2163 : FOUR
+<Multi_key> <5> <R> : "Ⅴ" # 2164 : FIVE
+<Multi_key> <6> <R> : "Ⅵ" # 2165 : SIX
+<Multi_key> <7> <R> : "Ⅶ" # 2166 : SEVEN
+<Multi_key> <8> <R> : "Ⅷ" # 2167 : EIGHT
+<Multi_key> <9> <R> : "Ⅸ" # 2168 : NINE
+<Multi_key> <a> <R> : "Ⅹ" # 2169 : TEN
+<Multi_key> <b> <R> : "Ⅺ" # 216A : ELEVEN
+<Multi_key> <c> <R> : "Ⅻ" # 216B : TWELVE
+<Multi_key> <1> <r> : "ⅰ" # 2170 : SMALL ONE
+<Multi_key> <2> <r> : "ⅱ" # 2171 : SMALL TWO
+<Multi_key> <3> <r> : "ⅲ" # 2172 : SMALL THREE
+<Multi_key> <4> <r> : "ⅳ" # 2173 : SMALL FOUR
+<Multi_key> <5> <r> : "ⅴ" # 2174 : SMALL FIVE
+<Multi_key> <6> <r> : "ⅵ" # 2175 : SMALL SIX
+<Multi_key> <7> <r> : "ⅶ" # 2176 : SMALL SEVEN
+<Multi_key> <8> <r> : "ⅷ" # 2177 : SMALL EIGHT
+<Multi_key> <9> <r> : "ⅸ" # 2178 : SMALL NINE
+<Multi_key> <a> <r> : "ⅹ" # 2179 : SMALL TEN
+<Multi_key> <b> <r> : "ⅺ" # 217A : SMALL ELEVEN
+<Multi_key> <c> <r> : "ⅻ" # 217B : SMALL TWELVE

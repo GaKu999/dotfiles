@@ -1,0 +1,12 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/fetch
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+url="${1:-$(clipboard get)}"
+: ${url:?}
+
+temp_file="$(mktemp)"
+trap 'rm -- "${temp_file}"' INT TERM EXIT
+
+curl --output "${temp_file}" --no-progress-meter -- "${url}" || exit "${?}"
+xdg-open -p "${temp_file}"

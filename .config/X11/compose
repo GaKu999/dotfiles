@@ -1,0 +1,42 @@
+# ${XDG_CONFIG_HOME}/X11/compose
+# vim:ft=conf:fenc=utf-8:
+
+include "%H/.config/X11/compose.d/arabic"
+include "%H/.config/X11/compose.d/base"
+include "%H/.config/X11/compose.d/cjk"
+include "%H/.config/X11/compose.d/control"
+include "%H/.config/X11/compose.d/currency"
+include "%H/.config/X11/compose.d/cyrillic"
+include "%H/.config/X11/compose.d/greek"
+include "%H/.config/X11/compose.d/hebrew"
+include "%H/.config/X11/compose.d/latin"
+include "%H/.config/X11/compose.d/roman"
+include "%H/.config/X11/compose.d/script"
+include "%H/.config/X11/compose.d/symbols"
+
+<Multi_key> <exclam> <g> <p> <g> : "B6F1C3E092DA04BB7371D4F202471E1B7E9034B2" # FINGERPRINT
+
+<Multi_key> <exclam> <s> <p> <i> <d> <e> <r> : "//X\\(;::;)/X\\\\" # SPIDER
+
+<Multi_key> <exclam> <k> <o> <n> <a> <m> <i> : "↑↑↓↓←→←→BA" # KONAMI CODE
+
+<Multi_key> <exclam> <f> <l> <i> <p> <1> : "(╯°□°)╯︵ ┻━┻"        # FLIP 1
+<Multi_key> <exclam> <f> <l> <i> <p> <2> : "┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻" # FLIP 2
+<Multi_key> <exclam> <f> <l> <i> <p> <3> : "(づ｡◕‿‿◕｡)づ ︵ ┻━┻"  # FLIP 3
+<Multi_key> <exclam> <f> <l> <i> <p> <4> : "(╯°□°）╯︵ /(.□. \\)" # FLIP 4
+<Multi_key> <exclam> <f> <l> <i> <p> <5> : "(╯°v°）╯︵ ┻━┻"       # FLIP 5
+<Multi_key> <exclam> <f> <l> <i> <p> <6> : "(╯°□°)╯︵ ┻━┻ FLIP THAT TABLE. ┻━┻ ︵ ヽ(°□°ヽ) FLIP THIS TABLE. ┻━┻ ︵ ＼\\('0')/／ ︵ ┻━┻ FLIP ALL THE TABLES. ಠ_ಠ Son. Put. The tables. Back. (╮°-°)╮┳━┳ (╯°□°)╯︵ ┻━┻ NEVER!!!!" # FLIP 6
+
+<Multi_key> <exclam> <u> <n> <f> <l> <i> <p> <1> : "┳━┳ノ(º _ ºノ)"             # UNFLIP 1
+<Multi_key> <exclam> <u> <n> <f> <l> <i> <p> <2> : "ヽ（ ﾟヮﾟ）ﾉ.・ﾟ*｡・+☆ ┳━┳" # UNFLIP 2
+<Multi_key> <exclam> <u> <n> <f> <l> <i> <p> <3> : "(づ｡◕‿‿◕｡)づ ︵ ┳━┳"        # UNFLIP 3
+
+<Multi_key> <exclam> <s> <h> <r> <u> <g> <1> : "¯\\_(ツ)_/¯" # SHRUG 1
+<Multi_key> <exclam> <s> <h> <r> <u> <g> <2> : "¯\\(º_o)/¯"  # SHRUG 2
+<Multi_key> <exclam> <s> <h> <r> <u> <g> <3> : "┐(ツ)┌"      # SHRUG 3
+
+<Multi_key> <exclam> <y> <a> <w> <n> : "＼（´Ｏ｀）／" # YAWN
+
+<Multi_key> <exclam> <g> <l> <a> <r> <e> : "ಠ_ಠ" # GLARE
+
+<Multi_key> <exclam> <l> <e> <n> <n> <y> : "( ͡° ͜ʖ ͡°)" # LENNY

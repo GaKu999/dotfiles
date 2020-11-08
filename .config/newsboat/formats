@@ -1,0 +1,18 @@
+# ${XDG_CONFIG_HOME}/newsboat/formats
+# vim:ft=conf:fenc=utf-8:
+
+articlelist-format        "%3i:%f:%-17D:   %t %> %L"
+articlelist-title-format  "%t Articles, %u unread, %?F?matching filter '%F', ?[%T] %> %U"
+datetime-format           "%b %d %R %Y"
+dialogs-title-format      "Dialogs"
+dirbrowser-title-format   "%?O?Open Directory&Save File? %f"
+feedlist-format           "%3i:%n:%S:   %-25t %> [%U/%c]"
+feedlist-title-format     "%t Feeds, %u unread%?F?, matching filter '%F'?%?T?, tagged '%T'?"
+filebrowser-title-format  "%?O?Open File&Save File? %f"
+help-title-format         "Help"
+itemview-title-format     "Article '%T' [%F]"
+notify-format             "%d new articles, %n unread articles, %f unread feeds"
+searchresult-title-format "Search result"
+selectfilter-title-format "Select filter"
+selecttag-title-format    "Select tag"
+urlview-title-format      "URLs"

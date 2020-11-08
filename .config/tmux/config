@@ -1,0 +1,41 @@
+# ${XDG_CONFIG_HOME}/tmux/config
+# vim:ft=tmux:fenc=utf-8:noet:ts=3:sw=3:
+
+set -g default-command  "${SHELL}"
+set -g default-terminal tmux-256color
+
+set -g extended-keys on
+
+set -g history-limit 10000
+
+set -g activity-action  other
+set -g bell-action      any
+set -g monitor-activity on
+set -g monitor-bell     on
+set -g monitor-silence  150
+set -g silence-action   any
+set -g focus-events     on
+
+set -g exit-empty      off
+set -g exit-unattached off
+
+set -g mode-keys vi
+
+set -g copy-command  vtclip
+set -g set-clipboard on
+
+set -g base-index      1
+set -g pane-base-index 1
+
+set -g automatic-rename on
+set -g renumber-windows on
+
+set -g mouse on
+
+set -g set-titles        on
+set -g set-titles-string 'tmux:#T'
+
+source "${HOME}/.config/tmux/environment"
+source "${HOME}/.config/tmux/keybinds"
+source "${HOME}/.config/tmux/status"
+source "${HOME}/.config/tmux/style"

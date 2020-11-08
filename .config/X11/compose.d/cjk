@@ -1,0 +1,264 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/cjk
+# vim:ft=conf:fenc=utf-8:
+
+<Multi_key>          <I> <S>          : "　" # 3000 : IDEOGRAPHIC SPACE
+<Multi_key>      <comma> <underscore> : "、" # 3001 : IDEOGRAPHIC COMMA
+<Multi_key>     <period> <underscore> : "。" # 3002 : IDEOGRAPHIC FULL STOP
+<Multi_key>       <plus> <quotedbl>   : "〃" # 3003 : DITTO MARK
+<Multi_key>       <plus> <underscore> : "〄" # 3004 : JAPANESE INDUSTRIAL STANDARD SYMBOL
+<Multi_key>   <asterisk> <underscore> : "々" # 3005 : IDEOGRAPHIC ITERATION MARK
+<Multi_key>  <semicolon> <underscore> : "〆" # 3006 : IDEOGRAPHIC CLOSING MARK
+<Multi_key>          <0> <underscore> : "〇" # 3007 : IDEOGRAPHIC NUMBER ZERO
+<Multi_key>       <less> <plus>       : "《" # 300A : LEFT DOUBLE ANGLE BRACKET
+<Multi_key>    <greater> <plus>       : "》" # 300B : RIGHT DOUBLE ANGLE BRACKET
+<Multi_key>       <less> <apostrophe> : "「" # 300C : LEFT CORNER BRACKET
+<Multi_key>    <greater> <apostrophe> : "」" # 300D : RIGHT CORNER BRACKET
+<Multi_key>       <less> <quotedbl>   : "『" # 300E : LEFT WHITE CORNER BRACKET
+<Multi_key>    <greater> <quotedbl>   : "』" # 300F : RIGHT WHITE CORNER BRACKET
+<Multi_key>  <parenleft> <quotedbl>   : "【" # 3010 : LEFT BLACK LENTICULAR BRACKET
+<Multi_key> <parenright> <quotedbl>   : "】" # 3011 : RIGHT BLACK LENTICULAR BRACKET
+<Multi_key>      <equal> <T>          : "〒" # 3012 : POSTAL MARK
+<Multi_key>      <equal> <underscore> : "〓" # 3013 : GETA MARK
+<Multi_key>  <parenleft> <apostrophe> : "〔" # 3014 : LEFT TORTOISE SHELL BRACKET
+<Multi_key> <parenright> <apostrophe> : "〕" # 3015 : RIGHT TORTOISE SHELL BRACKET
+<Multi_key>  <parenleft> <I>          : "〖" # 3016 : LEFT WHITE LENTICULAR BRACKET
+<Multi_key> <parenright> <I>          : "〗" # 3017 : RIGHT WHITE LENTICULAR BRACKET
+<Multi_key>      <minus> <question>   : "〜" # 301C : WAVE DASH
+
+# HIRAGANA
+<Multi_key>        <A> <5> : "ぁ" # 3041 : SMALL A
+<Multi_key>        <a> <5> : "あ" # 3042 : A
+<Multi_key>        <I> <5> : "ぃ" # 3043 : SMALL I
+<Multi_key>        <i> <5> : "い" # 3044 : I
+<Multi_key>        <U> <5> : "ぅ" # 3045 : SMALL U
+<Multi_key>        <u> <5> : "う" # 3046 : U
+<Multi_key>        <E> <5> : "ぇ" # 3047 : SMALL E
+<Multi_key>        <e> <5> : "え" # 3048 : E
+<Multi_key>        <O> <5> : "ぉ" # 3049 : SMALL O
+<Multi_key>        <o> <5> : "お" # 304A : O
+<Multi_key>        <k> <a> : "か" # 304B : KA
+<Multi_key>        <g> <a> : "が" # 304C : GA
+<Multi_key>        <k> <i> : "き" # 304D : KI
+<Multi_key>        <g> <i> : "ぎ" # 304E : GI
+<Multi_key>        <k> <u> : "く" # 304F : KU
+<Multi_key>        <g> <u> : "ぐ" # 3050 : GU
+<Multi_key>        <k> <e> : "け" # 3051 : KE
+<Multi_key>        <g> <e> : "げ" # 3052 : GE
+<Multi_key>        <k> <o> : "こ" # 3053 : KO
+<Multi_key>        <g> <o> : "ご" # 3054 : GO
+<Multi_key>        <s> <a> : "さ" # 3055 : SA
+<Multi_key>        <z> <a> : "ざ" # 3056 : ZA
+<Multi_key>        <s> <i> : "し" # 3057 : SI
+<Multi_key>        <z> <i> : "じ" # 3058 : ZI
+<Multi_key>        <s> <u> : "す" # 3059 : SU
+<Multi_key>        <z> <u> : "ず" # 305A : ZU
+<Multi_key>        <s> <e> : "せ" # 305B : SE
+<Multi_key>        <z> <e> : "ぜ" # 305C : ZE
+<Multi_key>        <s> <o> : "そ" # 305D : SO
+<Multi_key>        <z> <o> : "ぞ" # 305E : ZO
+<Multi_key>        <t> <a> : "た" # 305F : TA
+<Multi_key>        <d> <a> : "だ" # 3060 : DA
+<Multi_key>        <t> <i> : "ち" # 3061 : TI
+<Multi_key>        <d> <i> : "ぢ" # 3062 : DI
+<Multi_key>        <t> <U> : "っ" # 3063 : SMALL TU
+<Multi_key>        <t> <u> : "つ" # 3064 : TU
+<Multi_key>        <d> <u> : "づ" # 3065 : DU
+<Multi_key>        <t> <e> : "て" # 3066 : TE
+<Multi_key>        <d> <e> : "で" # 3067 : DE
+<Multi_key>        <t> <o> : "と" # 3068 : TO
+<Multi_key>        <d> <o> : "ど" # 3069 : DO
+<Multi_key>        <n> <a> : "な" # 306A : NA
+<Multi_key>        <n> <i> : "に" # 306B : NI
+<Multi_key>        <n> <u> : "ぬ" # 306C : NU
+<Multi_key>        <n> <e> : "ね" # 306D : NE
+<Multi_key>        <n> <o> : "の" # 306E : NO
+<Multi_key>        <h> <a> : "は" # 306F : HA
+<Multi_key>        <b> <a> : "ば" # 3070 : BA
+<Multi_key>        <p> <a> : "ぱ" # 3071 : PA
+<Multi_key>        <h> <i> : "ひ" # 3072 : HI
+<Multi_key>        <b> <i> : "び" # 3073 : BI
+<Multi_key>        <p> <i> : "ぴ" # 3074 : PI
+<Multi_key>        <h> <u> : "ふ" # 3075 : HU
+<Multi_key>        <b> <u> : "ぶ" # 3076 : BU
+<Multi_key>        <p> <u> : "ぷ" # 3077 : PU
+<Multi_key>        <h> <e> : "へ" # 3078 : HE
+<Multi_key>        <b> <e> : "べ" # 3079 : BE
+<Multi_key>        <p> <e> : "ぺ" # 307A : PE
+<Multi_key>        <h> <o> : "ほ" # 307B : HO
+<Multi_key>        <b> <o> : "ぼ" # 307C : BO
+<Multi_key>        <p> <o> : "ぽ" # 307D : PO
+<Multi_key>        <m> <a> : "ま" # 307E : MA
+<Multi_key>        <m> <i> : "み" # 307F : MI
+<Multi_key>        <m> <u> : "む" # 3080 : MU
+<Multi_key>        <m> <e> : "め" # 3081 : ME
+<Multi_key>        <m> <o> : "も" # 3082 : MO
+<Multi_key>        <y> <A> : "ゃ" # 3083 : SMALL YA
+<Multi_key>        <y> <a> : "や" # 3084 : YA
+<Multi_key>        <y> <U> : "ゅ" # 3085 : SMALL YU
+<Multi_key>        <y> <u> : "ゆ" # 3086 : YU
+<Multi_key>        <y> <O> : "ょ" # 3087 : SMALL YO
+<Multi_key>        <y> <o> : "よ" # 3088 : YO
+<Multi_key>        <r> <a> : "ら" # 3089 : RA
+<Multi_key>        <r> <i> : "り" # 308A : RI
+<Multi_key>        <r> <u> : "る" # 308B : RU
+<Multi_key>        <r> <e> : "れ" # 308C : RE
+<Multi_key>        <r> <o> : "ろ" # 308D : RO
+<Multi_key>        <w> <A> : "ゎ" # 308E : SMALL WA
+<Multi_key>        <w> <a> : "わ" # 308F : WA
+<Multi_key>        <w> <i> : "ゐ" # 3090 : WI
+<Multi_key>        <w> <e> : "ゑ" # 3091 : WE
+<Multi_key>        <w> <o> : "を" # 3092 : WO
+<Multi_key>        <n> <5> : "ん" # 3093 : N
+<Multi_key>        <v> <u> : "ゔ" # 3094 : VU
+<Multi_key> <quotedbl> <5> : "゛" # 309B : KATAKANA-VOICED SOUND MARK
+<Multi_key>        <0> <5> : "゜" # 309C : KATAKANA-SEMI-VOICED SOUND MARK
+<Multi_key> <asterisk> <5> : "ゝ" # 309D : ITERATION MARK
+<Multi_key>     <plus> <5> : "ゞ" # 309E : VOICED ITERATION MARK
+
+# KATAKANA
+<Multi_key>        <a> <6> : "ァ" # 30A1 : SMALL A
+<Multi_key>        <A> <6> : "ア" # 30A2 : A
+<Multi_key>        <i> <6> : "ィ" # 30A3 : SMALL I
+<Multi_key>        <I> <6> : "イ" # 30A4 : I
+<Multi_key>        <u> <6> : "ゥ" # 30A5 : SMALL U
+<Multi_key>        <U> <6> : "ウ" # 30A6 : U
+<Multi_key>        <e> <6> : "ェ" # 30A7 : SMALL E
+<Multi_key>        <E> <6> : "エ" # 30A8 : E
+<Multi_key>        <o> <6> : "ォ" # 30A9 : SMALL O
+<Multi_key>        <O> <6> : "オ" # 30AA : O
+<Multi_key>        <K> <a> : "カ" # 30AB : KA
+<Multi_key>        <G> <a> : "ガ" # 30AC : GA
+<Multi_key>        <K> <i> : "キ" # 30AD : KI
+<Multi_key>        <G> <i> : "ギ" # 30AE : GI
+<Multi_key>        <K> <u> : "ク" # 30AF : KU
+<Multi_key>        <G> <u> : "グ" # 30B0 : GU
+<Multi_key>        <K> <e> : "ケ" # 30B1 : KE
+<Multi_key>        <G> <e> : "ゲ" # 30B2 : GE
+<Multi_key>        <K> <o> : "コ" # 30B3 : KO
+<Multi_key>        <G> <o> : "ゴ" # 30B4 : GO
+<Multi_key>        <S> <a> : "サ" # 30B5 : SA
+<Multi_key>        <Z> <a> : "ザ" # 30B6 : ZA
+<Multi_key>        <S> <i> : "シ" # 30B7 : SI
+<Multi_key>        <Z> <i> : "ジ" # 30B8 : ZI
+<Multi_key>        <S> <u> : "ス" # 30B9 : SU
+<Multi_key>        <Z> <u> : "ズ" # 30BA : ZU
+<Multi_key>        <S> <e> : "セ" # 30BB : SE
+<Multi_key>        <Z> <e> : "ゼ" # 30BC : ZE
+<Multi_key>        <S> <o> : "ソ" # 30BD : SO
+<Multi_key>        <Z> <o> : "ゾ" # 30BE : ZO
+<Multi_key>        <T> <a> : "タ" # 30BF : TA
+<Multi_key>        <D> <a> : "ダ" # 30C0 : DA
+<Multi_key>        <T> <i> : "チ" # 30C1 : TI
+<Multi_key>        <D> <i> : "ヂ" # 30C2 : DI
+<Multi_key>        <T> <U> : "ッ" # 30C3 : SMALL TU
+<Multi_key>        <T> <u> : "ツ" # 30C4 : TU
+<Multi_key>        <D> <u> : "ヅ" # 30C5 : DU
+<Multi_key>        <T> <e> : "テ" # 30C6 : TE
+<Multi_key>        <D> <e> : "デ" # 30C7 : DE
+<Multi_key>        <T> <o> : "ト" # 30C8 : TO
+<Multi_key>        <D> <o> : "ド" # 30C9 : DO
+<Multi_key>        <N> <a> : "ナ" # 30CA : NA
+<Multi_key>        <N> <i> : "ニ" # 30CB : NI
+<Multi_key>        <N> <u> : "ヌ" # 30CC : NU
+<Multi_key>        <N> <e> : "ネ" # 30CD : NE
+<Multi_key>        <N> <o> : "ノ" # 30CE : NO
+<Multi_key>        <H> <a> : "ハ" # 30CF : HA
+<Multi_key>        <B> <a> : "バ" # 30D0 : BA
+<Multi_key>        <P> <a> : "パ" # 30D1 : PA
+<Multi_key>        <H> <i> : "ヒ" # 30D2 : HI
+<Multi_key>        <B> <i> : "ビ" # 30D3 : BI
+<Multi_key>        <P> <i> : "ピ" # 30D4 : PI
+<Multi_key>        <H> <u> : "フ" # 30D5 : HU
+<Multi_key>        <B> <u> : "ブ" # 30D6 : BU
+<Multi_key>        <P> <u> : "プ" # 30D7 : PU
+<Multi_key>        <H> <e> : "ヘ" # 30D8 : HE
+<Multi_key>        <B> <e> : "ベ" # 30D9 : BE
+<Multi_key>        <P> <e> : "ペ" # 30DA : PE
+<Multi_key>        <H> <o> : "ホ" # 30DB : HO
+<Multi_key>        <B> <o> : "ボ" # 30DC : BO
+<Multi_key>        <P> <o> : "ポ" # 30DD : PO
+<Multi_key>        <M> <a> : "マ" # 30DE : MA
+<Multi_key>        <M> <i> : "ミ" # 30DF : MI
+<Multi_key>        <M> <u> : "ム" # 30E0 : MU
+<Multi_key>        <M> <e> : "メ" # 30E1 : ME
+<Multi_key>        <M> <o> : "モ" # 30E2 : MO
+<Multi_key>        <Y> <A> : "ャ" # 30E3 : SMALL YA
+<Multi_key>        <Y> <a> : "ヤ" # 30E4 : YA
+<Multi_key>        <Y> <U> : "ュ" # 30E5 : SMALL YU
+<Multi_key>        <Y> <u> : "ユ" # 30E6 : YU
+<Multi_key>        <Y> <O> : "ョ" # 30E7 : SMALL YO
+<Multi_key>        <Y> <o> : "ヨ" # 30E8 : YO
+<Multi_key>        <R> <a> : "ラ" # 30E9 : RA
+<Multi_key>        <R> <i> : "リ" # 30EA : RI
+<Multi_key>        <R> <u> : "ル" # 30EB : RU
+<Multi_key>        <R> <e> : "レ" # 30EC : RE
+<Multi_key>        <R> <o> : "ロ" # 30ED : RO
+<Multi_key>        <W> <A> : "ヮ" # 30EE : SMALL WA
+<Multi_key>        <W> <a> : "ワ" # 30EF : WA
+<Multi_key>        <W> <i> : "ヰ" # 30F0 : WI
+<Multi_key>        <W> <e> : "ヱ" # 30F1 : WE
+<Multi_key>        <W> <o> : "ヲ" # 30F2 : WO
+<Multi_key>        <N> <6> : "ン" # 30F3 : N
+<Multi_key>        <V> <u> : "ヴ" # 30F4 : VU
+<Multi_key>        <K> <A> : "ヵ" # 30F5 : SMALL KA
+<Multi_key>        <K> <E> : "ヶ" # 30F6 : SMALL KE
+<Multi_key>        <V> <a> : "ヷ" # 30F7 : VA
+<Multi_key>        <V> <i> : "ヸ" # 30F8 : VI
+<Multi_key>        <V> <e> : "ヹ" # 30F9 : VE
+<Multi_key>        <V> <o> : "ヺ" # 30FA : VO
+<Multi_key>   <period> <6> : "・" # 30FB : MIDDLE DOT
+<Multi_key>    <minus> <6> : "ー" # 30FC : PROLONGED SOUND MARK
+<Multi_key> <asterisk> <6> : "ヽ" # 30FD : ITERATION MARK
+<Multi_key>     <plus> <6> : "ヾ" # 30FE : VOICED ITERATION MARK
+
+# BOPOMOFO
+<Multi_key> <b> <4> : "ㄅ" # 3105 : B
+<Multi_key> <p> <4> : "ㄆ" # 3106 : P
+<Multi_key> <m> <4> : "ㄇ" # 3107 : M
+<Multi_key> <f> <4> : "ㄈ" # 3108 : F
+<Multi_key> <d> <4> : "ㄉ" # 3109 : D
+<Multi_key> <t> <4> : "ㄊ" # 310A : T
+<Multi_key> <n> <4> : "ㄋ" # 310B : N
+<Multi_key> <l> <4> : "ㄌ" # 310C : L
+<Multi_key> <g> <4> : "ㄍ" # 310D : G
+<Multi_key> <k> <4> : "ㄎ" # 310E : K
+<Multi_key> <h> <4> : "ㄏ" # 310F : H
+<Multi_key> <j> <4> : "ㄐ" # 3110 : J
+<Multi_key> <q> <4> : "ㄑ" # 3111 : Q
+<Multi_key> <x> <4> : "ㄒ" # 3112 : X
+<Multi_key> <z> <h> : "ㄓ" # 3113 : ZH
+<Multi_key> <c> <h> : "ㄔ" # 3114 : CH
+<Multi_key> <s> <h> : "ㄕ" # 3115 : SH
+<Multi_key> <r> <4> : "ㄖ" # 3116 : R
+<Multi_key> <z> <4> : "ㄗ" # 3117 : Z
+<Multi_key> <c> <4> : "ㄘ" # 3118 : C
+<Multi_key> <s> <4> : "ㄙ" # 3119 : S
+<Multi_key> <a> <4> : "ㄚ" # 311A : A
+<Multi_key> <o> <4> : "ㄛ" # 311B : O
+<Multi_key> <e> <4> : "ㄜ" # 311C : E
+<Multi_key> <a> <i> : "ㄞ" # 311E : AI
+<Multi_key> <e> <i> : "ㄟ" # 311F : EI
+<Multi_key> <a> <u> : "ㄠ" # 3120 : AU
+<Multi_key> <o> <u> : "ㄡ" # 3121 : OU
+<Multi_key> <a> <n> : "ㄢ" # 3122 : AN
+<Multi_key> <e> <n> : "ㄣ" # 3123 : EN
+<Multi_key> <a> <N> : "ㄤ" # 3124 : ANG
+<Multi_key> <e> <N> : "ㄥ" # 3125 : ENG
+<Multi_key> <e> <r> : "ㄦ" # 3126 : ER
+<Multi_key> <i> <4> : "ㄧ" # 3127 : I
+<Multi_key> <u> <4> : "ㄨ" # 3128 : U
+<Multi_key> <i> <u> : "ㄩ" # 3129 : IU
+<Multi_key> <v> <4> : "ㄪ" # 312A : V
+<Multi_key> <n> <G> : "ㄫ" # 312B : NG
+<Multi_key> <g> <n> : "ㄬ" # 312C : GN
+
+# NUMERALS
+<Multi_key> <1> <c> : "㈠" # 3220 : ONE
+<Multi_key> <2> <c> : "㈡" # 3221 : TWO
+<Multi_key> <3> <c> : "㈢" # 3222 : THREE
+<Multi_key> <4> <c> : "㈣" # 3223 : FOUR
+<Multi_key> <5> <c> : "㈤" # 3224 : FIVE
+<Multi_key> <6> <c> : "㈥" # 3225 : SIX
+<Multi_key> <7> <c> : "㈦" # 3226 : SEVEN
+<Multi_key> <8> <c> : "㈧" # 3227 : EIGHT
+<Multi_key> <9> <c> : "㈨" # 3228 : NINE

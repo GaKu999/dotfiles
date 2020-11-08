@@ -1,0 +1,38 @@
+#!/hint/python
+# ${XDG_CONFIG_HOME}/python/init
+# vim:ft=python:fenc=utf-8:noet:ts=3:sw=3:
+
+def setup_readline():
+	import os
+	import atexit
+
+	try:
+		import readline
+	except ImportError:
+		return
+
+	history = os.environ.get("PYTHONHISTORY", os.path.join(os.path.expanduser("~"), ".python_history"))
+
+	try:
+		readline.read_history_file(history)
+	except OSError:
+		pass
+
+	if readline.get_current_history_length() == 0:
+		readline.add_history("None")
+
+	readline.set_history_length(int(os.environ.get("PYTHONHISTORYSIZE", -1)))
+
+	atexit.register(readline.write_history_file, history)
+
+setup_readline()
+del(setup_readline)
+
+def setup_prompt():
+	import sys
+
+	sys.ps1="> "
+	sys.ps2="\\ "
+
+setup_prompt()
+del(setup_prompt)

@@ -1,0 +1,10 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/xdg-open-msg
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${XDG_RUNTIME_DIR:?}
+
+for file; do
+	: ${file:?}
+	echo "${file}" >>"${XDG_RUNTIME_DIR}/xdg-open-daemon" && sleep 0.1 || exit "${?}"
+done &

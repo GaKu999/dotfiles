@@ -1,0 +1,61 @@
+# ${XDG_CONFIG_HOME}/alacritty/alacritty.yml
+# vim:ft=yaml:fenc=utf-8:et:ts=2:sw=2:
+
+colors:
+  primary:
+    background: '#151515'
+    foreground: '#d0d0d0'
+
+    dim_foreground:    '#d0d0d0'
+    bright_foreground: '#f5f5f5'
+
+  search:
+    matches:
+      foreground: '#f5f5f5'
+      background: '#ac4142'
+
+    focused_match:
+      foreground: '#f5f5f5'
+      background: '#ac4142'
+
+    bar:
+      background: '#151515'
+      foreground: '#f5f5f5'
+
+  line_indicator:
+      background: '#151515'
+      foreground: '#f5f5f5'
+
+  selection:
+    text:       '#f5f5f5'
+    background: '#ac4142'
+
+  normal:
+    black:   '#151515'
+    red:     '#732b2c'
+    green:   '#60713b'
+    yellow:  '#a37f4e'
+    blue:    '#476a79'
+    magenta: '#714e6a'
+    cyan:    '#4e7971'
+    white:   '#d0d0d0'
+
+  dim:
+    black:   '#151515'
+    red:     '#732b2c'
+    green:   '#60713b'
+    yellow:  '#a37f4e'
+    blue:    '#476a79'
+    magenta: '#714e6a'
+    cyan:    '#4e7971'
+    white:   '#d0d0d0'
+
+  bright:
+    black:   '#505050'
+    red:     '#ac4142'
+    green:   '#90a959'
+    yellow:  '#f4bf75'
+    blue:    '#6a9fb5'
+    magenta: '#aa759f'
+    cyan:    '#75b5aa'
+    white:   '#f5f5f5'

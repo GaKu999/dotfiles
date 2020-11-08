@@ -1,0 +1,49 @@
+#!/hint/sh
+# ${XDG_CONFIG_HOME}/sh/alias
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+alias diff='diff -Ndu --color=auto'
+alias exa='exa -F -b --group-directories-first --icons'
+alias grep='grep --color=auto'
+alias ip='ip -d -h -s --color=auto'
+alias pacman='pacman --color=auto'
+
+alias l='exa -lh'
+alias la='exa -alh'
+alias ls=exa
+alias lsa='exa -a'
+
+alias cp='cp -i --preserve=all --reflink=auto'
+alias ln='ln -i'
+alias mv='mv -i'
+alias rm='rm -i'
+
+alias llog='journalctl -b'
+alias paclog='paclog --color | less'
+alias tlog='journalctl -b -f'
+
+alias mnt='udiskie-mount -r'
+alias umnt='udiskie-umount -l'
+
+alias backup='rsync -AFPXahh --delete'
+alias clone='rsync -AHPSXahh --delete'
+alias cpr='rsync -Pahh -@ 1'
+alias mvr='rsync -Pahh --remove-source-files -@ 1'
+
+alias du='du -h'
+alias dua='du -cs'
+alias dus='du -ms -- * | sort -n | tail'
+
+alias df='df -h'
+alias dfs='df -x devtmpfs -x tmpfs'
+
+alias fuck='sudo -- $(history -p "!!")'
+alias hex="printf '%x\n'"
+alias mntls='findmnt --real'
+alias oct="printf '%o\n'"
+alias pacdiff='DIFFPROG=sudoedit SUDO_EDITOR=vimdiff pacdiff'
+alias pong="ping -c 3 '1.1.1.1'"
+alias rmcdir='cd ..; rmdir -- "${OLDPWD:?}" || cd -- "${OLDPWD:?}"'
+alias uncomment="grep -Ev '^\s*#.*$|^\s*$'"
+alias urldec='python -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
+alias urlenc='python -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]))"'

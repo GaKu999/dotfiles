@@ -1,0 +1,20 @@
+#!/hint/sh
+# ${XDG_CONFIG_HOME}/sh/login
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+set -a
+eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
+set +a
+systemctl --user import-environment PATH
+dbus-update-activation-environment PATH
+
+if [ "${0##*/}" = sh ] || [ -n "${POSIXLY_CORRECT}" ]; then
+	trap '. "${XDG_CONFIG_HOME:-${HOME}/.config}/sh/logout"' EXIT
+fi
+
+: ${GPGKEY:?} ${SSH_KEYS:?}
+
+ssh-add -l >/dev/null 2>&1 || ssh-add -q $(printf "${HOME}/.ssh/%s" ${SSH_KEYS})
+GPG_TTY="$(tty)" gpg --local-user "${GPGKEY}" --quiet --sign </dev/null >/dev/null

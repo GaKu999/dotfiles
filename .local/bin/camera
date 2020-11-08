@@ -1,0 +1,5 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/camera
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+exec mpv --profile="${2:-webcam-fast}" "av://v4l2:/dev/video${1:-0}"

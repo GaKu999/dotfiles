@@ -1,0 +1,244 @@
+# ${XDG_CONFIG_HOME}/polybar/config
+# vim:ft=dosini:fenc=utf-8:
+
+[colors]
+background = #cc151515
+foreground = #f5f5f5
+
+red     = #ac4142
+green   = #90a959
+yellow  = #f4bf75
+blue    = #6a9fb5
+magenta = #aa759f
+cyan    = #75b5aa
+gray    = #505050
+
+[bar/default]
+monitor = eDP-1
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+height    = 27
+separator = " "
+padding   = 1
+
+line-size = 2
+
+font-0 = sans-serif:pixelsize=14
+font-1 = Symbols Nerd Font:pixelsize=14
+
+modules-left   = workspaces
+modules-center = window
+modules-right  = mpd separator mails0 mails1 updates separator cpu memory disk0 battery0 separator tempzone0 tempzone1 separator wlan separator pulseaudio separator backlight separator date
+
+cursor-click  = pointer
+cursor-scroll = ns-resize
+
+[module/separator]
+type = custom/text
+
+content            = •
+content-foreground = ${colors.gray}
+
+[module/workspaces]
+type = internal/xworkspaces
+
+enable-scroll = false
+
+label-active             = %name%
+label-active-padding     = 1
+label-active-underline   = ${colors.green}
+label-occupied           = %name%
+label-occupied-underline =
+label-occupied-padding   = 1
+label-urgent             = %name%
+label-urgent-underline   = ${colors.yellow}
+label-urgent-padding     = 1
+label-empty              =
+label-empty-underline    =
+
+[module/window]
+type = internal/xwindow
+
+format-foreground = ${colors.green}
+
+[module/mpd]
+type = internal/mpd
+
+format-offline            =  
+format-offline-foreground = ${colors.red}
+format-paused             =   <label-time> <icon-consume> <icon-random> <icon-repeat> <icon-single>
+format-paused-foreground  = ${colors.gray}
+format-playing            =   <label-time> <icon-consume> <icon-random> <icon-repeat> <icon-single>
+format-playing-foreground = ${colors.green}
+format-stopped            =   <label-time> <icon-consume> <icon-random> <icon-repeat> <icon-single>
+format-stopped-foreground = ${colors.yellow}
+
+label-time = (%elapsed%/%total%)
+
+icon-consume = 
+icon-random  = 
+icon-repeat  = 
+icon-single  = ₁
+
+toggle-on-foreground  = ${colors.green}
+toggle-off-foreground = ${colors.gray}
+
+[section/script]
+type     = custom/script
+interval = 60
+
+format-foreground = ${colors.magenta}
+
+[module/mails0]
+inherit = section/script
+
+exec   = mails new
+format =  <label>
+
+[module/mails1]
+inherit = section/script
+
+exec   = mails cur
+format =  <label>
+
+[module/updates]
+inherit = section/script
+
+exec   = updates count
+format =  <label>
+
+[module/cpu]
+type = internal/cpu
+
+format            =  <label>
+format-foreground = ${colors.magenta}
+
+[module/memory]
+type = internal/memory
+
+format            =  <label>
+format-foreground = ${colors.magenta}
+
+[section/disk]
+type = internal/fs
+
+format-mounted              =  <label-mounted>
+format-mounted-foreground   = ${colors.magenta}
+format-unmounted            = 
+format-unmounted-foreground = ${colors.red}
+
+label-mounted = %percentage_used%%
+
+[module/disk0]
+inherit = section/disk
+
+mount-0 = /
+
+[section/battery]
+type = internal/battery
+
+format-charging               = <ramp-capacity> <label-charging>
+format-charging-foreground    = ${colors.green}
+format-discharging            = <ramp-capacity> <label-discharging>
+format-discharging-foreground = ${colors.yellow}
+format-full                   = <ramp-capacity> <label-full>
+format-full-foreground        = ${colors.green}
+
+label-charging    = %percentage%%
+label-discharging = %percentage%%
+label-full        = %percentage%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+[module/battery0]
+inherit = section/battery
+
+battery = BAT0
+adapter = ADP1
+
+[section/tempzone]
+type = internal/temperature
+
+format-foreground      = ${colors.yellow}
+format-warn-foreground = ${colors.red}
+
+label = %temperature-c%
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+
+[module/tempzone0]
+inherit      = section/tempzone
+thermal-zone = 0
+
+base-temperature = 40
+warn-temperature = 100
+
+format = <ramp> <label>
+
+[module/tempzone1]
+inherit      = section/tempzone
+thermal-zone = 1
+
+base-temperature = 40
+warn-temperature = 80
+
+format = <ramp> <label>
+
+[module/wlan]
+type      = internal/network
+interface = wlan0
+
+format-connected               =  <label-connected>
+format-connected-foreground    = ${colors.green}
+format-disconnected            = 
+format-disconnected-foreground = ${colors.red}
+
+label-connected = %signal%%
+
+[module/pulseaudio]
+type     = internal/pulseaudio
+interval = 5
+
+format-muted-foreground  = ${colors.red}
+format-volume            = <ramp-volume> <label-volume>
+format-volume-foreground = ${colors.green}
+
+label-muted = 
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+[module/backlight]
+type = internal/backlight
+card = amdgpu_bl0
+
+format            = <ramp> <label>
+format-foreground = ${colors.magenta}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+
+[module/date]
+type     = internal/date
+interval = 60
+
+format-foreground = ${colors.cyan}
+
+date     =
+date-alt = %d %A %B %Y
+time     = %H:%M
+time-alt =
+
+label = %date%%time%

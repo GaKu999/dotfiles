@@ -1,0 +1,22 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/.overrides/passmenu
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+shopt -s globstar nullglob
+
+store_dir="${XDG_DATA_HOME:-${HOME}/.local/share}/pass"
+files=("${store_dir}"/**/*.gpg)
+files=("${files[@]#${store_dir}/}")
+files=("${files[@]%.gpg}")
+
+name="$(printf '%s\n' "${files[@]}" | bemenu --prompt 'Password for:')"
+[[ -n "${name}" ]] || exit 0
+
+printf '%s' "$(pass show "${name}" | head --lines 1)" |
+case "${1}" in
+-q) qrencode --type SVG | imv - ;;
+-t) typechars ;;
+*) clipboard -t set ;;
+esac

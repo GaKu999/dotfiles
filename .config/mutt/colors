@@ -1,0 +1,57 @@
+# ${XDG_CONFIG_HOME}/mutt/colors
+# vim:ft=muttrc:fenc=utf-8:
+
+color normal white default
+
+color error     brightred   default
+color indicator brightred   default
+color message   brightgreen default
+color status    brightgreen default
+color tree      brightcyan  default
+
+color index brightcyan default "~u"
+
+uncolor index "~P"
+uncolor index "~C @.com"
+uncolor index "~N ~u"
+uncolor index "~N !~u"
+uncolor index "~T"
+uncolor index "~D"
+
+color index brightyellow default "~P"
+color index brightblue   default "~C @.com"
+color index brightcyan   default "~N ~u"
+color index brightwhite  default "~N !~u"
+color index brightwhite  default "~T"
+color index brightblack  default "~D"
+
+color header brightyellow  default "^from:"
+color header brightyellow  default "^to:"
+color header brightmagenta default "^cc:"
+color header brightcyan    default "^date:"
+color header brightgreen   default "^subject:"
+
+color attachment brightblack  default
+color bold       brightyellow default
+color hdrdefault brightyellow default
+color search     brightwhite  red
+color signature  brightcyan   default
+color tilde      brightblack  default
+
+color body brightblue default "(^|<| )mailto:[^ ]+@[^ ]( |>|$)"
+color body brightblue default "(^|<| )(http|https|ftp|file|telnet|news|finger)://[^ ]+( |>|$)"
+
+color body brightyellow default "\\[[0-9]+\\]"
+
+color body brightyellow default "(^| )+(|[<>|])[8;:](|[^ ])[)(/|DOPS]( |$)+"
+color body brightyellow default "(^| )+[)(/|DOPS](|[^ ])[8;:](|[<>|])( |$)+"
+
+color body brightcyan default "(^| )\\*[^ ]+\\*( |$)"
+color body brightcyan default "(^| )_[^ ]+_( |$)"
+color body brightcyan default "(^| )/[^ ]+/( |$)"
+
+color quoted brightblack default
+
+color body brightgreen  default "^gpg: Good signature .*"
+color body brightyellow default "^gpg: "
+color body brightred    default "^gpg: BAD signature from. *"

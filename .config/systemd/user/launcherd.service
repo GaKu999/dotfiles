@@ -1,0 +1,31 @@
+# ${XDG_CONFIG_HOME}/systemd/user/launcherd.service
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Launcher daemon
+PartOf=graphical-session.target
+After=graphical-session-pre.target
+
+[Service]
+ExecStart=%h/.local/bin/launchy launcherd bemenu-run
+PIDFile=%t/launchy/launcherd.pid
+
+Restart=always
+RestartSec=0
+
+StandardInput=null
+StandardOutput=null
+StandardError=null
+
+LockPersonality=true
+NoNewPrivileges=true
+ProtectProc=invisible
+ProtectSystem=full
+RestrictSUIDSGID=true
+
+MemoryHigh=6G
+MemoryMax=8G
+TasksMax=5000
+
+[Install]
+WantedBy=graphical-session-pre.target

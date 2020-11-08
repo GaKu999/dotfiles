@@ -1,0 +1,7 @@
+calendar     = /home/gaku/.config/when/calendar
+editor       = vim
+
+ampm         = 0
+future       = 7
+monday_first = 1
+paging       = 0

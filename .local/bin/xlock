@@ -1,0 +1,24 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/xlock
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+_locked_hint() {
+	: ${1:?}
+	gdbus call --system --dest org.freedesktop.login1 --object-path /org/freedesktop/login1/session/auto --method org.freedesktop.login1.Session.SetLockedHint "${1}"
+}
+
+if [[ -n "${XSS_SLEEP_LOCK_FD}" ]]; then
+	i3lock --nofork {XSS_SLEEP_LOCK_FD}<&- & pid="${!}"
+	trap 'kill "${pid}"' TERM
+	sleep 1
+	exec {XSS_SLEEP_LOCK_FD}<&-
+	_locked_hint true
+	wait "${pid}"
+	_locked_hint false
+else
+	i3lock --nofork & pid="${!}"
+	trap 'kill "${pid}"' TERM
+	_locked_hint true
+	wait "${pid}"
+	_locked_hint false
+fi

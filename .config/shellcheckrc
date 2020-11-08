@@ -1,0 +1,17 @@
+# ${XDG_CONFIG_HOME}/shellcheckrc
+# vim:ft=conf:fenc=utf-8:
+
+enable=check-unassigned-upercase
+
+disable=1090
+disable=1091
+disable=2016
+disable=2032
+disable=2033
+disable=2034
+disable=2039
+disable=2046
+disable=2086
+disable=2155
+disable=2164
+disable=2209

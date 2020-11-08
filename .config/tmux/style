@@ -1,0 +1,28 @@
+# ${XDG_CONFIG_HOME}/tmux/style
+# vim:ft=tmux:fenc=utf-8:noet:ts=3:sw=3:
+
+set -g copy-mode-current-match-style bright,fg=white,bg=red
+set -g copy-mode-mark-style          bright,fg=white,bg=red
+set -g copy-mode-match-style         bright,fg=white,bg=red
+
+set -g display-panes-active-colour   green
+set -g display-panes-colour          gray
+
+set -g message-command-style         fg=white,bg=default
+set -g message-style                 fg=white,bg=default
+
+set -g mode-style                    bright,fg=white,bg=red
+
+set -g pane-active-border-style      fg=cyan,bg=default
+set -g pane-border-style             fg=green,bg=default
+
+set -g status-left-style             bright,fg=green,bg=default
+set -g status-right-style            bright,fg=green,bg=default
+set -g status-style                  bright,fg=green,bg=default
+
+set -g window-status-activity-style  bright,fg=yellow,bg=default
+set -g window-status-bell-style      bright,fg=yellow,bg=default
+set -g window-status-current-style   bright,fg=green,bg=default
+set -g window-status-style           bright,fg=black,bg=default
+
+set -g clock-mode-style 24

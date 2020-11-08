@@ -1,0 +1,4 @@
+# ${XDG_CONFIG_HOME}/mutt/isync
+# vim:ft=muttrc:fenc=utf-8:
+
+macro index Z "<shell-escape>mbsync --all<enter>" "sync IMAP"

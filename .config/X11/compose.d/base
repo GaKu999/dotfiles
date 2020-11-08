@@ -1,0 +1,20 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/base
+# vim:ft=conf:fenc=utf-8:
+
+<Multi_key>          <S> <P>          : " "  # 0020 : SPACE
+<Multi_key>          <N> <b>          : "#"  # 0023 : NUMBER SIGN
+<Multi_key>          <D> <O>          : "$"  # 0024 : DOLLAR SIGN
+<Multi_key>          <A> <t>          : "@"  # 0040 : COMMERCIAL AT
+<Multi_key>       <less> <parenleft>  : "["  # 005B : LEFT SQUARE BRACKET
+<Multi_key>      <slash> <slash>      : "\\" # 005C : REVERSE SOLIDUS
+<Multi_key> <parenright> <greater>    : "]"  # 005D : RIGHT SQUARE BRACKET
+<Multi_key> <apostrophe> <greater>    : "^"  # 005E : CIRCUMFLEX ACCENT
+<Multi_key> <apostrophe> <exclam>     : "`"  # 0060 : GRAVE ACCENT
+<Multi_key>  <parenleft> <exclam>     : "{"  # 007B : LEFT CURLY BRACKET
+<Multi_key>     <exclam> <parenright> : "}"  # 007D : RIGHT CURLY BRACKET
+<Multi_key> <apostrophe> <question>   : "~"  # 007E : TILDE
+<Multi_key>          <N> <S>          : " "  # 00A0 : NO-BREAK SPACE
+<Multi_key>     <exclam> <exclam>     : "¡"  # 00A1 : INVERTED EXCLAM
+<Multi_key>          <C> <O>          : "©"  # 00A9 : COPYRIGHT
+<Multi_key>          <o> <s>          : "°"  # 00B0 : DEGREE
+<Multi_key>   <question> <question>   : "¿"  # 00BF : INVERTED QUESTION

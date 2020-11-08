@@ -1,0 +1,93 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/.overrides/abook
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+config_dir="${XDG_CONFIG_HOME:-${HOME}/.config}/abook"
+mkdir --parents -- "${config_dir}"
+
+if [ ! -e "${config_dir}/config" ]; then
+	echo "Creating sample config file ${config_dir}/config"
+	cat >"${config_dir}/config" <<EOF
+# sample abook configuration file
+#
+
+# Declare a few custom fields
+field pager = Pager
+field address_lines = Address, list
+field birthday = Birthday, date
+
+# Define how fields should be displayed in tabs
+view CONTACT = name, email
+view ADDRESS = address_lines, city, state, zip, country
+view PHONE = phone, workphone, pager, mobile, fax
+view OTHER = url, birthday
+
+# Preserve any unknown field while loading an abook database
+set preserve_fields=all
+
+# Automatically save database on exit
+set autosave=true
+
+# Format of entries lines in list
+set index_format=" {name:22} {email:40} {phone:12|workphone|mobile}"
+
+# Show all email addresses in list
+set show_all_emails=true
+
+# Command used to start mutt
+set mutt_command=mutt
+
+# Return all email addresses to a mutt query
+set mutt_return_all_emails=true
+
+# Command used to print
+set print_command=lpr
+
+# Command used to start the web browser
+set www_command=lynx
+
+# Address style [eu|us|uk]
+set address_style=eu
+
+# Use ASCII characters only
+set use_ascii_only=false
+
+# Prevent double entry
+set add_email_prevent_duplicates=false
+
+# Field to be used with "sort by field" command
+set sort_field=nick
+
+# Show cursor in main display
+set show_cursor=false
+EOF
+fi
+
+_usage() {
+	/bin/abook --help
+	echo 'Override: -E --export <format> export all as <format> in abook aliases'
+	exit "${1:-0}"
+}
+
+_export() {
+	: ${1:?}
+	if [ ! -e "${config_dir}/data" ]; then
+		echo "abook: ${config_dir}/data: no such file or directory" >&2
+		return 1
+	fi
+
+	mkdir --parents -- "${config_dir}/aliases"
+	alias_file="${config_dir}/aliases/${1}"
+	
+	[ ! -s "${alias_file}" ] || mv -- "${alias_file}" "${alias_file}~"
+
+	exec /bin/abook --convert --informat abook --infile "${config_dir}/data" --outformat "${1}" --outfile "${alias_file}"
+}
+
+case "${1}" in
+-h|--help) _usage ;;
+-E|--export) : ${2:?}; _export "${2}" ;;
+*) exec /bin/abook --config "${config_dir}/config" --datafile "${config_dir}/data" "${@}" ;;
+esac

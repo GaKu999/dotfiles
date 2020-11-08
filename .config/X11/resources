@@ -1,0 +1,48 @@
+! ${XDG_CONFIG_HOME}/X11/resources
+! vim:ft=xdefaults:fenc=utf-8:
+
+*theme:       Adwaita
+*size:        36
+*cursorBlink: true
+
+*font:           xft:monospace:style=Regular:pixelsize=16:antialias=true:hinting=slight
+*boldFont:       xft:monospace:style=Bold:pixelsize=16:antialias=true:hinting=slight
+*italicFont:     xft:monospace:style=Italic:pixelsize=16:antialias=true:hinting=slight
+*boldItalicFont: xft:monospace:style=Bold Italic:pixelsize=16:antialias=true:hinting=slight
+*letterSpace:    -1
+*dpi:            96
+
+*background: rgb:15/15/15
+*foreground: rgb:d0/d0/d0
+
+! black
+*color0:  rgb:15/15/15
+*color8:  rgb:50/50/50
+
+! red
+*color1:  rgb:73/2b/2c
+*color9:  rgb:ac/41/42
+
+! green
+*color2:  rgb:60/71/3b
+*color10: rgb:90/a9/59
+
+! yellow
+*color3:  rgb:a3/7f/4e
+*color11: rgb:f4/bf/75
+
+! blue
+*color4:  rgb:47/6a/79
+*color12: rgb:6a/9f/b5
+
+! magenta
+*color5:  rgb:71/4e/6a
+*color13: rgb:aa/75/9f
+
+! cyan
+*color6:  rgb:4e/79/71
+*color14: rgb:75/b5/aa
+
+! white
+*color7:  rgb:d0/d0/d0
+*color15: rgb:f5/f5/f5

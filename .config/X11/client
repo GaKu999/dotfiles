@@ -1,0 +1,40 @@
+#!/bin/sh
+# ${XDG_CONFIG_HOME}/X11/client
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?} ${XDG_RUNTIME_DIR:?} ${XDG_VTNR:?}
+
+export DISPLAY=":${XDG_VTNR}" XAUTHORITY="${XDG_RUNTIME_DIR}/Xauth"
+
+set -a
+eval "$(printf '%s=x11;' CLUTTER_BACKEND DESKTOP_SESSION GDK_BACKEND SDL_VIDEODRIVER XDG_SESSION_TYPE WINIT_UNIX_BACKEND)"
+set +a
+
+export QT_QPA_PLATFORM=xcb WINIT_X11_SCALE_FACTOR=1
+
+xauth generate "${DISPLAY}" MIT-MAGIC-COOKIE-1 trusted
+
+for file in /etc/X11/xinit/xinitrc.d/*.sh; do
+	. "${file}"
+done
+
+for file in "${XDG_CONFIG_HOME:-${HOME}/.config}/X11/client.d"/*.sh; do
+	. "${file}"
+done
+
+xinput set-prop 11 'libinput Accel Speed' 0.5
+xinput set-prop 11 'libinput Disable While Typing Enabled' 0
+xinput set-prop 11 'libinput Send Events Mode Enabled' 0 1
+xinput set-prop 11 'libinput Tapping Enabled' 1
+
+xset dpms 300 300 300
+xset r rate 200 30
+xset s 300 0
+
+xrandr --dpi 96
+
+setxkbmap -option compose:ralt
+
+xbindkeys -f "${XDG_CONFIG_HOME:-${HOME}/.config}/X11/keybinds"
+
+(sleep 2; systemctl --user start X11.target) & exec openbox

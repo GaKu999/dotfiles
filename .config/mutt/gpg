@@ -1,0 +1,16 @@
+# ${XDG_CONFIG_HOME}/mutt/gpg
+# vim:ft=muttrc:fenc=utf-8:
+
+set pgp_timeout         = 300
+set pgp_good_sign       = "^gpgv?: Good signature from "
+set pgp_getkeys_command = "pkspxycwrap %r"
+set crypt_replysign
+set crypt_replysignencrypted
+set crypt_use_gpgme
+
+macro compose \Cp \
+	"<filter-entry>gpg --clearsign<enter>y \
+	<edit-type>^Uapplication/pgp; format=text; x-action=sign<enter>" \
+	"clear sign message"
+
+macro compose Y pcy "send mail without pgp"

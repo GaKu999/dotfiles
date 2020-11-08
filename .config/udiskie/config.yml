@@ -1,0 +1,23 @@
+# ${XDG_CONFIG_HOME}/udiskie/config.yml
+# vim:ft=yaml:fenc=utf-8:et:ts=2:sw=2:
+
+program_options:
+  automount:       false
+  menu:            nested
+  notify:          true
+  password_cache:  1440
+  password_prompt: "askpass '[udiskie] password for {device_presentation}: '"
+  tray:            false
+
+device_config:
+  - { is_crypto: true, ignore: false }
+
+  - { id_type: btrfs, ignore: false, options: [noatime, nodev, noexec, nosuid, compress=zstd] }
+  - { id_type: vfat,  ignore: false, options: [noatime, nodev, noexec, nosuid, fmask=0133] }
+
+  - { ignore: true, options: [noatime, nodev, noexec, nosuid] }
+
+notifications:
+  timeout: -1
+
+quickmenu_actions: all

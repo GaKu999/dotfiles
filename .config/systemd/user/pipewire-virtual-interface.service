@@ -1,0 +1,21 @@
+# ${XDG_CONFIG_HOME}/systemd/user/pipewire-virtual-sink.target
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Multimedia virtual interface
+Documentation=man:systemd.special(7)
+BindsTo=pipewire.service
+After=pipewire.service
+
+[Service]
+Slice=session.slice
+ExecStart=/usr/bin/pw-loopback --capture-props="media.class=Audio/Sink node.name=Virtual"
+
+LockPersonality=true
+NoNewPrivileges=true
+ProtectProc=invisible
+ProtectSystem=full
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=pipewire.service

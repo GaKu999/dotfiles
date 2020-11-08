@@ -1,0 +1,27 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/launchyctl
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${XDG_RUNTIME_DIR:?}
+
+_usage() {
+	echo 'Usage: launchyctl [-h|--help] task|alt|end ID'
+	exit "${1:-0}"
+}
+
+_signal() {
+	: ${1:?}
+	pid_file="${XDG_RUNTIME_DIR}/launchy/${1}.pid"
+	pid="$(cat "${pid_file}")" || return "${?}"
+
+	kill -0 "${pid}" || return "${?}"
+	kill -s "${2:-TERM}" "${pid}"
+}
+
+case "${1}" in
+task) : ${2:?}; _signal "${2}" USR1 ;;
+alt) : ${2:?}; _signal "${2}" USR2 ;;
+end) : ${2:?}; _signal "${2}" ;;
+-h|--help) _usage ;;
+*) _usage 2 ;;
+esac

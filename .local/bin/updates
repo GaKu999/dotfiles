@@ -1,0 +1,31 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/updates
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${CHECKUPDATES_DB:?}
+
+_usage() {
+	echo 'Usage: updates [-h|--help] show|notify|count|check|update'
+	exit "${1:-0}"
+}
+
+case "${1}" in
+show|notify|count)
+	mapfile -t updates < <(pacman --query --upgrades --dbpath "${CHECKUPDATES_DB}" 2>/dev/null | grep --invert-match '\[.*\]')
+	if [[ "${1}" == count ]]; then
+		echo "${#updates[@]}"
+	elif (("${#updates[@]}")); then
+		case "${1}" in
+		show) printf '%s\n' "${updates[@]}" ;;
+		notify) notify-send "${#updates[@]} update(s) available" "$(printf '%s\n' "${updates[@]}")" ;;
+		esac
+	fi
+;;
+check) checkupdates >/dev/null ;;
+update)
+	sudo pacman --sync --refresh --sysupgrade
+	read -p '' # wait for input, for reading
+;;
+-h|--help) _usage ;;
+*) _usage 2 ;;
+esac

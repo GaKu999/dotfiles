@@ -1,0 +1,37 @@
+# ${XDG_CONFIG_HOME}/abook/config
+# vim:ft=conf:fenc=utf-8:
+
+view CONTACT = name, email
+view ADDRESS = address, address2, city, state, zip, country
+view PHONE   = phone, workphone, mobile, fax
+view OTHER   = nick, url, notes, anniversary
+
+set add_email_prevent_duplicates = true
+set address_style                = us
+set index_format                 = "{name:40} {email:40} {phone:40|workphone|mobile}"
+set preserve_fields              = none
+set print_command                = "notes pr abook"
+set show_all_emails              = false
+set use_colors                   = true
+set www_command                  = vtclip
+
+set color_field_name_bg     = default
+set color_field_name_fg     = yellow
+set color_field_value_bg    = default
+set color_field_value_fg    = white
+set color_footer_bg         = default
+set color_footer_fg         = green
+set color_header_bg         = default
+set color_header_fg         = green
+set color_list_even_bg      = default
+set color_list_even_fg      = white
+set color_list_header_bg    = default
+set color_list_header_fg    = yellow
+set color_list_highlight_bg = default
+set color_list_highlight_fg = red
+set color_list_odd_bg       = default
+set color_list_odd_fg       = white
+set color_tab_border_bg     = default
+set color_tab_border_fg     = green
+set color_tab_label_bg      = default
+set color_tab_label_fg      = yellow

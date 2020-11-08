@@ -1,0 +1,65 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/arabic
+# vim:ft=conf:fenc=utf-8:
+
+<Multi_key>      <comma> <plus>       : "،" # 060C : COMMA
+<Multi_key>  <semicolon> <plus>       : "؛" # 061B : SEMICOLON
+<Multi_key>   <question> <plus>       : "؟" # 061F : QUESTION MARK
+<Multi_key>          <H> <apostrophe> : "ء" # 0621 : HAMZA
+<Multi_key>          <a> <M>          : "آ" # 0622 : ALEF WITH MADDA ABOVE
+<Multi_key>          <a> <H>          : "أ" # 0623 : ALEF WITH HAMZA ABOVE
+<Multi_key>          <w> <H>          : "ؤ" # 0624 : WAW WITH HAMZA ABOVE
+<Multi_key>          <a> <h>          : "إ" # 0625 : ALEF WITH HAMZA BELOW
+<Multi_key>          <y> <H>          : "ئ" # 0626 : YEH WITH HAMZA ABOVE
+<Multi_key>          <a> <plus>       : "ا" # 0627 : ALEF
+<Multi_key>          <b> <plus>       : "ب" # 0628 : BEH
+<Multi_key>          <t> <m>          : "ة" # 0629 : TEH MARBUTA
+<Multi_key>          <t> <plus>       : "ت" # 062A : TEH
+<Multi_key>          <t> <k>          : "ث" # 062B : THEH
+<Multi_key>          <g> <plus>       : "ج" # 062C : JEEM
+<Multi_key>          <h> <k>          : "ح" # 062D : HAH
+<Multi_key>          <x> <plus>       : "خ" # 062E : KHAH
+<Multi_key>          <d> <plus>       : "د" # 062F : DAL
+<Multi_key>          <d> <k>          : "ذ" # 0630 : THAL
+<Multi_key>          <r> <plus>       : "ر" # 0631 : REH
+<Multi_key>          <z> <plus>       : "ز" # 0632 : ZAIN
+<Multi_key>          <s> <plus>       : "س" # 0633 : SEEN
+<Multi_key>          <s> <n>          : "ش" # 0634 : SHEEN
+<Multi_key>          <c> <plus>       : "ص" # 0635 : SAD
+<Multi_key>          <d> <d>          : "ض" # 0636 : DAD
+<Multi_key>          <t> <j>          : "ط" # 0637 : TAH
+<Multi_key>          <z> <H>          : "ظ" # 0638 : ZAH
+<Multi_key>          <e> <plus>       : "ع" # 0639 : AIN
+<Multi_key>          <i> <plus>       : "غ" # 063A : GHAIN
+<Multi_key>       <plus> <plus>       : "ـ" # 0640 : TATWEEL
+<Multi_key>          <f> <plus>       : "ف" # 0641 : FEH
+<Multi_key>          <q> <plus>       : "ق" # 0642 : QAF
+<Multi_key>          <k> <plus>       : "ك" # 0643 : KAF
+<Multi_key>          <l> <plus>       : "ل" # 0644 : LAM
+<Multi_key>          <m> <plus>       : "م" # 0645 : MEEM
+<Multi_key>          <n> <plus>       : "ن" # 0646 : NOON
+<Multi_key>          <h> <plus>       : "ه" # 0647 : HEH
+<Multi_key>          <w> <plus>       : "و" # 0648 : WAW
+<Multi_key>          <j> <plus>       : "ى" # 0649 : ALEF MAKSURA
+<Multi_key>          <y> <plus>       : "ي" # 064A : YEH
+<Multi_key>      <colon> <plus>       : "ً"  # 064B : FATHATAN
+<Multi_key>   <quotedbl> <plus>       : "ٌ"  # 064C : DAMMATAN
+<Multi_key>      <equal> <plus>       : "ٍ"  # 064D : KASRATAN
+<Multi_key>      <slash> <plus>       : "َ"  # 064E : FATHA
+<Multi_key> <apostrophe> <plus>       : "ُ"  # 064F : DAMMA
+<Multi_key>          <1> <plus>       : "ِ"  # 0650 : KASRA
+<Multi_key>          <3> <plus>       : "ّ"  # 0651 : SHADDA
+<Multi_key>          <0> <plus>       : "ْ"  # 0652 : SUKUN
+<Multi_key>          <a> <S>          : "ٰ"  # 0670 : SUPERSCRIPT ALEF
+<Multi_key>          <p> <plus>       : "پ" # 067E : PEH
+<Multi_key>          <v> <plus>       : "ڤ" # 06A4 : VEH
+<Multi_key>          <g> <f>          : "گ" # 06AF : GAF
+<Multi_key>          <0> <a>          : "۰" # 06F0 : ZERO
+<Multi_key>          <1> <a>          : "۱" # 06F1 : ONE
+<Multi_key>          <2> <a>          : "۲" # 06F2 : TWO
+<Multi_key>          <3> <a>          : "۳" # 06F3 : THREE
+<Multi_key>          <4> <a>          : "۴" # 06F4 : FOUR
+<Multi_key>          <5> <a>          : "۵" # 06F5 : FIVE
+<Multi_key>          <6> <a>          : "۶" # 06F6 : SIX
+<Multi_key>          <7> <a>          : "۷" # 06F7 : SEVEN
+<Multi_key>          <8> <a>          : "۸" # 06F8 : EIGHT
+<Multi_key>          <9> <a>          : "۹" # 06F9 : NINE

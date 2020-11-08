@@ -1,0 +1,19 @@
+# ${XDG_CONFIG_HOME}/newsboat/colors
+# vim:ft=conf:fenc=utf-8:
+
+color listnormal        white default
+color listnormal_unread white default bold
+color listfocus         red   default
+color listfocus_unread  red   default bold
+color info              green default bold
+color background        white default
+color article           white default
+
+highlight article "^(Date|Link):.*$"         cyan   default bold
+highlight article "^(Feed|Title|Author):.*$" yellow default bold
+
+highlight article "(http|https|ftp|file|telnet|news|finger)?://[^ ]+" cyan default bold
+
+highlight article "\\[[0-9]+\\]" yellow default bold
+
+highlight article "\\[image\\ [0-9]+\\]" black default bold

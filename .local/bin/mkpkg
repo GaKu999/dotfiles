@@ -1,0 +1,36 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/mkpkg
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${USER:?}
+
+. /usr/share/makepkg/util/util.sh
+colorize
+
+if ! ((EUID)); then
+	error 'mkpkg: running as root is not allowed'
+	exit "${E_ROOT}"
+fi
+
+arch="$(uname -m)"
+build_dir=/var/lib/archbuild/tmp
+chroot_dir="/var/lib/archbuild/${arch}"
+
+temp_dir="$(mktemp --directory --tmpdir="${build_dir}")"
+ln -Tfs "${chroot_dir}" "${temp_dir}/root"
+trap 'rm --force "${temp_dir}/root" "${temp_dir}/root.lock"; rmdir "${temp_dir}"' EXIT
+
+if [[ "${1}" == -u ]]; then
+	shift
+	arch-nspawn -- "${chroot_dir}" pacman --sync --refresh --sysupgrade
+fi
+
+if (("${#}")); then
+	for dir in "${@}"; do
+		cd "${dir}"
+		makechrootpkg -T -d "/srv/pacman/pkg/${USER}" -r "${temp_dir}"
+		cd "${OLDPWD:?}"
+	done
+else
+	makechrootpkg -T -d "/srv/pacman/pkg/${USER}" -r "${temp_dir}"
+fi

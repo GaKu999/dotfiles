@@ -1,0 +1,39 @@
+# ${XDG_CONFIG_HOME}/newsboat/config
+# vim:ft=conf:fenc=utf-8:
+
+cache-file   ~/.local/share/newsboat/cache.db
+cookie-cache ~/.local/share/newsboat/cookies
+error-log    ~/.local/share/newsboat/error.log
+save-path    ~/Downloads/Feeds
+
+urls-source local
+
+confirm-delete-all-articles               no
+confirm-mark-all-feeds-read               no
+openbrowser-and-mark-jumps-to-next-unread yes
+swap-title-and-hints                      yes
+toggleitemread-jumps-to-next-unread       yes
+reload-only-visible-feeds                 yes
+
+notify-always yes
+notify-beep   no
+notify-xterm  yes
+
+download-retries   3
+download-timeout   60
+history-limit      10000
+max-browser-tabs   1
+max-download-speed 4096
+reload-threads     8
+reload-time        480
+scrolloff          999
+
+browser             "vtclip %u"
+external-url-viewer extract_url
+notify-program      notify-send
+
+feed-sort-order lastupdated-desc
+
+include ~/.config/newsboat/colors
+include ~/.config/newsboat/filters
+include ~/.config/newsboat/formats

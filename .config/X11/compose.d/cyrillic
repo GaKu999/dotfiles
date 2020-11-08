@@ -1,0 +1,107 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/cyrillic
+# vim:ft=conf:fenc=utf-8:
+
+<Multi_key>       <I> <O>          : "Ё" # 0401 : CAPITAL IO
+<Multi_key>       <D> <percent>    : "Ђ" # 0402 : CAPITAL DJE
+<Multi_key>       <G> <percent>    : "Ѓ" # 0403 : CAPITAL GJE
+<Multi_key>       <I> <E>          : "Є" # 0404 : CAPITAL UKRAINIAN IE
+<Multi_key>       <D> <S>          : "Ѕ" # 0405 : CAPITAL DZE
+<Multi_key>       <I> <I>          : "І" # 0406 : CAPITAL BYELORUSSIAN-UKRAINIAN I
+<Multi_key>       <Y> <I>          : "Ї" # 0407 : CAPITAL YI
+<Multi_key>       <J> <percent>    : "Ј" # 0408 : CAPITAL JE
+<Multi_key>       <L> <J>          : "Љ" # 0409 : CAPITAL LJE
+<Multi_key>       <N> <J>          : "Њ" # 040A : CAPITAL NJE
+<Multi_key>       <T> <s>          : "Ћ" # 040B : CAPITAL TSHE
+<Multi_key>       <K> <J>          : "Ќ" # 040C : CAPITAL KJE
+<Multi_key>       <V> <percent>    : "Ў" # 040E : CAPITAL SHORT U
+<Multi_key>       <D> <Z>          : "Џ" # 040F : CAPITAL DZHE
+<Multi_key>       <A> <equal>      : "А" # 0410 : CAPITAL A
+<Multi_key>       <B> <equal>      : "Б" # 0411 : CAPITAL BE
+<Multi_key>       <V> <equal>      : "В" # 0412 : CAPITAL VE
+<Multi_key>       <G> <equal>      : "Г" # 0413 : CAPITAL GHE
+<Multi_key>       <D> <equal>      : "Д" # 0414 : CAPITAL DE
+<Multi_key>       <E> <equal>      : "Е" # 0415 : CAPITAL IE
+<Multi_key>       <Z> <percent>    : "Ж" # 0416 : CAPITAL ZHE
+<Multi_key>       <Z> <equal>      : "З" # 0417 : CAPITAL ZE
+<Multi_key>       <I> <equal>      : "И" # 0418 : CAPITAL I
+<Multi_key>       <J> <equal>      : "Й" # 0419 : CAPITAL SHORT I
+<Multi_key>       <K> <equal>      : "К" # 041A : CAPITAL KA
+<Multi_key>       <L> <equal>      : "Л" # 041B : CAPITAL EL
+<Multi_key>       <M> <equal>      : "М" # 041C : CAPITAL EM
+<Multi_key>       <N> <equal>      : "Н" # 041D : CAPITAL EN
+<Multi_key>       <O> <equal>      : "О" # 041E : CAPITAL O
+<Multi_key>       <P> <equal>      : "П" # 041F : CAPITAL PE
+<Multi_key>       <R> <equal>      : "Р" # 0420 : CAPITAL ER
+<Multi_key>       <S> <equal>      : "С" # 0421 : CAPITAL ES
+<Multi_key>       <T> <equal>      : "Т" # 0422 : CAPITAL TE
+<Multi_key>       <U> <equal>      : "У" # 0423 : CAPITAL U
+<Multi_key>       <F> <equal>      : "Ф" # 0424 : CAPITAL EF
+<Multi_key>       <H> <equal>      : "Х" # 0425 : CAPITAL HA
+<Multi_key>       <C> <equal>      : "Ц" # 0426 : CAPITAL TSE
+<Multi_key>       <C> <percent>    : "Ч" # 0427 : CAPITAL CHE
+<Multi_key>       <S> <percent>    : "Ш" # 0428 : CAPITAL SHA
+<Multi_key>       <S> <c>          : "Щ" # 0429 : CAPITAL SHCHA
+<Multi_key>   <equal> <quotedbl>   : "Ъ" # 042A : CAPITAL HARD SIGN
+<Multi_key>       <Y> <equal>      : "Ы" # 042B : CAPITAL YERU
+<Multi_key> <percent> <quotedbl>   : "Ь" # 042C : CAPITAL SOFT SIGN
+<Multi_key>       <J> <E>          : "Э" # 042D : CAPITAL E
+<Multi_key>       <J> <U>          : "Ю" # 042E : CAPITAL YU
+<Multi_key>       <J> <A>          : "Я" # 042F : CAPITAL YA
+<Multi_key>       <a> <equal>      : "а" # 0430 : SMALL A
+<Multi_key>       <b> <equal>      : "б" # 0431 : SMALL BE
+<Multi_key>       <v> <equal>      : "в" # 0432 : SMALL VE
+<Multi_key>       <g> <equal>      : "г" # 0433 : SMALL GHE
+<Multi_key>       <d> <equal>      : "д" # 0434 : SMALL DE
+<Multi_key>       <e> <equal>      : "е" # 0435 : SMALL IE
+<Multi_key>       <z> <percent>    : "ж" # 0436 : SMALL ZHE
+<Multi_key>       <z> <equal>      : "з" # 0437 : SMALL ZE
+<Multi_key>       <i> <equal>      : "и" # 0438 : SMALL I
+<Multi_key>       <j> <equal>      : "й" # 0439 : SMALL SHORT I
+<Multi_key>       <k> <equal>      : "к" # 043A : SMALL KA
+<Multi_key>       <l> <equal>      : "л" # 043B : SMALL EL
+<Multi_key>       <m> <equal>      : "м" # 043C : SMALL EM
+<Multi_key>       <n> <equal>      : "н" # 043D : SMALL EN
+<Multi_key>       <o> <equal>      : "о" # 043E : SMALL O
+<Multi_key>       <p> <equal>      : "п" # 043F : SMALL PE
+<Multi_key>       <r> <equal>      : "р" # 0440 : SMALL ER
+<Multi_key>       <s> <equal>      : "с" # 0441 : SMALL ES
+<Multi_key>       <t> <equal>      : "т" # 0442 : SMALL TE
+<Multi_key>       <u> <equal>      : "у" # 0443 : SMALL U
+<Multi_key>       <f> <equal>      : "ф" # 0444 : SMALL EF
+<Multi_key>       <h> <equal>      : "х" # 0445 : SMALL HA
+<Multi_key>       <c> <equal>      : "ц" # 0446 : SMALL TSE
+<Multi_key>       <c> <percent>    : "ч" # 0447 : SMALL CHE
+<Multi_key>       <s> <percent>    : "ш" # 0448 : SMALL SHA
+<Multi_key>       <s> <c>          : "щ" # 0449 : SMALL SHCHA
+<Multi_key>   <equal> <apostrophe> : "ъ" # 044A : SMALL HARD SIGN
+<Multi_key>       <y> <equal>      : "ы" # 044B : SMALL YERU
+<Multi_key> <percent> <apostrophe> : "ь" # 044C : SMALL SOFT SIGN
+<Multi_key>       <j> <e>          : "э" # 044D : SMALL E
+<Multi_key>       <j> <u>          : "ю" # 044E : SMALL YU
+<Multi_key>       <j> <a>          : "я" # 044F : SMALL YA
+<Multi_key>       <i> <o>          : "ё" # 0451 : SMALL IO
+<Multi_key>       <d> <percent>    : "ђ" # 0452 : SMALL DJE
+<Multi_key>       <g> <percent>    : "ѓ" # 0453 : SMALL GJE
+<Multi_key>       <i> <e>          : "є" # 0454 : SMALL UKRAINIAN IE
+<Multi_key>       <d> <s>          : "ѕ" # 0455 : SMALL DZE
+<Multi_key>       <i> <i>          : "і" # 0456 : SMALL BYELORUSSIAN-UKRAINIAN I
+<Multi_key>       <y> <i>          : "ї" # 0457 : SMALL YI
+<Multi_key>       <j> <percent>    : "ј" # 0458 : SMALL JE
+<Multi_key>       <l> <j>          : "љ" # 0459 : SMALL LJE
+<Multi_key>       <n> <j>          : "њ" # 045A : SMALL NJE
+<Multi_key>       <t> <s>          : "ћ" # 045B : SMALL TSHE
+<Multi_key>       <k> <j>          : "ќ" # 045C : SMALL KJE
+<Multi_key>       <v> <percent>    : "ў" # 045E : SMALL SHORT U
+<Multi_key>       <d> <z>          : "џ" # 045F : SMALL DZHE
+<Multi_key>       <Y> <3>          : "Ѣ" # 0462 : CAPITAL YAT
+<Multi_key>       <y> <3>          : "ѣ" # 0463 : SMALL YAT
+<Multi_key>       <O> <3>          : "Ѫ" # 046A : CAPITAL BIG YUS
+<Multi_key>       <o> <3>          : "ѫ" # 046B : SMALL BIG YUS
+<Multi_key>       <F> <3>          : "Ѳ" # 0472 : CAPITAL FITA
+<Multi_key>       <f> <3>          : "ѳ" # 0473 : SMALL FITA
+<Multi_key>       <V> <3>          : "Ѵ" # 0474 : CAPITAL IZHITSA
+<Multi_key>       <v> <3>          : "ѵ" # 0475 : SMALL IZHITSA
+<Multi_key>       <C> <3>          : "Ҁ" # 0480 : CAPITAL KOPPA
+<Multi_key>       <c> <3>          : "ҁ" # 0481 : SMALL KOPPA
+<Multi_key>       <G> <3>          : "Ґ" # 0490 : CAPITAL GHE WITH UPTURN
+<Multi_key>       <g> <3>          : "ґ" # 0491 : SMALL GHE WITH UPTURN

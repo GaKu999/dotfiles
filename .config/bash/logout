@@ -1,0 +1,7 @@
+#!/hint/bash
+# ${XDG_CONFIG_HOME}/bash/logout
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+. "${XDG_CONFIG_HOME:-${HOME}/.config}/sh/logout"

@@ -1,0 +1,5 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/wfstream
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+exec wf-recorder --codec rawvideo -f "/dev/video${1:-2}" --muxer v4l2 --pixel-format yuyv422

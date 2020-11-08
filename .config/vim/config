@@ -1,0 +1,148 @@
+"!/hint/vim
+" ${XDG_CONFIG_HOME}/vim/config
+" vim:ft=vim:fenc=utf-8:noet:ts=3:sw=3:
+
+if exists('${XDG_CONFIG_HOME}')
+	set runtimepath=${XDG_CONFIG_HOME}/vim,${VIM}/vimfiles,${VIMRUNTIME},${VIM}/after,${XDG_CONFIG_HOME}/vim/after
+else
+	set runtimepath=${HOME}/.config/vim,${VIM}/vimfiles,${VIMRUNTIME},${VIM}/after,${HOME}/.config/vim/after
+endif
+
+colorscheme default
+set t_Co=16
+
+syntax on
+filetype plugin on
+filetype indent on
+
+set encoding=utf-8
+
+if exists('${XDG_CONFIG_HOME}')
+	set dictionary=${XDG_CONFIG_HOME}/vim/dict
+	set spellfile=${XDG_CONFIG_HOME}/vim/spell/en.utf-8.add
+	set viminfofile=${XDG_CONFIG_HOME}/vim/info
+else
+	set dictionary=${HOME}/.config/vim/dict
+	set spellfile=${HOME}/.config/vim/spell/en.utf-8.add
+	set viminfofile=${HOME}/.config/vim/info
+endif
+
+set foldmethod=indent
+
+set listchars=trail:·,precedes:«,extends:»,eol:↲,tab:▸\ "
+
+set nowrap
+set scrolloff=999
+set sidescrolloff=999
+
+set ttyfast
+
+set matchpairs=<:>,{:},(:),[:]
+set showmatch
+
+set whichwrap=b,s,<,>,[,]
+
+set backup
+set backupskip=/tmp/*,/var/tmp/*,/run/*,/dev/shm/*,${XDG_RUNTIME_DIR}/*
+set undofile
+
+set history=10000
+set undolevels=10000
+
+set wildmenu
+set wildmode=list:longest,full
+
+set autoindent
+set linebreak
+set shiftwidth=3
+set smartindent
+set smarttab
+set splitbelow
+set tabstop=3
+
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+
+set laststatus=2
+set noruler
+set statusline=%f%m%r%h%w\ ::\ %y\ [%{&ff}]\%=\ [%p%%:\ %c:%l/%L]
+
+if &diff | syntax off | endif
+
+if has('autocmd')
+	autocmd BufReadPost * if line("'\"")>0 && line("'\"") <= line('$') | exec "normal g`\"" | endif
+
+	autocmd BufRead,BufNewFile * if &filetype == '' | setlocal filetype=text | endif
+
+	autocmd FileType text setlocal spell
+
+	autocmd FileType xxd setlocal nospell
+
+	autocmd FileType *sh setlocal makeprg=shellcheck\ -f\ gcc\ %
+endif
+
+nnoremap <silent> <F11> :bprevious<CR>
+nnoremap <silent> <F12> :bnext<CR>
+
+nnoremap <silent> <Space> :nohlsearch<CR>
+
+function CommandAlias(alias, cmd)
+	exec 'cnoreabbrev <expr> '.a:alias
+		\ .' ((getcmdtype() is# ":" && getcmdline() is# "'.a:alias.'")'
+		\ .'? ("'.a:cmd.'") : ("'.a:alias.'"))'
+endfunction
+
+call CommandAlias('rmtw', '%s/\\(\\w\\)\\s\\+$/\\1/e')
+
+let s:hex_mode=0
+let s:old_filetype=''
+
+function s:HexToggle()
+	if s:hex_mode == 0
+		%!xxd -g 1
+		let s:hex_mode=1
+		let s:old_filetype=&filetype
+		let &filetype='xxd'
+	else
+		%!xxd -g 1 -r
+		let s:hex_mode=0
+		let &filetype=s:old_filetype
+		let s:old_filetype=''
+	endif
+endfunction
+
+call CommandAlias('hex', 'call <SID>HexToggle()<CR>')
+
+function MapToggle(key, opt)
+	let cmd=':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+	exec 'nnoremap '.a:key.' '.cmd
+	exec 'inoremap '.a:key." \<C-O>".cmd
+endfunction
+
+command -nargs=+ MapToggle call MapToggle(<f-args>)
+
+MapToggle <F2> number
+MapToggle <F3> cursorline
+MapToggle <F4> cursorcolumn
+MapToggle <F5> list
+MapToggle <F6> spell
+MapToggle <F7> hlsearch
+MapToggle <F8> paste
+MapToggle <F9> wrap
+
+set colorcolumn=0
+let s:color_column_old=80
+
+function! s:ToggleColorColumn()
+	if s:color_column_old == 0
+		let s:color_column_old=&colorcolumn
+		windo let &colorcolumn=0
+	else
+		windo let &colorcolumn=s:color_column_old
+		let s:color_column_old=0
+	endif
+endfunction
+
+nnoremap <silent> <BAR> :call <SID>ToggleColorColumn()<CR>

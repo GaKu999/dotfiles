@@ -1,0 +1,17 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/xdg-open-daemon
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${XDG_RUNTIME_DIR:?}
+
+fifo_file="${XDG_RUNTIME_DIR}/xdg-open-daemon"
+trap 'rm -- "${fifo_file}"' EXIT
+
+[[ ! -e "${fifo_file}" || -p "${fifo_file}" ]] || rm -- "${fifo_file}"
+mknod --mode 0700 "${fifo_file}" p
+
+trap '' WINCH
+while :; do
+	IFS='' read -r target <"${fifo_file}"
+	xdg-open "${target}"
+done 

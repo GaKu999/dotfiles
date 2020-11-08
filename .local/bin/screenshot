@@ -1,0 +1,17 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/screenshot
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+screenshot_file="${XDG_PICTURES_DIR:-${HOME}/Pictures}/Screenshots/$(date '+%x_%X').png"
+mkdir --parents -- "${screenshot_file%/*}"
+
+if [ -n "${WAYLAND_DISPLAY}" ]; then
+	exec grim -- "${screenshot_file}"
+elif [ -n "${DISPLAY}" ]; then
+	exec scrot --silent -- "${screenshot_file}"
+else
+	echo 'screenshot: display unavailable' >&2
+	exit 1
+fi

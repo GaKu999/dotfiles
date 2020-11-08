@@ -1,0 +1,7 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/st
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${1:?} ${2:?}
+
+exec curl --form "${1}=${2}" --no-progress-meter -- 'https://0x0.st'

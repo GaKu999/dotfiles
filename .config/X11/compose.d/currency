@@ -1,0 +1,10 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/currency
+# vim:ft=conf:fenc=utf-8:
+
+<Multi_key>     <L> <i>     : "₤" # 20A4 : LIRA
+<Multi_key>     <P> <t>     : "₧" # 20A7 : PESETA
+<Multi_key>     <W> <equal> : "₩" # 20A9 : WON
+<Multi_key> <equal> <e>     : "€" # 20AC : EURO
+<Multi_key>     <E> <u>     : "€" # 20AC : EURO
+<Multi_key> <equal> <R>     : "₽" # 20BD : RUBLE
+<Multi_key> <equal> <P>     : "₽" # 20BD : RUBLE

@@ -1,0 +1,10 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/.overrides/mpc
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+if [ "${1}" = play ] && [ -z "$(/bin/mpc --quiet current)" ]; then
+	/bin/mpc --quiet clear
+	/bin/mpc --quiet load all
+fi
+
+exec /bin/mpc "${@}"

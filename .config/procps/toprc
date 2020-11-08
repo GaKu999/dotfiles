@@ -1,0 +1,20 @@
+top's Config File (Linux processes with windows)
+Id:i, Mode_altscr=1, Mode_irixps=1, Delay_time=2.000, Curwin=0
+CPU	fieldscur=¥¨·Å&K;=@:93456DF')*+,-./0128<>?ABCGHIJLMNOPQRSTUVWXYZ[\]^_`abcdefghij
+	winflags=180020, sortindx=18, maxtasks=0, graph_cpus=1, graph_mems=1
+	summclr=6, msgsclr=2, headclr=7, taskclr=6
+MEM	fieldscur=¥¨ºÅ&7934D;=@<')*+,-./012568>?ABCFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghij
+	winflags=180148, sortindx=21, maxtasks=0, graph_cpus=1, graph_mems=1
+	summclr=3, msgsclr=2, headclr=7, taskclr=3
+THR	fieldscur=¥¨ÄÅ43:;<=>?@AMBNC7&')*+,-./0125689FGHIJKLOPQRSTUVWXYZ[\]^_`abcdefghij
+	winflags=180022, sortindx=32, maxtasks=0, graph_cpus=1, graph_mems=1
+	summclr=4, msgsclr=2, headclr=7, taskclr=4
+USR	fieldscur=¥¨°Å&'*97:D)+,-./1234568;<=>?@ABCFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghij
+	winflags=179764, sortindx=3, maxtasks=0, graph_cpus=1, graph_mems=1
+	summclr=1, msgsclr=2, headclr=7, taskclr=1
+Fixed_widest=0, Summ_mscale=2, Task_mscale=1, Zero_suppress=1
+
+pipe	Open Files	lsof -P -p %d 2>&1
+file	NUMA Info	/proc/%d/numa_maps
+pipe	Status	cat /proc/%d/status | expand -
+pipe	Trace	strace -p %d 2>&1

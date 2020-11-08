@@ -1,0 +1,13 @@
+#!/bin/sh
+# ${XDG_CONFIG_HOME}/X11/clean
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?} ${XDG_RUNTIME_DIR:?} ${XDG_VTNR:?}
+
+systemctl --user stop graphical-session.target
+
+for file in "${XDG_CONFIG_HOME:-${HOME}/.config}/X11/clean.d"/*.sh; do
+	. "${file}"
+done
+
+xauth -f "${XDG_RUNTIME_DIR}/Xauth" remove ":${XDG_VTNR}"

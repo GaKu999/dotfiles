@@ -1,0 +1,305 @@
+# ${XDG_CONFIG_HOME}/X11/compose.d/symbols
+# vim:ft=conf:fenc=utf-8:
+
+# PUNCTUATION
+<Multi_key>          <1> <N>          : " " # 2002 : EN SPACE
+<Multi_key>          <1> <M>          : " " # 2003 : EM SPACE
+<Multi_key>          <3> <M>          : " " # 2004 : THREE-PER-EM SPACE
+<Multi_key>          <4> <M>          : " " # 2005 : FOUR-PER-EM SPACE
+<Multi_key>          <6> <M>          : " " # 2006 : SIX-PER-EM SPACE
+<Multi_key>          <1> <T>          : " " # 2009 : THIN SPACE
+<Multi_key>          <1> <H>          : " " # 200A : HAIR SPACE
+<Multi_key>      <minus> <1>          : "‐" # 2010 : HYPHEN
+<Multi_key>      <minus> <N>          : "–" # 2013 : EN DASH
+<Multi_key>      <minus> <M>          : "—" # 2014 : EM DASH
+<Multi_key>      <minus> <3>          : "―" # 2015 : HORIZONTAL BAR
+<Multi_key>     <exclam> <2>          : "‖" # 2016 : DOUBLE VERTICAL LINE
+<Multi_key>      <equal> <2>          : "‗" # 2017 : DOUBLE LOW LINE
+<Multi_key> <apostrophe> <6>          : "‘" # 2018 : LEFT SINGLE QUOTATION MARK
+<Multi_key> <apostrophe> <9>          : "’" # 2019 : RIGHT SINGLE QUOTATION MARK
+<Multi_key>     <period> <9>          : "‚" # 201A : SINGLE LOW-9 QUOTATION MARK
+<Multi_key>          <9> <apostrophe> : "‛" # 201B : SINGLE HIGH-REVERSED-9 QUOTATION MARK
+<Multi_key>   <quotedbl> <6>          : "“" # 201C : LEFT DOUBLE QUOTATION MARK
+<Multi_key>   <quotedbl> <9>          : "”" # 201D : RIGHT DOUBLE QUOTATION MARK
+<Multi_key>      <colon> <9>          : "„" # 201E : DOUBLE LOW-9 QUOTATION MARK
+<Multi_key>          <9> <quotedbl>   : "‟" # 201F : DOUBLE HIGH-REVERSED-9 QUOTATION MARK
+<Multi_key>      <slash> <minus>      : "†" # 2020 : DAGGER
+<Multi_key>      <slash> <equal>      : "‡" # 2021 : DOUBLE DAGGER
+<Multi_key>          <o> <o>          : "•" # 2022 : BULLET
+<Multi_key>          <S> <t>          : "‣" # 2023 : TRIANGULAR BULLET
+<Multi_key>     <period> <period>     : "‥" # 2025 : TWO DOT LEADER
+<Multi_key>      <comma> <period>     : "…" # 2026 : HORIZONTAL ELLIPSIS
+<Multi_key>    <percent> <0>          : "‰" # 2030 : PER MILLE SIGN
+<Multi_key>          <1> <apostrophe> : "′" # 2032 : PRIME
+<Multi_key>          <2> <apostrophe> : "″" # 2033 : DOUBLE PRIME
+<Multi_key>          <3> <apostrophe> : "‴" # 2034 : TRIPLE PRIME
+<Multi_key>          <1> <quotedbl>   : "‵" # 2035 : REVERSED PRIME
+<Multi_key>          <2> <quotedbl>   : "‶" # 2036 : REVERSED DOUBLE PRIME
+<Multi_key>          <3> <quotedbl>   : "‷" # 2037 : REVERSED TRIPLE PRIME
+<Multi_key>          <C> <a>          : "‸" # 2038 : CARET
+<Multi_key>       <less> <1>          : "‹" # 2039 : SINGLE LEFT-POINTING ANGLE QUOTATION MARK
+<Multi_key>    <greater> <1>          : "›" # 203A : SINGLE RIGHT-POINTING ANGLE QUOTATION MARK
+<Multi_key>      <colon> <X>          : "※" # 203B : REFERENCE MARK
+<Multi_key>     <exclam> <question>   : "‽" # 203D : INTERROBANG
+<Multi_key> <apostrophe> <minus>      : "‾" # 203E : OVERLINE
+<Multi_key>          <S> <minus>      : "⁃" # 2043 : HYPHEN BULLET
+<Multi_key>      <slash> <f>          : "⁄" # 2044 : FRACTION SLASH
+<Multi_key>   <question> <exclam>     : "⸘" # 203D : INVERSE INTERROBANG
+
+# MISC 1
+<Multi_key> <o> <C> : "℃" # 2103 : DEGREE CELSIUS
+<Multi_key> <c> <o> : "℅" # 2105 : CARE OF
+<Multi_key> <o> <F> : "℉" # 2109 : DEGREE FAHRENHEIT
+<Multi_key> <N> <0> : "№" # 2116 : NUMERO
+<Multi_key> <P> <O> : "℗" # 2117 : SOUND RECORDING COPYRIGHT
+<Multi_key> <R> <x> : "℞" # 211E : PRESCRIPTION TAKE
+<Multi_key> <S> <M> : "℠" # 2120 : SERVICE MARK
+<Multi_key> <T> <M> : "™" # 2122 : TRADE MARK
+<Multi_key> <O> <m> : "Ω" # 2126 : OHM
+<Multi_key> <A> <O> : "Å" # 212B : ANGSTROM
+<Multi_key> <1> <3> : "⅓" # 2153 : ONE THIRD
+<Multi_key> <2> <3> : "⅔" # 2154 : TWO THIRDS
+<Multi_key> <1> <5> : "⅕" # 2155 : ONE FIFTH
+<Multi_key> <2> <5> : "⅖" # 2156 : TWO FIFTHS
+<Multi_key> <3> <5> : "⅗" # 2157 : THREE FIFTHS
+<Multi_key> <4> <5> : "⅘" # 2158 : FOUR FIFTHS
+<Multi_key> <1> <6> : "⅙" # 2159 : ONE SIXTH
+<Multi_key> <5> <6> : "⅚" # 215A : FIVE SIXTHS
+<Multi_key> <1> <8> : "⅛" # 215B : ONE EIGHTH
+<Multi_key> <3> <8> : "⅜" # 215C : THREE EIGHTHS
+<Multi_key> <5> <8> : "⅝" # 215D : FIVE EIGHTHS
+<Multi_key> <7> <8> : "⅞" # 215E : SEVEN EIGHTHS
+
+# ARROWS
+<Multi_key>  <less> <minus>   : "←" # 2190 : LEFTWARDS
+<Multi_key> <minus> <exclam>  : "↑" # 2191 : UPWARDS
+<Multi_key> <minus> <greater> : "→" # 2192 : RIGHTWARDS
+<Multi_key> <minus> <v>       : "↓" # 2193 : DOWNWARDS
+<Multi_key>  <less> <greater> : "↔" # 2194 : LEFT RIGHT
+<Multi_key>     <U> <D>       : "↕" # 2195 : UP DOWN
+<Multi_key>  <less> <equal>   : "⇐" # 21D0 : LEFTWARDS DOUBLE
+<Multi_key> <equal> <greater> : "⇒" # 21D2 : RIGHTWARDS DOUBLE
+<Multi_key> <equal> <equal>   : "⇔" # 21D4 : LEFT RIGHT DOUBLE
+
+# MATH
+<Multi_key>          <F> <A>          : "∀" # 2200 : FOR ALL
+<Multi_key>          <d> <P>          : "∂" # 2202 : PARTIAL DIFFERENTIAL
+<Multi_key>          <T> <E>          : "∃" # 2203 : THERE EXISTS
+<Multi_key>      <slash> <0>          : "∅" # 2205 : EMPTY SET
+<Multi_key>          <D> <E>          : "∆" # 2206 : INCREMENT
+<Multi_key>          <N> <B>          : "∇" # 2207 : NABLA
+<Multi_key>  <parenleft> <minus>      : "∈" # 2208 : ELEMENT OF
+<Multi_key>      <minus> <parenright> : "∋" # 220B : CONTAINS AS MEMBER
+<Multi_key>   <asterisk> <P>          : "∏" # 220F : N-ARY PRODUCT
+<Multi_key>       <plus> <Z>          : "∑" # 2211 : N-ARY SUMMATION
+<Multi_key>      <minus> <2>          : "−" # 2212 : MINUS SIGN
+<Multi_key>      <minus> <plus>       : "∓" # 2213 : MINUS-OR-PLUS SIGN
+<Multi_key>   <asterisk> <minus>      : "∗" # 2217 : ASTERISK OPERATOR
+<Multi_key>          <O> <b>          : "∘" # 2218 : RING OPERATOR
+<Multi_key>          <S> <b>          : "∙" # 2219 : BULLET OPERATOR
+<Multi_key>          <R> <T>          : "√" # 221A : SQUARE ROOT
+<Multi_key>          <0> <parenleft>  : "∝" # 221D : PROPORTIONAL TO
+<Multi_key>          <0> <0>          : "∞" # 221E : INFINITY
+<Multi_key>      <minus> <L>          : "∟" # 221F : RIGHT ANGLE
+<Multi_key>      <minus> <V>          : "∠" # 2220 : ANGLE
+<Multi_key>          <P> <P>          : "∥" # 2225 : PARALLEL TO
+<Multi_key>          <A> <N>          : "∧" # 2227 : LOGICAL AND
+<Multi_key>          <O> <R>          : "∨" # 2228 : LOGICAL OR
+<Multi_key>  <parenleft> <U>          : "∩" # 2229 : INTERSECTION
+<Multi_key> <parenright> <U>          : "∪" # 222A : UNION
+<Multi_key>          <I> <n>          : "∫" # 222B : INTEGRAL
+<Multi_key>          <D> <I>          : "∬" # 222C : DOUBLE INTEGRAL
+<Multi_key>          <I> <o>          : "∮" # 222E : CONTOUR INTEGRAL
+<Multi_key>     <period> <colon>      : "∴" # 2234 : THEREFORE
+<Multi_key>      <colon> <period>     : "∵" # 2235 : BECAUSE
+<Multi_key>      <colon> <R>          : "∶" # 2236 : RATIO
+<Multi_key>      <colon> <colon>      : "∷" # 2237 : PROPORTION
+<Multi_key>   <question> <1>          : "∼" # 223C : TILDE OPERATOR
+<Multi_key>          <C> <G>          : "∾" # 223E : INVERTED LAZY S
+<Multi_key>   <question> <minus>      : "≃" # 2243 : ASYMPTOTICALLY EQUAL TO
+<Multi_key>   <question> <equal>      : "≅" # 2245 : APPROXIMATELY EQUAL TO
+<Multi_key>   <question> <2>          : "≈" # 2248 : ALMOST EQUAL TO
+<Multi_key>      <equal> <question>   : "≌" # 224C : ALL EQUAL TO
+<Multi_key>          <H> <I>          : "≓" # 2253 : IMAGE OF OR APPROXIMATELY EQUAL TO
+<Multi_key>     <exclam> <equal>      : "≠" # 2260 : NOT EQUAL TO
+<Multi_key>      <equal> <3>          : "≡" # 2261 : IDENTICAL TO
+<Multi_key>      <equal> <less>       : "≤" # 2264 : LESS-THAN OR EQUAL TO
+<Multi_key>    <greater> <equal>      : "≥" # 2265 : GREATER-THAN OR EQUAL TO
+<Multi_key>       <less> <asterisk>   : "≪" # 226A : MUCH LESS-THAN
+<Multi_key>   <asterisk> <greater>    : "≫" # 226B : MUCH GREATER-THAN
+<Multi_key>     <exclam> <less>       : "≮" # 226E : NOT LESS-THAN
+<Multi_key>     <exclam> <greater>    : "≯" # 226F : NOT GREATER-THAN
+<Multi_key>  <parenleft> <C>          : "⊂" # 2282 : SUBSET OF
+<Multi_key> <parenright> <C>          : "⊃" # 2283 : SUPERSET OF
+<Multi_key>  <parenleft> <underscore> : "⊆" # 2286 : SUBSET OF OR EQUAL TO
+<Multi_key> <parenright> <underscore> : "⊇" # 2287 : SUPERSET OF OR EQUAL TO
+<Multi_key>          <0> <period>     : "⊙" # 2299 : CIRCLED DOT OPERATOR
+<Multi_key>          <0> <2>          : "⊚" # 229A : CIRCLED RING OPERATOR
+<Multi_key>      <minus> <T>          : "⊥" # 22A5 : UP TACK
+<Multi_key>     <period> <P>          : "⋅" # 22C5 : DOT OPERATOR
+<Multi_key>      <colon> <3>          : "⋮" # 22EE : VERTICAL ELLIPSIS
+<Multi_key>     <period> <3>          : "⋯" # 22EF : MIDLINE HORIZONTAL ELLIPSIS
+
+# TECHNICAL
+<Multi_key>         <E> <h>       : "⌂"  # 2302 : HOUSE
+<Multi_key>      <less> <7>       : "⌈"  # 2308 : LEFT CEILING
+<Multi_key>   <greater> <7>       : "⌉"  # 2309 : RIGHT CEILING
+<Multi_key>         <7> <less>    : "⌊"  # 230A : LEFT FLOOR
+<Multi_key>         <7> <greater> : "⌋"  # 230B : RIGHT FLOOR
+<Multi_key>         <N> <I>       : "⌐"  # 2310 : REVERSED NOT SIGN
+<Multi_key> <parenleft> <A>       : "⌒"  # 2312 : ARC
+<Multi_key>         <T> <R>       : "⌕"  # 2315 : TELEPHONE RECORDER
+<Multi_key>         <I> <u>       : "⌠"  # 2320 : TOP HALF INTEGRAL
+<Multi_key>         <I> <l>       : "⌡"  # 2321 : BOTTOM HALF INTEGRAL
+<Multi_key>      <less> <slash>   : "〈" # 2329 : LEFT-POINTING ANGLE BRACKET
+<Multi_key>     <slash> <greater> : "〉" # 232A : RIGHT-POINTING ANGLE BRACKET
+
+# MISC 2
+<Multi_key> <V> <s>      : "␣" # 2423 : OPEN BOX
+<Multi_key> <1> <h>      : "⑀" # 2440 : HOOK
+<Multi_key> <3> <h>      : "⑁" # 2441 : CHAIR
+<Multi_key> <2> <h>      : "⑂" # 2442 : FORK
+<Multi_key> <4> <h>      : "⑃" # 2443 : INVERTED FORK
+<Multi_key> <1> <j>      : "⑆" # 2446 : BRANCH BANK IDENTIFICATION
+<Multi_key> <2> <j>      : "⑇" # 2447 : AMOUNT OF CHECK
+<Multi_key> <3> <j>      : "⑈" # 2448 : DASH
+<Multi_key> <4> <j>      : "⑉" # 2449 : CUSTOMER ACCOUNT NUMBER
+<Multi_key> <1> <period> : "⒈" # 2488 : ONE FULL STOP
+<Multi_key> <2> <period> : "⒉" # 2489 : TWO FULL STOP
+<Multi_key> <3> <period> : "⒊" # 248A : THREE FULL STOP
+<Multi_key> <4> <period> : "⒋" # 248B : FOUR FULL STOP
+<Multi_key> <5> <period> : "⒌" # 248C : FIVE FULL STOP
+<Multi_key> <6> <period> : "⒍" # 248D : SIX FULL STOP
+<Multi_key> <7> <period> : "⒎" # 248E : SEVEN FULL STOP
+<Multi_key> <8> <period> : "⒏" # 248F : EIGHT FULL STOP
+<Multi_key> <9> <period> : "⒐" # 2490 : NINE FULL STOP
+
+# DRAWING
+<Multi_key> <h> <h>          : "─" # 2500 : LIGHT HORIZONTAL
+<Multi_key> <H> <H>          : "━" # 2501 : HEAVY HORIZONTAL
+<Multi_key> <v> <v>          : "│" # 2502 : LIGHT VERTICAL
+<Multi_key> <V> <V>          : "┃" # 2503 : HEAVY VERTICAL
+<Multi_key> <3> <minus>      : "┄" # 2504 : LIGHT TRIPLE DASH HORIZONTAL
+<Multi_key> <3> <underscore> : "┅" # 2505 : HEAVY TRIPLE DASH HORIZONTAL
+<Multi_key> <3> <exclam>     : "┆" # 2506 : LIGHT TRIPLE DASH VERTICAL
+<Multi_key> <3> <slash>      : "┇" # 2507 : HEAVY TRIPLE DASH VERTICAL
+<Multi_key> <4> <minus>      : "┈" # 2508 : LIGHT QUADRUPLE DASH HORIZONTAL
+<Multi_key> <4> <underscore> : "┉" # 2509 : HEAVY QUADRUPLE DASH HORIZONTAL
+<Multi_key> <4> <exclam>     : "┊" # 250A : LIGHT QUADRUPLE DASH VERTICAL
+<Multi_key> <4> <slash>      : "┋" # 250B : HEAVY QUADRUPLE DASH VERTICAL
+<Multi_key> <d> <r>          : "┌" # 250C : LIGHT DOWN AND RIGHT
+<Multi_key> <d> <R>          : "┍" # 250D : DOWN LIGHT AND RIGHT HEAVY
+<Multi_key> <D> <r>          : "┎" # 250E : DOWN HEAVY AND RIGHT LIGHT
+<Multi_key> <D> <R>          : "┏" # 250F : HEAVY DOWN AND RIGHT
+<Multi_key> <d> <l>          : "┐" # 2510 : LIGHT DOWN AND LEFT
+<Multi_key> <d> <L>          : "┑" # 2511 : DOWN LIGHT AND LEFT HEAVY
+<Multi_key> <D> <l>          : "┒" # 2512 : DOWN HEAVY AND LEFT LIGHT
+<Multi_key> <L> <D>          : "┓" # 2513 : HEAVY DOWN AND LEFT
+<Multi_key> <u> <r>          : "└" # 2514 : LIGHT UP AND RIGHT
+<Multi_key> <u> <R>          : "┕" # 2515 : UP LIGHT AND RIGHT HEAVY
+<Multi_key> <U> <r>          : "┖" # 2516 : UP HEAVY AND RIGHT LIGHT
+<Multi_key> <U> <R>          : "┗" # 2517 : HEAVY UP AND RIGHT
+<Multi_key> <u> <l>          : "┘" # 2518 : LIGHT UP AND LEFT
+<Multi_key> <u> <L>          : "┙" # 2519 : UP LIGHT AND LEFT HEAVY
+<Multi_key> <U> <l>          : "┚" # 251A : UP HEAVY AND LEFT LIGHT
+<Multi_key> <U> <L>          : "┛" # 251B : HEAVY UP AND LEFT
+<Multi_key> <v> <r>          : "├" # 251C : LIGHT VERTICAL AND RIGHT
+<Multi_key> <v> <R>          : "┝" # 251D : VERTICAL LIGHT AND RIGHT HEAVY
+<Multi_key> <V> <r>          : "┠" # 2520 : VERTICAL HEAVY AND RIGHT LIGHT
+<Multi_key> <V> <R>          : "┣" # 2523 : HEAVY VERTICAL AND RIGHT
+<Multi_key> <v> <l>          : "┤" # 2524 : LIGHT VERTICAL AND LEFT
+<Multi_key> <v> <L>          : "┥" # 2525 : VERTICAL LIGHT AND LEFT HEAVY
+<Multi_key> <V> <l>          : "┨" # 2528 : VERTICAL HEAVY AND LEFT LIGHT
+<Multi_key> <V> <L>          : "┫" # 252B : HEAVY VERTICAL AND LEFT
+<Multi_key> <d> <h>          : "┬" # 252C : LIGHT DOWN AND HORIZONTAL
+<Multi_key> <d> <H>          : "┯" # 252F : DOWN LIGHT AND HORIZONTAL HEAVY
+<Multi_key> <D> <h>          : "┰" # 2530 : DOWN HEAVY AND HORIZONTAL LIGHT
+<Multi_key> <D> <H>          : "┳" # 2533 : HEAVY DOWN AND HORIZONTAL
+<Multi_key> <u> <h>          : "┴" # 2534 : LIGHT UP AND HORIZONTAL
+<Multi_key> <u> <H>          : "┷" # 2537 : UP LIGHT AND HORIZONTAL HEAVY
+<Multi_key> <U> <h>          : "┸" # 2538 : UP HEAVY AND HORIZONTAL LIGHT
+<Multi_key> <U> <H>          : "┻" # 253B : HEAVY UP AND HORIZONTAL
+<Multi_key> <v> <h>          : "┼" # 253C : LIGHT VERTICAL AND HORIZONTAL
+<Multi_key> <v> <H>          : "┿" # 253F : VERTICAL LIGHT AND HORIZONTAL HEAVY
+<Multi_key> <V> <h>          : "╂" # 2542 : VERTICAL HEAVY AND HORIZONTAL LIGHT
+<Multi_key> <V> <H>          : "╋" # 254B : HEAVY VERTICAL AND HORIZONTAL
+<Multi_key> <F> <D>          : "╱" # 2571 : LIGHT DIAGONAL UPPER RIGHT TO LOWER LEFT
+<Multi_key> <B> <D>          : "╲" # 2572 : LIGHT DIAGONAL UPPER LEFT TO LOWER RIGHT
+
+# BLOCK
+<Multi_key>        <T> <B> : "▀" # 2580 : UPPER HALF BLOCK
+<Multi_key>        <L> <B> : "▄" # 2584 : LOWER HALF BLOCK
+<Multi_key>        <F> <B> : "█" # 2588 : FULL BLOCK
+<Multi_key>        <l> <B> : "▌" # 258C : LEFT HALF BLOCK
+<Multi_key>        <R> <B> : "▐" # 2590 : RIGHT HALF BLOCK
+<Multi_key>   <period> <S> : "░" # 2591 : LIGHT SHADE
+<Multi_key>    <colon> <S> : "▒" # 2592 : MEDIUM SHADE
+<Multi_key> <question> <S> : "▓" # 2593 : DARK SHADE
+
+# SHAPES
+<Multi_key> <f> <S> : "■" # 25A0 : BLACK SQUARE
+<Multi_key> <O> <S> : "□" # 25A1 : WHITE SQUARE
+<Multi_key> <R> <O> : "▢" # 25A2 : WHITE SQUARE WITH ROUNDED CORNERS
+<Multi_key> <R> <r> : "▣" # 25A3 : WHITE SQUARE CONTAINING BLACK SMALL SQUARE
+<Multi_key> <R> <F> : "▤" # 25A4 : SQUARE WITH HORIZONTAL FILL
+<Multi_key> <R> <Y> : "▥" # 25A5 : SQUARE WITH VERTICAL FILL
+<Multi_key> <R> <H> : "▦" # 25A6 : SQUARE WITH ORTHOGONAL CROSSHATCH FILL
+<Multi_key> <R> <Z> : "▧" # 25A7 : SQUARE WITH UPPER LEFT TO LOWER RIGHT FILL
+<Multi_key> <R> <K> : "▨" # 25A8 : SQUARE WITH UPPER RIGHT TO LOWER LEFT FILL
+<Multi_key> <R> <X> : "▩" # 25A9 : SQUARE WITH DIAGONAL CROSSHATCH FILL
+<Multi_key> <s> <B> : "▪" # 25AA : BLACK SMALL SQUARE
+<Multi_key> <S> <R> : "▬" # 25AC : BLACK RECTANGLE
+<Multi_key> <O> <r> : "▭" # 25AD : WHITE RECTANGLE
+<Multi_key> <U> <T> : "▲" # 25B2 : BLACK UP-POINTING TRIANGLE
+<Multi_key> <u> <T> : "△" # 25B3 : WHITE UP-POINTING TRIANGLE
+<Multi_key> <P> <R> : "▶" # 25B6 : BLACK RIGHT-POINTING TRIANGLE
+<Multi_key> <T> <r> : "▷" # 25B7 : WHITE RIGHT-POINTING TRIANGLE
+<Multi_key> <D> <t> : "▼" # 25BC : BLACK DOWN-POINTING TRIANGLE
+<Multi_key> <d> <T> : "▽" # 25BD : WHITE DOWN-POINTING TRIANGLE
+<Multi_key> <P> <L> : "◀" # 25C0 : BLACK LEFT-POINTING TRIANGLE
+<Multi_key> <T> <l> : "◁" # 25C1 : WHITE LEFT-POINTING TRIANGLE
+<Multi_key> <D> <b> : "◆" # 25C6 : BLACK DIAMOND
+<Multi_key> <D> <w> : "◇" # 25C7 : WHITE DIAMOND
+<Multi_key> <L> <Z> : "◊" # 25CA : LOZENGE
+<Multi_key> <0> <m> : "○" # 25CB : WHITE CIRCLE
+<Multi_key> <0> <o> : "◎" # 25CE : BULLSEYE
+<Multi_key> <0> <M> : "●" # 25CF : BLACK CIRCLE
+<Multi_key> <0> <L> : "◐" # 25D0 : CIRCLE WITH LEFT HALF BLACK
+<Multi_key> <0> <R> : "◑" # 25D1 : CIRCLE WITH RIGHT HALF BLACK
+<Multi_key> <S> <n> : "◘" # 25D8 : INVERSE BULLET
+<Multi_key> <I> <c> : "◙" # 25D9 : INVERSE WHITE CIRCLE
+<Multi_key> <F> <d> : "◢" # 25E2 : BLACK LOWER RIGHT TRIANGLE
+<Multi_key> <B> <d> : "◣" # 25E3 : BLACK LOWER LEFT TRIANGLE
+<Multi_key> <S> <w> : "◦" # 25E6 : WHITE BULLET
+
+# MISC 3
+<Multi_key> <ampersand> <3> : "☃"  # 2603 : SNOWMAN
+<Multi_key>  <asterisk> <2> : "★"  # 2605 : BLACK STAR
+<Multi_key>  <asterisk> <1> : "☆"  # 2606 : WHITE STAR
+<Multi_key>      <less> <H> : "☜"  # 261C : WHITE LEFT POINTING INDEX
+<Multi_key>   <greater> <H> : "☞"  # 261E : WHITE RIGHT POINTING INDEX
+<Multi_key>         <0> <u> : "☺"  # 263A : WHITE SMILING FACE
+<Multi_key>         <0> <U> : "☻"  # 263B : BLACK SMILING FACE
+<Multi_key>         <S> <U> : "☼"  # 263C : WHITE SUN WITH RAYS
+<Multi_key>         <F> <m> : "♀"  # 2640 : FEMALE SIGN
+<Multi_key>         <M> <l> : "♂"  # 2642 : MALE SIGN
+<Multi_key>         <c> <S> : "♠"  # 2660 : BLACK SPADE SUIT
+<Multi_key>         <c> <H> : "♡"  # 2661 : WHITE HEART SUIT
+<Multi_key>         <c> <D> : "♢"  # 2662 : WHITE DIAMOND SUIT
+<Multi_key>         <c> <C> : "♣"  # 2663 : BLACK CLUB SUIT
+<Multi_key>         <M> <d> : "♩"  # 2669 : QUARTER NOTE
+<Multi_key>         <M> <8> : "♪"  # 266A : EIGHTH NOTE
+<Multi_key>         <M> <2> : "♫"  # 266B : BEAMED EIGHTH NOTES
+<Multi_key>         <M> <b> : "♭"  # 266D : MUSIC FLAT SIGN
+<Multi_key>         <M> <x> : "♮"  # 266E : MUSIC NATURAL SIGN
+<Multi_key>         <M> <X> : "♯"  # 266F : MUSIC SHARP SIGN
+<Multi_key> <ampersand> <2> : "⛄" # 26C4 : SNOWMAN WITHOUT SNOW
+<Multi_key> <ampersand> <1> : "⛇"  # 26C7 : BLACK SNOWMAN
+
+# DINGS
+<Multi_key>     <O> <K> : "✓" # 2713 : CHECK MARK
+<Multi_key>     <X> <X> : "✗" # 2717 : BALLOT X
+<Multi_key> <minus> <X> : "✠" # 2720 : MALTESE CROSS
+
+# MISC 4
+<Multi_key> <asterisk> <f> : "✻" # 273B : SNOWFLAKE

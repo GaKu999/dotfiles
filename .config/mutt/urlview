@@ -1,0 +1,9 @@
+# ${XDG_CONFIG_HOME}/mutt/urlview
+# vim:ft=muttrc:fenc=utf-8:
+
+macro index,pager \Cb \
+	"<enter-command> set my_pdsave=\$pipe_decode<enter> \
+	<enter-command> unset pipe_decode<enter> \
+	<pipe-message>extract_url<enter> \
+	<enter-command> set pipe_decode=\$my_pdsave<enter>" \
+	"get URLs"

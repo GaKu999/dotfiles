@@ -1,0 +1,3 @@
+.config/msmtp/config filter=msmtp-redact-private-info
+.config/notmuch.conf filter=notmuch-redact-private-info
+.config/mbsync.conf  filter=mbsync-redact-private-info

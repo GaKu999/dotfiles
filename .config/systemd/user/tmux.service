@@ -1,0 +1,29 @@
+# ${XDG_CONFIG_HOME}/systemd/user/tmux.service
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Terminal multiplexer daemon
+Documentation=man:tmux(1)
+
+[Service]
+ExecStart=%h/.local/bin/.overrides/tmux -D
+
+Restart=always
+RestartSec=5
+
+StandardInput=null
+StandardOutput=null
+StandardError=null
+
+LockPersonality=true
+NoNewPrivileges=true
+ProtectProc=invisible
+ProtectSystem=full
+RestrictSUIDSGID=true
+
+MemoryHigh=6G
+MemoryMax=8G
+TasksMax=2500
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,21 @@
+# ${XDG_CONFIG_HOME}/systemd/user/mbsync.service
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Mailbox Sync
+Documentation=man:mbsync(1)
+
+[Service]
+Type=oneshot
+ExecStart=-%h/.local/bin/.overrides/mbsync --all
+ExecStartPost=/usr/bin/notmuch new
+
+StandardInput=null
+StandardOutput=null
+StandardError=null
+
+LockPersonality=true
+NoNewPrivileges=true
+ProtectProc=invisible
+ProtectSystem=full
+RestrictSUIDSGID=true

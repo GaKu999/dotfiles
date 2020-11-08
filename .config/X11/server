@@ -1,0 +1,7 @@
+#!/bin/sh
+# ${XDG_CONFIG_HOME}/X11/server
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${XDG_RUNTIME_DIR:?} ${XDG_VTNR:?}
+
+exec /usr/lib/Xorg ":${XDG_VTNR}" "vt${XDG_VTNR}" -auth "${XDG_RUNTIME_DIR}/Xauth" -keeptty -logfile /dev/null -nolisten tcp -noreset -novtswitch -quiet

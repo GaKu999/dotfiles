@@ -1,0 +1,8 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/choice
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${1:?}
+
+reply="$(printf '%s\n' Yes No | bemenu --prompt "${1}")"
+[[ -n "${reply}" && "${reply}" == [Yy]* ]] || exit 1

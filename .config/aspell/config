@@ -1,0 +1,16 @@
+# ${XDG_CONFIG_HOME}/aspell/config
+# vim:ft=conf:fenc=utf-8:
+
+home-dir /home/gaku/.config/aspell
+
+lang     en
+master   en
+personal en.pws
+repl     en.prepl
+
+camel-case   true
+guess        true
+ignore-case  true
+run-together true
+
+sug-mode ultra

@@ -1,0 +1,31 @@
+# ${XDG_CONFIG_HOME}/systemd/user/terminald.service
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Terminal daemon
+PartOf=graphical-session.target
+After=graphical-session-pre.target
+
+[Service]
+ExecStart=%h/.local/bin/launchy terminald terminal termux
+PIDFile=%t/launchy/terminald.pid
+
+Restart=always
+RestartSec=0
+
+StandardInput=null
+StandardOutput=null
+StandardError=null
+
+LockPersonality=true
+NoNewPrivileges=true
+ProtectProc=invisible
+ProtectSystem=full
+RestrictSUIDSGID=true
+
+MemoryHigh=4G
+MemoryMax=6G
+TasksMax=2000
+
+[Install]
+WantedBy=graphical-session-pre.target

@@ -1,0 +1,30 @@
+# ${XDG_CONFIG_HOME}/systemd/user/xdg-open-daemon.service
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=Daemon helper for xdg-open inside a sandbox
+PartOf=graphical-session.target
+After=graphical-session-pre.target
+
+[Service]
+ExecStart=%h/.local/bin/xdg-open-daemon
+
+Restart=always
+RestartSec=5
+
+StandardInput=null
+StandardOutput=null
+StandardError=null
+
+LockPersonality=true
+NoNewPrivileges=true
+ProtectProc=invisible
+ProtectSystem=full
+RestrictSUIDSGID=true
+
+MemoryHigh=4G
+MemoryMax=6G
+TasksMax=4000
+
+[Install]
+WantedBy=graphical-session-pre.target

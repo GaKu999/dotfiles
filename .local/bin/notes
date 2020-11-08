@@ -1,0 +1,55 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/notes
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+notes_dir="${XDG_DATA_HOME:-${HOME}/.local/share}/notes"
+mkdir --parents -- "${notes_dir}"
+
+_usage() {
+	echo 'Usage: notes [-h|--help] [mk NOTE]|[ed NOTES...]|[pr NOTE]|[mv FROM TO]|[rm NOTE...]|[NOTE...]'
+	exit "${1:-0}"
+}
+
+_edit() {
+	: ${@:?}
+	mapfile -t notes < <(printf "${notes_dir}/%s\n" "${@}")
+	mkdir --parents -- "${notes[@]%/*}"
+	vim -- "${notes[@]}"
+}
+
+if ! (("${#}")); then
+	if [[ -s "${notes_dir}" ]]; then
+		echo Notes
+		tree -C -l --noreport -- "${notes_dir}" | tail --lines +2
+	fi
+	exit 0
+fi
+
+case "${1}" in
+mk) : ${2:?}; _edit "${2}" ;;
+ed) : ${2:?}; _edit "${@:2}" ;;
+pr) : ${2:?}; tee -- "${notes_dir}/${2}" ;;
+mv)
+	: ${2:?} ${3:?}
+	source="${notes_dir}/${2}"
+	target="${notes_dir}/${3}"
+	mkdir --parents -- "${target%/*}"
+	mv -- "${source}" "${target}"
+	rmdir --parents --ignore-fail-on-non-empty -- "${source%/*}"
+;;
+rm)
+	: ${2:?}
+	mapfile -t notes < <(printf "${notes_dir}/%s\n" "${@:2}")
+	rm -- "${notes[@]}"
+	rmdir --parents --ignore-fail-on-non-empty -- "${notes[@]%/*}"
+;;
+-h|--help) _usage
+;;
+*)
+	: ${@:?}
+	mapfile -t notes < <(printf "${notes_dir}/%s\n" "${@}")
+	less -- "${notes[@]}"
+;;
+esac

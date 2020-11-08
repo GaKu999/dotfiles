@@ -1,0 +1,7 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/terminal
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${SHELL:?} ${TERMINAL:?}
+
+exec ${TERMINAL} -e "${@:-${SHELL}}"

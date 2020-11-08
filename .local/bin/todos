@@ -1,0 +1,28 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/todos
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+todos_file="${XDG_DATA_HOME:-${HOME}/.local/share}/todos"
+mkdir --parents -- "${todos_file%/*}"
+touch -- "${todos_file}"
+
+_usage() {
+	echo 'Usage: todos [-h] [add TASK...|clear|delete [INDEX]|edit]'
+	exit "${1:-0}"
+}
+
+if ! (("${#}")); then
+	nl -b a -h a -s ': ' -w 1 -- "${todos_file}"
+	exit 0
+fi
+
+case "${1}" in
+add) : ${2:?}; echo "${@:2}" >>"${todos_file}" ;;
+clear) </dev/null >|"${todos_file}" ;;
+delete) sed -i -- "${2:-0}d" "${todos_file}" ;;
+edit) vim -- "${todos_file}" ;;
+-h|--help) _usage ;;
+*) _usage 2 ;;
+esac

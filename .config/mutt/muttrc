@@ -1,0 +1,133 @@
+# ${XDG_CONFIG_HOME}/mutt/muttrc
+# vim:ft=muttrc:fenc=utf-8:
+
+set editor        = "vim -c 'set ft=mail' -c '+/^--.$/-1'"
+set ispell        = "aspell -e -c"
+set print_command = "notes pr mail"
+
+set alias_file   = "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/abook/aliases/mutt`"
+set mailcap_path = "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/mailcap`"
+set signature    = "fortune -s |"
+
+set mail_check = 0
+set timeout    = 5
+set beep_new
+set delete
+set pipe_decode
+set reverse_alias
+set text_flowed
+unset confirmappend
+unset confirmcreate
+unset help
+unset imap_peek
+unset maildir_trash
+unset mark_old
+
+set certificate_file = "`echo ${XDG_CACHE_HOME:-${HOME}/.cache}/mutt/certificates`"
+set header_cache     = "`echo ${XDG_CACHE_HOME:-${HOME}/.cache}/mutt/headers`"
+set message_cachedir = "`echo ${XDG_CACHE_HOME:-${HOME}/.cache}/mutt/messages`"
+set tmpdir           = "`mkdir --parents -- ${XDG_RUNTIME_DIR}/mutt; echo ${XDG_RUNTIME_DIR}/mutt`"
+
+set folder    = "`echo ${HOME}/.local/mail`"
+set spoolfile = "+LOCAL/INBOX"
+
+mailboxes +LOCAL/INBOX +LOCAL/SENT +LOCAL/DRAFT +LOCAL/ARCHIVE +LOCAL/TRASH
+mailboxes +GMAIL/PUBLIC/INBOX +GMAIL/PUBLIC/SENT +GMAIL/PUBLIC/DRAFT +GMAIL/PUBLIC/ARCHIVE +GMAIL/PUBLIC/TRASH +GMAIL/PUBLIC/SPAM
+mailboxes +GMAIL/PRIVATE/INBOX +GMAIL/PRIVATE/SENT +GMAIL/PRIVATE/DRAFT +GMAIL/PRIVATE/ARCHIVE +GMAIL/PRIVATE/TRASH +GMAIL/PRIVATE/SPAM
+mailboxes +BACKUP/GMAIL/PUBLIC +BACKUP/GMAIL/PRIVATE
+
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set sort         = "threads"
+set sort_aux     = "reverse-last-date-received"
+set uncollapse_jump
+
+alternative_order text/plain text/html
+auto_view text/html
+set pager_context     = 5
+set pager_index_lines = 10
+set quote_regexp      = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set menu_scroll
+set pager_stop
+set tilde
+unset markers
+
+set date_format   = "%x %X"
+set index_format  = "%3C:%?X?A& ?:%S:%-17D:   %-40.40L   %-40.40s %> %c"
+set pager_format  = "Reading message %C of %m %> [%P]"
+set folder_format = "%2C:%t:%N:%D:   %-35f %> %8s"
+set status_format = " %?M?%M/?%m Mails%?n?, %n new?%?u?, %u unread?%?p?, %p drafts?%?t?, %t tagged?%?d?, %d deleted? %> %?V?Match '%V'? [%P] [%f %l] "
+set alias_format  = "%4n %t %-20a %r"
+
+set forward_format = "Fwd: %s"
+set sendmail_wait  = -1
+set askcc
+set attribution
+set edit_headers
+set envelope_from
+set fast_reply
+set forward_quote
+set include
+set mime_forward
+set reply_to
+set reverse_name
+
+ignore *
+unignore  from: to: cc: date: subject:
+hdr_order from: to: cc: date: subject:
+
+bind index,pager \# noop
+bind index i        noop
+bind index d        noop
+
+bind attach <return> view-mailcap
+bind compose p       pgp-menu
+bind index D         purge-message
+bind index G         last-entry
+bind index J         next-unread
+bind index K         previous-unread
+bind index W         clear-flag
+bind index gg        first-entry
+bind index w         set-flag
+bind index,pager R   group-reply
+bind pager /         search
+bind pager <down>    next-line
+bind pager <up>      previous-line
+bind pager G         bottom
+bind pager J         next-undeleted
+bind pager K         previous-undeleted
+bind pager gg        top
+bind pager j         next-line
+bind pager k         previous-line
+bind pager q         exit
+
+macro index B "<limit>~b " "filter messages"
+
+macro index,pager <F1> \
+	"<shell-escape>w3m \"file:///usr/share/doc/mutt/manual.html\"<enter>" \
+	"show the documentation"
+
+macro index,pager <F2> \
+	"<enter-command>toggle help<enter> \
+	<enter-command>set ?help<enter>" \
+	"toggle help status line"
+
+macro index,pager <F5> \
+	"<enter-command>source \"`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/config`\"<enter>" \
+	"reload the configuration"
+
+macro index \Cr \
+	"<tag-pattern>~N<enter> \
+	<tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+	"new messages as read"
+
+source "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/colors`"
+
+source "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/abook`"
+source "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/gpg`"
+source "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/isync`"
+source "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/notmuch`"
+source "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/urlview`"
+
+folder-hook LOCAL/*         source "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/local`"
+folder-hook GMAIL/PUBLIC/*  source "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/gmail-public`"
+folder-hook GMAIL/PRIVATE/* source "`echo ${XDG_CONFIG_HOME:-${HOME}/.config}/mutt/gmail-private`"

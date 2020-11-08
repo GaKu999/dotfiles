@@ -1,0 +1,7 @@
+#!/bin/sh
+# ${XDG_BIN_DIR}/.overrides/curl
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?}
+
+exec /bin/curl --config "${XDG_CONFIG_HOME:-${HOME}/.config}/curl.conf" "${@}"

@@ -1,0 +1,5 @@
+#!/bin/bash
+# ${XDG_BIN_DIR}/lookup
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+exec ddgr --num 1 -- "${@}"

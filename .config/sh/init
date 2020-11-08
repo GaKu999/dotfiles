@@ -1,0 +1,47 @@
+#!/hint/sh
+# ${XDG_CONFIG_HOME}/sh/init
+# vim:ft=sh:fenc=utf-8:noet:ts=3:sw=3:
+
+export GPG_TTY="$(tty)"
+
+case "${-}" in
+*i*) : ;;
+*) return 0 ;;
+esac
+
+: ${HOME:?}
+
+if [ "${0##*/}" = sh ] || [ -n "${POSIXLY_CORRECT}" ]; then
+	. "${XDG_CONFIG_HOME:-${HOME}/.config}/sh/alias"
+	. "${XDG_CONFIG_HOME:-${HOME}/.config}/sh/functions"
+fi
+
+stty -ixon
+stty start undef
+stty stop undef
+
+set -o vi
+set -o noclobber
+
+lesscap() {
+	: ${1:?} ${2:?}
+	export LESS_TERMCAP_${1}="$(printf '\033[%sm' "${2}")"
+}
+
+lesscap mb '1;31'
+lesscap md '1;34'
+lesscap me '0'
+lesscap se '0'
+lesscap so '1;37'
+lesscap ue '0'
+lesscap us '1;36'
+
+unset -f lesscap
+
+eval "$(dircolors -b -- "${XDG_CONFIG_HOME:-${HOME}/.config}/dircolors.conf")"
+
+unset -v HISTFILE
+
+PS1='\$ '
+PS2='\\ '
+PS4='+ '

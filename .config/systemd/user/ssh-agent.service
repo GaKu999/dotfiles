@@ -1,0 +1,13 @@
+# ${XDG_CONFIG_HOME}/systemd/user/ssh-agent.service
+# vim:ft=dosini:fenc=utf-8:
+
+[Unit]
+Description=SSH agent
+Documentation=man:ssh-agent(1)
+
+[Service]
+ExecStart=/usr/bin/ssh-agent -a %t/ssh-agent -D -t 604800
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

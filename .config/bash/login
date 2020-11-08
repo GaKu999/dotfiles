@@ -1,0 +1,38 @@
+#!/hint/bash
+# ${XDG_CONFIG_HOME}/bash/login
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+
+: ${HOME:?} ${XDG_VTNR:?}
+
+. "${XDG_CONFIG_HOME:-${HOME}/.config}/sh/login"
+
+trap '. "${XDG_CONFIG_HOME:-${HOME}/.config}/bash/logout"' EXIT
+
+case "${XDG_VTNR}" in
+1)
+	while :; do
+		PS3='Select protocol: '
+		select protocol in Wayland X11; do
+			case "${protocol}" in
+				Wayland) wrapper Waynit ;;
+				X11) Xinit ;;
+			esac
+			break
+		done
+
+		clear
+		read -p 'Restart WM? [Y/n]: ' reply
+		case "${reply}" in
+		[Nn]*) break ;;
+		esac
+	done
+	logout
+;;
+2)
+	tmux has -t tty >/dev/null 2>&1 || tmux new -d -s tty
+	tmux attach -t tty
+	logout
+;;
+esac
+
+. "${BASH_ENV:-${XDG_CONFIG_HOME:-${HOME}/.config}/bash/init}"
