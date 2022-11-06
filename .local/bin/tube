@@ -1,0 +1,119 @@
+#!/bin/bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/tube
+#==============================================================================#
+
+
+set -a
+: ${XDG_DOWNLOAD_DIR:=$HOME/Downloads}
+set +a
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+# [$1: EXIT CODE (0)]
+function _usage { local ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg <<ENDUSAGEMSG
+Usage: $_SELF [-dpsw] [-E FORMAT] [-F {a[udio],v[ideo]}] [-R PIXELS] [-P PATH] [{URI,URL,CODE}...]
+
+  -d                    download
+  -p                    playlist
+  -s                    sixel
+  -w                    worst
+
+  -E FORMAT             format
+  -F {a[udio],v[ideo]}  filter
+  -R PIXELS             vertical resolution
+  -P PATH               download path
+
+  -h                    show this information
+ENDUSAGEMSG
+	printf "%s" "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [-dpsw] [-E FORMAT] [-F {a[udio],v[ideo]}] [-R PIXELS] [-P PATH] [{URI,URL,CODE}...]
+function main { local query
+	local download extension filter format out path playlist resolution sixel worst opts
+	local OPT OPTARG OPTIND
+	while getopts ":E:F:R:P:dpswh" OPT; do
+		case "$OPT" in
+			'E') extension="$OPTARG" ;;
+			'F')
+				case "$OPTARG" in
+					[Aa]*) filter="audio" ;;
+					[Vv]*) filter="video" ;;
+					*)
+						echo "$_SELF: invalid filter -- '$OPTARG'" >&2
+						_usage 2
+					;;
+				esac
+			;;
+			'R') resolution="$OPTARG" ;;
+			'P') path="$OPTARG" ;;
+			'd') download=1 ;;
+			'p') playlist=1 ;;
+			's') sixel=1 ;;
+			'w') worst=1 ;;
+			'h') _usage ;;
+			'?')
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':')
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done; shift "$((OPTIND - 1))"; query=("$@")
+	: ${resolution:=1440}
+	: ${path:=$XDG_DOWNLOAD_DIR}
+	if (("${#query[@]}" == 0)); then
+		query=("$(wl-paste)")
+		[[ -n "${query[@]}" ]] || _usage 2
+	fi
+	case "$filter" in
+		audio) ((worst)) && format="worstvideo" || format="bestvideo[height<=?$resolution]" ;;
+		video) ((worst)) && format="worstaudio" || format="bestaudio" ;;
+		*) ((worst)) && format="worstvideo+worstaudio/worst" || format="bestvideo[height<=?$resolution]+bestaudio/best" ;;
+	esac
+	opts=()
+	if ((download)); then
+		if [[ -n "$extension" ]]; then
+			format="($format)[ext=$extension]"
+		fi
+		out="%(title)s.%(ext)s"
+		if ((playlist)); then
+			opts+=("--yes-playlist")
+			out="%(playlist_title)s/%(playlist_index)s-$out"
+		fi
+		exec yt-dlp -i "${opts[@]}" -f "$format" -o "$path/$out" -- "${query[@]}"
+	else
+		if [[ ! -t 0 ]]; then
+			opts+=("--msg-level=all=warn")
+		fi
+		if ((sixel)); then
+			opts+=("--really-quiet" "--vo=sixel")
+		fi
+		if [[ -n "$filter" ]]; then
+			opts+=("--$filter=no")
+		fi
+		exec mpv "${opts[@]}" --save-position-on-quit --ytdl-format="$format" -- "${query[@]}"
+	fi
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

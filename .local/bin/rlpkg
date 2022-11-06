@@ -1,0 +1,125 @@
+#!/bin/bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/rlpkg
+#==============================================================================#
+
+
+source /usr/share/makepkg/integrity/verify_signature.sh
+source /usr/share/makepkg/util/config.sh
+source /usr/share/makepkg/util/message.sh
+
+colorize
+load_makepkg_config
+
+# bail early
+if ((EUID == 0)); then
+	error "running as root is not allowed" >&2
+	exit "$E_ROOT"
+fi
+
+
+#==============================================================================#
+
+
+: ${REPODEST:=/srv/pacman/$USER}
+
+_UMASK="$(umask)"
+umask 0022
+trap 'umask "$_UMASK"' EXIT
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+# [$1: EXIT CODE (0)]
+function _usage { local ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg <<ENDUSAGEMSG
+Usage: $_SELF [-is] [-R {PATH,URL}] [PATH...]
+
+  -i       install package
+  -s       sync remote
+
+  -R REPO  remote repository
+
+  -h       show this information
+ENDUSAGEMSG
+	printf "%s" "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [-is] [-R PATH|URL] [PATH...]
+function main { local path
+	local install sync pkgs index pkg success
+	local OPT OPTARG OPTIND
+	while getopts ":R:ish" OPT; do
+		case "$OPT" in
+			'R') REPODEST="$OPTARG" ;;
+			'i') install=1 ;;
+			's') sync=1 ;;
+			'h') _usage ;;
+			'?')
+				error "invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':')
+				error "missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done; shift "$((OPTIND - 1))"
+	if (("$#")); then
+		index=0
+		for path; do
+			pushd "$path" &>/dev/null
+			mapfile -t -O"$index" pkgs < <(makepkg --packagelist)
+			popd &>/dev/null
+			index="$(("${#pkgs[@]}" + 1))"
+		done; unset -v index
+	elif [[ -f ./PKGBUILD ]]; then
+		mapfile -t pkgs < <(makepkg --packagelist)
+	else
+		error "PKGBUILD does not exist"
+		return 1
+	fi
+	if (("${#pkgs[@]}")); then
+		for pkg in "${pkgs[@]}"; do
+			if [[ -s "$pkg.sig" ]]; then
+				statusfile="$(mktemp -u --tmpdir rlpkg.XXXXXXXX)"
+				gpg -q --batch --status-file "$statusfile" \
+					--verify "$pkg.sig" "$pkg" 2>/dev/null
+				success=0
+				parse_gpg_statusfile "$statusfile"
+				rm -- "$statusfile"
+				if ((success)); then
+					continue
+				fi
+				warning "$pkg: stale signature"
+				rm -- "$pkg.sig"
+			fi
+			gpg -b --sign-with "$PACKAGER" -- "$pkg"
+		done
+		repo-add -s -R -v "$PKGDEST/$USER.db.tar.gz" "${pkgs[@]}"
+		if ((install)); then
+			sudo pacman -U "${pkgs[@]}"
+		fi
+	fi
+	if ((sync)); then
+		rsync -vayP --delay-updates --delete-delay "$PKGDEST" "$REPODEST"
+		rsync -vayP --delay-updates --delete-delay "$SRCPKGDEST" "$REPODEST"
+	fi
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,112 @@
+#!/bin/bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/mimeo-open
+#==============================================================================#
+
+
+set -a
+: ${XDG_DATA_HOME:=$HOME/.local/share}
+: ${XDG_DATA_DIRS:=$XDG_DATA_HOME:/usr/local/share:/usr/share}
+set +a
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+# [$1: EXIT CODE (0)]
+function _usage { local ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg <<ENDUSAGEMSG
+Usage: $_SELF [-cp] [FILE|URL]...
+
+  -c   change the handler
+  -p   prompt before opening
+
+  -h   show this information
+ENDUSAGEMSG
+	printf "%s" "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+function _lsapps {
+	local path apps
+	shopt -s nullglob
+	IFS=':'; for path in $XDG_DATA_DIRS; do
+		apps+=("$path/applications/"*.desktop)
+	done; unset -v IFS
+	apps=("${apps[@]##*/}")
+	apps=("${apps[@]%.desktop}")
+	if (("${#apps[@]}")); then
+		printf "%s\n" "${apps[@]}" | sort -u
+	fi
+}
+
+
+#==============================================================================#
+
+
+# $@: [-cp] [FILE|URL]...
+function main {
+	local change prompt args opts arg
+	local OPT OPTARG OPTIND
+	while getopts ":cph" OPT; do
+		case "$OPT" in
+			'c') change=1 ;;
+			'p') prompt=1 ;;
+			'h') _usage ;;
+			'?')
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':')
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done; shift "$((OPTIND - 1))"
+	if (("$#")); then
+		args=("$@")
+	elif [[ ! -t 0 ]]; then
+		tmpfile="$(mktemp -u --tmpdir xdg-open.XXXXXXXX)"
+		cat >"$tmpfile"
+		trap 'sleep 0.25; rm -- "$tmpfile"' EXIT
+		args=("$tmpfile")
+		opts=("--by-content-only")
+	else
+		_usage 2
+	fi
+	for arg in "${args[@]}"; do
+		if [[ -e "$arg" ]]; then
+			arg="$(realpath -eq -- "$arg")"
+		fi
+		mimetype="$(mimeo -m "${opts[@]}" --swap -- "$arg" | head -n1)"
+		if ((prompt)); then
+			wmenu-prompt "Open $arg [$mimetype]?:" || continue
+		fi
+		if ((change)); then
+			handler="$(_lsapps | wmenu -p"Select handler for [$mimetype]:")"
+			if [[ "$handler" == clear ]]; then
+				mimeo --clear "$mimetype"
+			elif [[ -n "$handler" ]]; then
+				mimeo --clear "$mimetype"
+				mimeo --prefer "$mimetype" "$handler.desktop"
+			fi
+		fi
+		mimeo "${opts[@]}" -- "$arg"
+		sleep 0.25
+	done
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,17 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_CONFIG_HOME/pinentry/preexec
+#==============================================================================#
+
+
+# TODO: better logic?
+if [ -n "$WAYLAND_DISPLAY" ] || [ -n "$DISPLAY" ]; then
+	exec /usr/bin/pinentry-gnome3
+else
+	exec /usr/bin/pinentry-curses
+fi
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
