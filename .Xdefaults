@@ -1,0 +1,74 @@
+! vim:ft=xdefaults:
+! man:xrdb(1)
+! file:$HOME/.Xdefaults
+!==============================================================================!
+
+
+!! cursor
+*cursorBlink: true
+*size:        16
+*theme:       Bibata-Modern-Classic
+
+
+!==============================================================================!
+
+
+!! mirror fontconfig
+*antialias: 1
+*autohint:  0
+*dpi:       96
+*hinting:   1
+*hintstyle: hintfull
+*lcdfilter: lcddefault
+
+!! use sans-serif, let fontconfig handle the rest
+*font:           xft:sans-serif:style=Regular:size=12
+*boldFont:       xft:sans-serif:style=Bold:size=12
+*italicFont:     xft:sans-serif:style=Italic:size=12
+*boldItalicFont: xft:sans-serif:style=Bold Italic:size=12
+*letterSpace:    -1
+
+
+!==============================================================================!
+
+
+!! default colors
+*background: rgb:15/15/15
+*foreground: rgb:d0/d0/d0
+
+!! black
+*color0:  rgb:15/15/15
+*color8:  rgb:50/50/50
+
+!! red
+*color1:  rgb:73/2b/2c
+*color9:  rgb:ac/41/42
+
+!! green
+*color2:  rgb:60/71/3b
+*color10: rgb:90/a9/59
+
+!! yellow
+*color3:  rgb:a3/7f/4e
+*color11: rgb:f4/bf/75
+
+!! blue
+*color4:  rgb:47/6a/79
+*color12: rgb:6a/9f/b5
+
+!! magenta
+*color5:  rgb:71/4e/6a
+*color13: rgb:aa/75/9f
+
+!! cyan
+*color6:  rgb:4e/79/71
+*color14: rgb:75/b5/aa
+
+!! white
+*color7:  rgb:d0/d0/d0
+*color15: rgb:f5/f5/f5
+
+
+!==============================================================================!
+!                                 END OF FILE                                  !
+!==============================================================================!

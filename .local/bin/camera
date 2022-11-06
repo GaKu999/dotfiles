@@ -1,0 +1,90 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/camera
+#==============================================================================#
+
+
+set -a
+: ${XDG_PICTURES_DIR:=$HOME/Pictures}
+: ${XDG_VIDEOS_DIR:=$HOME/Videos}
+set +a
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+_herecat() {
+	local msg line
+	local LFCR="$(printf "%b" "\012\015")"
+	while IFS="$LFCR" read -r line; do
+		msg="$msg$line$LFCR"
+	done
+	printf "%s" "$msg"
+}
+
+# [$1: EXIT CODE (0)]
+_usage() { local ec="${1:-0}"
+	_herecat <<ENDUSAGEMSG
+Usage: $_SELF [-pv (p)] [-D SECONDS]
+
+  -p           take a picture
+  -v           record a video
+
+  -D SECONDS   delay before capture
+
+  -h           show this information
+ENDUSAGEMSG
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [-pv (p)] [-D SECONDS]
+main() {
+	local delay mode out
+	local OPT OPTARG OPTIND
+	while getopts ":D:pvh" OPT; do
+		case "$OPT" in
+			'D') delay="$OPTARG" ;;
+			'p') mode="picture" ;;
+			'v') mode="video" ;;
+			'h') _usage ;;
+			'?')
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':')
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done; shift "$((OPTIND - 1))"
+	: ${delay:=0}
+	: ${mode:=picture}
+	sleep "$delay"
+	out="Camera/$(date "+%Y-%m-%d_%H%M%S")"
+	case "$mode" in
+		picture)
+			out="$XDG_PICTURES_DIR/$out"
+			mkdir -p -- "${out%/*}"
+			guvcview -e -gnone -anone -t1 -n1 -rnone -mnone -x1920x1080 -i"$out.jpg"
+		;;
+		video)
+			out="$XDG_VIDEOS_DIR/$out"
+			mkdir -p -- "${out%/*}"
+			guvcview -e -gnone -apulse -y60 -oaac -uh264 -rnone -mnone -x1920x1080 -w1 -j"$out.mkv"
+		;;
+	esac
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

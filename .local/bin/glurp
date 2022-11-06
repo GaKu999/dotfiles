@@ -1,0 +1,75 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/glurp
+#==============================================================================#
+
+
+set -a
+: ${XDG_PICTURES_DIR:=$HOME/Pictures}
+set +a
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+_herecat() {
+	local msg line
+	local LFCR="$(printf "%b" "\012\015")"
+	while IFS="$LFCR" read -r line; do
+		msg="$msg$line$LFCR"
+	done
+	printf "%s" "$msg"
+}
+
+# [$1: EXIT CODE (0)]
+_usage() { local ec="${1:-0}"
+	_herecat <<ENDUSAGEMSG
+Usage: $_SELF [-a]
+
+  -a          capture all displays
+
+  -h          show this information
+ENDUSAGEMSG
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [-a] [-D SECONDS]
+main() {
+	local mode out
+	local OPT OPTARG OPTIND
+	while getopts ":ah" OPT; do
+		case "$OPT" in
+			'a') mode="all" ;;
+			'h') _usage ;;
+			'?')
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':')
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done; shift "$((OPTIND - 1))"
+	: ${mode:=select}
+	out="$XDG_PICTURES_DIR/Screenshots/$(date "+%Y-%m-%d_%H%M%S").png"
+	mkdir -p -- "${out%/*}"
+	case "$mode" in
+		all) grim -- "$out" ;;
+		select) grim -g "$(slurp)" -- "$out" ;;
+	esac
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

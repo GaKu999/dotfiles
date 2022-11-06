@@ -1,0 +1,33 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/mbsync.service
+#==============================================================================#
+
+
+[Unit]
+Description=Mailbox sync and notify
+Documentation=man:mbsync(1)
+Documentation=man:notify-send(1)
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/mails sync --all
+ExecStartPost=-%h/.local/bin/mails notify
+
+Slice=background.slice
+
+LockPersonality=true
+NoNewPrivileges=true
+ProcSubset=pid
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,396 @@
+# vim:ft=swayconfig:noet:ts=3:sw=3:
+# man:sway(5)
+# file:$XDG_CONFIG_HOME/sway/config
+#==============================================================================#
+
+
+set $left  h
+set $down  j
+set $up    k
+set $right l
+
+set $alt  mod1
+set $super mod4
+
+default_orientation auto
+workspace_layout    default
+xwayland            enable
+
+client.focused           #d0d0d0 #505050 #f5f5f5 #75b5aa #f5f5f5
+client.focused_inactive  #505050 #151515f2 #d0d0d0 #505050 #505050
+client.focused_tab_title #d0d0d0 #505050 #f5f5f5
+client.unfocused         #505050 #151515f2 #d0d0d0 #505050 #505050
+
+default_border pixel          2
+default_floating_border pixel 2
+
+floating_modifier $super
+
+font pango:sans-serif 12
+
+force_display_urgency_hint 500
+
+titlebar_border_thickness 2
+
+gaps inner 4
+gaps outer 2
+
+smart_borders on
+smart_gaps    on
+
+title_align center
+
+workspace_auto_back_and_forth yes
+
+
+#==============================================================================#
+#                                    INPUTS                                    #
+#==============================================================================#
+
+
+# man:sway-input(5)
+# man:xkeyboard-config(7)
+input type:keyboard {
+	repeat_delay 200
+	repeat_rate  30
+	xkb_layout   us,es
+	xkb_numlock  enabled
+	xkb_options  eurosign:5,grp:alt_space_toggle,lv3:ralt_switch_multikey
+}
+
+# man:sway-input(5)
+input type:touchpad {
+	dwt           enabled
+	events        disabled_on_external_mouse
+	pointer_accel 0.5
+	tap           enable
+}
+
+
+#==============================================================================#
+#                                   KEYBINDS                                   #
+#==============================================================================#
+
+
+bindsym --no-repeat {
+	Ctrl+$alt+r reload
+
+	Ctrl+$alt+Backspace exec systemctl --user stop graphical-session.target; exit
+
+	$super+Delete kill
+
+	$super+Escape exec loginctl lock-session
+
+	$super+$left  focus left
+	$super+$down  focus down
+	$super+$up    focus up
+	$super+$right focus right
+
+	$super+Left  focus left
+	$super+Down  focus down
+	$super+Up    focus up
+	$super+Right focus right
+
+	$super+Shift+$left  move left
+	$super+Shift+$down  move down
+	$super+Shift+$up    move up
+	$super+Shift+$right move right
+
+	$super+Shift+Left  move left
+	$super+Shift+Down  move down
+	$super+Shift+Up    move up
+	$super+Shift+Right move right
+
+	$super+1 workspace number 1
+	$super+2 workspace number 2
+	$super+3 workspace number 3
+	$super+4 workspace number 4
+	$super+5 workspace number 5
+	$super+6 workspace number 6
+	$super+7 workspace number 7
+	$super+8 workspace number 8
+	$super+9 workspace number 9
+
+	$super+comma  workspace prev
+	$super+period workspace next
+
+	$super+Tab      workspace next_on_output
+	$super+$alt+Tab workspace prev_on_output
+
+	$super+Shift+1 move container workspace number 1
+	$super+Shift+2 move container workspace number 2
+	$super+Shift+3 move container workspace number 3
+	$super+Shift+4 move container workspace number 4
+	$super+Shift+5 move container workspace number 5
+	$super+Shift+6 move container workspace number 6
+	$super+Shift+7 move container workspace number 7
+	$super+Shift+8 move container workspace number 8
+	$super+Shift+9 move container workspace number 9
+
+	$super+Shift+comma  move container workspace prev
+	$super+Shift+period move container workspace next
+
+	$super+Shift+Tab      move container workspace next_on_output
+	$super+Shift+$alt+Tab move container workspace prev_on_output
+
+	$super+m mode move
+	$super+r mode size
+
+	$super+b splith
+	$super+v splitv
+
+	$super+s layout stacking
+	$super+w layout tabbed
+	$super+e layout toggle split
+
+	$super+f fullscreen
+
+	$super+Shift+space      floating toggle
+	$super+Ctrl+Shift+space sticky   toggle
+
+	$super+space focus mode_toggle
+
+	$super+Shift+minus move scratchpad
+	$super+minus       scratchpad show
+
+	$super+Return      exec footclient -N
+	$super+$alt+Return exec foot
+
+	Menu      exec xdgctl -Amenu
+	$alt+Menu exec wmenu-run
+	$super+c   exec wmenu -p: </dev/null | xargs swaymsg exec --
+
+	Print       exec swayshot
+	Ctrl+Print  exec swayshot -w
+	Shift+Print exec swayshot -a
+
+	Insert      exec emoji type
+	Ctrl+Insert exec unicode type
+}
+
+bindsym --inhibited $super+$alt+i seat * shortcuts_inhibitor toggle
+
+bindsym --locked {
+	XF86AudioRaiseVolume exec pamixer -i5
+	XF86AudioLowerVolume exec pamixer -d5
+	XF86AudioMute        exec pamixer -t
+
+	XF86MonBrightnessUp   exec light -A 5
+	XF86MonBrightnessDown exec light -U 5
+}
+
+bindsym --locked --no-repeat $super+p exec swaydpms
+
+bindswitch --locked --no-warn lid:on output eDP-2 dpms off
+bindswitch --locked --no-warn lid:off output eDP-2 dpms on
+
+
+#==============================================================================#
+#                                    MODES                                     #
+#==============================================================================#
+
+
+mode size {
+	bindsym {
+		$left  resize shrink width 4px
+		$down  resize grow height 4px
+		$up    resize shrink height 4px
+		$right resize grow width 4px
+
+		Left  resize shrink width 4px
+		Down  resize grow height 4px
+		Up    resize shrink height 4px
+		Right resize grow width 4px
+
+		Shift+$left  resize shrink width 16px
+		Shift+$down  resize grow height 16px
+		Shift+$up    resize shrink height 16px
+		Shift+$right resize grow width 16px
+
+		Shift+Left  resize shrink width 16px
+		Shift+Down  resize grow height 16px
+		Shift+Up    resize shrink height 16px
+		Shift+Right resize grow width 16px
+
+		Ctrl+$left  resize shrink width 1px
+		Ctrl+$down  resize grow height 1px
+		Ctrl+$up    resize shrink height 1px
+		Ctrl+$right resize grow width 1px
+
+		Ctrl+Left  resize shrink width 1px
+		Ctrl+Down  resize grow height 1px
+		Ctrl+Up    resize shrink height 1px
+		Ctrl+Right resize grow width 1px
+
+		Return mode default
+		Escape mode default
+	}
+}
+
+mode move {
+	bindsym {
+		$left  move left  4px
+		$down  move down  4px
+		$up    move up    4px
+		$right move right 4px
+
+		Left  move left  4px
+		Down  move down  4px
+		Up    move up    4px
+		Right move right 4px
+
+		Shift+$left  move left  16px
+		Shift+$down  move down  16px
+		Shift+$up    move up    16px
+		Shift+$right move right 16px
+
+		Shift+Left  move left  16px
+		Shift+Down  move down  16px
+		Shift+Up    move up    16px
+		Shift+Right move right 16px
+
+		Ctrl+$left  move left  1px
+		Ctrl+$down  move down  1px
+		Ctrl+$up    move up    1px
+		Ctrl+$right move right 1px
+
+		Ctrl+Left  move left  1px
+		Ctrl+Down  move down  1px
+		Ctrl+Up    move up    1px
+		Ctrl+Right move right 1px
+
+		Return mode default
+		Escape mode default
+	}
+}
+
+mode passthrough {
+	bindsym $super+Pause mode default
+}
+bindsym $super+Pause mode passthrough
+
+
+#==============================================================================#
+#                                   OUTPUTS                                    #
+#==============================================================================#
+
+
+# man:sway-output(5)
+output eDP-2 {
+	adaptive_sync on
+	background    ~/Pictures/Wallpapers/eDP-2.png fill #151515
+	mode          2560x1600@165Hz
+	position      961 961
+	scale         1.5
+	subpixel      rgb
+	transform     normal
+}
+
+output HEADLESS-1 {
+	adaptive_sync off
+	background    ~/Pictures/Wallpapers/HEADLESS-1.png fill #151515
+	mode          1280x720@20Hz
+	pos           5120 2880
+	scale         1.0
+	subpixel      rgb
+	transform     normal
+}
+
+output DP-1 {
+	adaptive_sync on
+	background    ~/Pictures/Wallpapers/DP-1.png fill #151515
+	mode          2560x1440@165Hz
+	position      961 0
+	scale         1.5
+	subpixel      rgb
+	transform     normal
+}
+
+output DP-3 {
+	adaptive_sync on
+	background    ~/Pictures/Wallpapers/DP-3.png fill #151515
+	mode          2560x1440@165Hz
+	pos           0 0
+	scale         1.5
+	subpixel      vrgb
+	transform     270
+}
+
+output DP-4 {
+	adaptive_sync on
+	background    ~/Pictures/Wallpapers/DP-4.png fill #151515
+	mode          2560x1440@165Hz
+	position      2667 0
+	scale         1.5
+	subpixel      vbgr
+	transform     90
+}
+
+
+#==============================================================================#
+#                                    SEATS                                     #
+#==============================================================================#
+
+
+seat * {
+	hide_cursor   3000
+	hide_cursor   when-typing enable
+	xcursor_theme Bibata-Modern-Classic 16
+}
+
+
+#==============================================================================#
+#                                   SWAYIDLE                                   #
+#==============================================================================#
+
+
+# man:swayidle(1)
+# man:swaylock(1)
+exec swayidle -w \
+	before-sleep 'swaylock -f' \
+	lock         'swaylock -f' \
+	timeout  60  'swaymsg "exec screensaver start"' \
+		resume    'swaymsg "exec screensaver stop"' \
+	timeout 297  'swaymsg "exec screensaver stop"' \
+	timeout  298 'swaymsg "output * dpms off"' \
+		resume    'swaymsg "output * dpms on"' \
+	timeout  299 'loginctl lock-session' \
+	idlehint 300
+
+
+#==============================================================================#
+#                                   WAYVNC                                     #
+#==============================================================================#
+
+
+# man:wayvnc(1)
+exec wayvnc -u -f20 -oHEADLESS-1 $XDG_RUNTIME_DIR/sway-vnc.sock
+
+
+#==============================================================================#
+#                                   WINDOWS                                    #
+#==============================================================================#
+
+
+for_window [app_id="screensaver"] {
+	floating enable
+	fullscreen enable global
+	sticky enable
+}
+
+include ~/.config/sway/windows.d/*.conf
+
+
+#==============================================================================#
+#                                   SYSTEMD                                    #
+#==============================================================================#
+
+
+exec systemctl --user import-environment SWAYSOCK DISPLAY WAYLAND_DISPLAY >/dev/null 2>&1
+exec dbus-update-activation-environment --systemd SWAYSOCK DISPLAY WAYLAND_DISPLAY >/dev/null 2>&1
+exec systemctl --user start sway-session.target >/dev/null 2>&1
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
