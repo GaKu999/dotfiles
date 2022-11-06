@@ -1,0 +1,44 @@
+#!/bin/python
+# vim:ft=python:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/xdgctl
+#==============================================================================#
+
+
+import argparse
+import sys
+from pydbus import SessionBus
+
+# $@: [-A {open,menu,quit} (open)] [TARGET]
+def main() -> int:
+	try:
+		daemon = SessionBus().get("net.gaku.XDGD")
+	except RuntimeError:
+		print("xdgctl: daemon is not alive", file=sys.stderr)
+		return 1
+
+	parser = argparse.ArgumentParser()
+	parser.add_argument("--action", "-A", metavar="action", default="open")
+	parser.add_argument("target", metavar="target", nargs="?")
+	args = parser.parse_args()
+
+	if args.action == "open" or parser.prog == "xdg-open":
+		if args.target is not None:
+			daemon.Open(args.target)
+		else:
+			parser.print_usage()
+			return 2
+	elif args.action == "menu":
+		daemon.Menu()
+	elif args.action == "quit":
+		daemon.Quit()
+	else:
+		parser.print_help()
+		return 2
+
+if __name__ == "__main__":
+	sys.exit(main())
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

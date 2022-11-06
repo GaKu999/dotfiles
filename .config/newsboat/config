@@ -1,0 +1,93 @@
+# man:newsboat(1)
+# file:$XDG_CONFIG_HOME/newsboat/config
+#==============================================================================#
+
+
+save-path ~/Downloads
+
+urls-source local
+
+confirm-delete-all-articles no
+confirm-mark-all-feeds-read no
+confirm-mark-feed-read      no
+
+openbrowser-and-mark-jumps-to-next-unread yes
+reload-only-visible-feeds                 yes
+swap-title-and-hints                      no
+toggleitemread-jumps-to-next-unread       yes
+show-keymap-hint                          no
+
+notify-always yes
+notify-beep   no
+notify-xterm  yes
+
+download-retries   3
+download-timeout   60
+history-limit      0
+max-browser-tabs   1
+max-download-speed 4096
+reload-threads     8
+reload-time        480
+scrolloff          999
+
+browser        "vtclip %u"
+notify-program notify-send
+
+feed-sort-order lastupdated-desc
+
+
+#==============================================================================#
+#                                    COLORS                                    #
+#==============================================================================#
+
+
+color article           white default
+color background        white default
+color info              magenta default bold
+color listfocus         white color8 bold
+color listfocus_unread  white color8 bold
+color listnormal        white default
+color listnormal_unread white default bold
+
+highlight article "^(Author|Date|Feed|Link|Title):" yellow default bold
+
+highlight article "(ipfs|ipns|magnet|mailto|gemini|gopher|https|http|news|file|git|ssh|ftp):[^ <>{-}\\^()\`]+" blue default bold
+
+highlight article "\\[[0-9]+\\]" yellow default bold
+
+search-highlight-colors white color8 bold
+
+
+#==============================================================================#
+#                                   FILTERS                                    #
+#==============================================================================#
+
+
+define-filter "recent articles" "age between 0:7"
+
+
+#==============================================================================#
+#                                   FORMATS                                    #
+#==============================================================================#
+
+
+articlelist-format        "%3i:%f:%-16D:   %t %> %L"
+articlelist-title-format  "%t Article(s), %u unread, %?F?matching filter '%F', ?[%T] %> %U"
+datetime-format           "%Y-%m-%d %H:%M"
+dialogs-title-format      "Dialogs"
+dirbrowser-title-format   "%?O?Open Directory&Save File? %f"
+feedlist-format           "%3i:%n:%S:   %-25t %> [%U/%c]"
+feedlist-title-format     "%t Feed(s), %u unread%?F?, matching filter '%F'?%?T?, tagged '%T'?"
+filebrowser-title-format  "%?O?Open File&Save File? %f"
+help-title-format         "Help"
+itemview-title-format     "Article '%T' [%F]"
+notify-format             "%d new article(s), %n unread article(s), %f unread feed(s)"
+searchresult-title-format "Search result"
+selectfilter-title-format "Select filter"
+selecttag-title-format    "Select tag"
+urlview-title-format      "URLs"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,38 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/alacritty.service
+#==============================================================================#
+
+
+[Unit]
+Description=Alacritty terminal supervisor window
+Documentation=man:alacritty(1)
+
+PartOf=graphical-session.target
+After=graphical-session.target
+
+ConditionEnvironment=DISPLAY
+
+[Service]
+ExecStartPre=-/usr/bin/rm -f %t/alacritty.sock
+ExecStart=/usr/bin/alacritty --daemon --socket %t/alacritty.sock
+
+Restart=on-failure
+
+LockPersonality=true
+NoNewPrivileges=true
+ProcSubset=pid
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+UnsetEnvironment=ALACRITTY_LOG ALACRITTY_SOCKET ALACRITTY_WINDOW_ID
+
+[Install]
+WantedBy=graphical-session.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

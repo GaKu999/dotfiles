@@ -1,0 +1,5 @@
+.config/aerc/accounts.conf filter=aerc-redact
+.config/git/config filter=git-redact
+.config/notmuch/default/config filter=notmuch-redact
+.config/stig/default.rc filter=stig-redact
+.config/stig/private.rc filter=stig-redact

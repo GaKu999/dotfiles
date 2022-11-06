@@ -1,0 +1,74 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/todos
+#==============================================================================#
+
+
+set -a
+: ${XDG_DATA_HOME:=$HOME/.local/share}
+: ${TODOS_FILE:=$XDG_DATA_HOME/todos}
+: ${EDITOR:=nvim}
+set +a
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+_herecat() {
+	local msg line
+	local LFCR="$(printf "%b" "\012\015")"
+	while IFS="$LFCR" read -r line; do
+		msg="$msg$line$LFCR"
+	done
+	printf "%s" "$msg"
+}
+
+# [$1: EXIT CODE (0)]
+_usage() { local ec="${1:-0}"
+	_herecat <<ENDUSAGEMSG
+Usage: $_SELF [ACTION (show)]
+
+  ACTIONS:
+   add TASK...         add entries
+   clear               clear all entries
+   delete [INDEX (0)]  delete entry at INDEX
+   edit                edit entries
+   show                show entries
+ENDUSAGEMSG
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# [$1: {add, clear, delete, edit, show} (show)]
+main() { local action="${1:-show}"
+	mkdir -p -- "${TODOS_FILE%/*}"
+	touch -- "$TODOS_FILE"
+	case "$action" in
+		show) nl -ba -ha -s: -w1 -- "$TODOS_FILE" ;;
+		add)
+			shift
+			[ "$#" -gt 0 ] || _usage 2
+			echo "$@" >>"$TODOS_FILE"
+		;;
+		edit) $EDITOR -- "$TODOS_FILE" ;;
+		delete) sed -i -- "${2:-0}d" "$TODOS_FILE" ;;
+		clear) truncate -s0 -- "$TODOS_FILE" ;;
+		*)
+			echo "$_SELF: unknown action -- '$action'" >&2
+			_usage 2
+		;;
+	esac
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

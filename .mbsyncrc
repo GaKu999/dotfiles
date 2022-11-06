@@ -1,0 +1,74 @@
+# vim:ft=conf:
+# man:mbsync(1)
+# file:$HOME/.mbsyncrc
+#==============================================================================#
+
+
+SyncState *
+
+IMAPAccount posteo
+Host        posteo.de
+UserCmd     "secret-tool lookup posteo.de username"
+PassCmd     "secret-tool lookup posteo.de password"
+TLSType     IMAPS
+
+IMAPStore posteo-remote
+Account   posteo
+
+MaildirStore posteo-local
+Subfolders   Verbatim
+Path         ~/.mail/POSTEO/
+Inbox        ~/.mail/POSTEO/INBOX
+
+
+#==============================================================================#
+
+
+Channel  posteo-inbox
+Far      :posteo-remote:
+Near     :posteo-local:
+Patterns INBOX
+
+Channel posteo-sent
+Far     :posteo-remote:Sent
+Near    :posteo-local:SENT
+Create  Near
+
+Channel posteo-drafts
+Far     :posteo-remote:Drafts
+Near    :posteo-local:DRAFTS
+Create  Near
+
+Channel posteo-notes
+Far     :posteo-remote:Notes
+Near    :posteo-local:NOTES
+Create  Near
+
+Channel posteo-archive
+Far     :posteo-remote:Archive
+Near    :posteo-local:ARCHIVE
+Create  Near
+
+Channel posteo-trash
+Far     :posteo-remote:Trash
+Near    :posteo-local:TRASH
+Create  Near
+
+Channel posteo-junk
+Far     :posteo-remote:Junk
+Near    :posteo-local:JUNK
+Create  Near
+
+Group   posteo-group
+Channel posteo-inbox
+Channel posteo-sent
+Channel posteo-drafts
+Channel posteo-notes
+Channel posteo-archive
+Channel posteo-trash
+Channel posteo-junk
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

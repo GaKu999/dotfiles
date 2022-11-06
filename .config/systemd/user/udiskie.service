@@ -1,0 +1,30 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/udiskie.service
+#==============================================================================#
+
+
+[Unit]
+Description=Device daemon
+Documentation=man:udiskie(8)
+
+[Service]
+ExecStart=/usr/bin/udiskie
+
+Restart=on-failure
+
+LockPersonality=true
+NoNewPrivileges=true
+ProcSubset=pid
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

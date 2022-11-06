@@ -1,0 +1,34 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/tint2.service
+#==============================================================================#
+
+[Unit]
+Description=Basic, good-looking task manager for WMs
+
+PartOf=graphical-session.target
+After=graphical-session.target
+
+ConditionEnvironment=DISPLAY
+
+[Service]
+ExecStart=/usr/bin/tint2
+ExecReload=kill -SIGUSR1 $MAINPID
+
+Restart=on-failure
+
+LockPersonality=true
+NoNewPrivileges=true
+ProcSubset=pid
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=graphical-session.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

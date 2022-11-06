@@ -1,0 +1,383 @@
+// vim:ft=jsonc:noet:ts=3:sw=3:
+// man:waybar(5)
+// file:$XDG_CONFIG_HOME/waybar/config.jsonc
+[
+	{
+		"layer": "top",
+		"position": "top",
+
+		"modules-left": [
+			"sway/scratchpad",
+			"custom/separator",
+			"sway/workspaces",
+			"custom/separator",
+			"sway/language",
+			"sway/mode",
+			"custom/separator"
+		],
+
+		"modules-center": [
+			"sway/window"
+		],
+
+		"modules-right": [
+			"custom/separator",
+			"custom/mails#new",
+			"custom/mails#cur",
+			"custom/updates",
+			"custom/separator",
+			"cpu",
+			"memory",
+			"disk",
+			"custom/separator",
+			"battery#status",
+			"battery#capacity",
+			"custom/separator",
+			"network#ether",
+			"network#wlan",
+			"bluetooth",
+			"network#vpn",
+			"custom/wan",
+			"custom/separator",
+			"pulseaudio#output",
+			"pulseaudio#input",
+			"custom/separator",
+			"backlight",
+			"custom/separator",
+			"clock",
+			"tray",
+			"custom/separator",
+			"idle_inhibitor"
+		],
+
+		"custom/separator": {
+			"tooltip": false,
+
+			"format": "│"
+		},
+
+		"custom/mails#new": {
+			"interval": 300,
+			"tooltip": false,
+
+			"exec": "mails count new",
+			"exec-on-event": true,
+
+			"on-click": "swaymsg -q exec 'footclient -N aerc'",
+			"on-click-right": "swaymsg -q exec 'mails sync --pull posteo-inbox'",
+
+			"format": "<big></big><small><b>{}</b></small>"
+		},
+
+		"custom/mails#cur": {
+			"interval": 300,
+			"tooltip": false,
+
+			"exec": "mails count cur",
+			"exec-on-event": true,
+
+			"on-click": "swaymsg -q exec 'footclient -N aerc'",
+			"on-click-right": "swaymsg -q exec 'mails sync --push posteo-inbox'",
+
+			"format": "<big></big><small><b>{}</b></small>"
+		},
+
+		"custom/updates": {
+			"interval": 300,
+			"tooltip": false,
+
+			"exec": "updates count",
+			"exec-on-event": true,
+
+			"on-click": "swaymsg -q exec 'updates notify'",
+			"on-click-right": "swaymsg -q exec 'updates check'",
+			"on-click-middle": "swaymsg -q exec 'foot updates update'",
+
+			"format": "<big>󰏓</big><small><b>{}</b></small>"
+		},
+
+		"sway/scratchpad": {
+			"show-empty": true,
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small><b>{count}</b></small>"
+		},
+
+		"sway/language": {
+			"tooltip": false,
+
+			"format": "<big>{flag}</big>",
+			"format-alt": "<big>{flag}</big><small><b>{long}</b></small>"
+		},
+
+		"sway/workspaces": {
+			"tooltip": false,
+
+			"all-outputs": true,
+			"disable-scroll": true,
+
+			"format": "<big>{value}</big>"
+		},
+
+		"sway/mode": {
+			"tooltip": false,
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small><b><i>{}</i></b></small>"
+		},
+
+		"sway/window": {
+			"tooltip": false,
+
+			"all-outputs": true,
+			"max-length": 50,
+
+			"format": "<small><b>{title}</b></small>"
+		},
+
+		"cpu": {
+			"tooltip": false,
+
+			"on-click-right": "swaymsg -q exec 'footclient -N top'",
+
+			"states": {
+				"low": 25,
+				"medium": 50,
+				"high": 75
+			},
+
+			"format": "<big></big><small><b>{usage}%</b></small>",
+			"format-alt": "<big></big><small><b>{avg_frequency}GHz</b></small>"
+		},
+
+		"memory": {
+			"tooltip": false,
+
+			"on-click-right": "swaymsg -q exec 'footclient -N top'",
+
+			"states": {
+				"low": 25,
+				"medium": 50,
+				"high": 75
+			},
+
+			"format": "<big></big><small><b>{percentage}%</b></small>",
+			"format-alt": "<big></big><small><b>{used:0.1f}GiB/{total:0.1f}GiB</b></small>"
+		},
+
+		"disk": {
+			"interval": 300,
+			"tooltip": false,
+
+			"path": "/home",
+
+			"states": {
+				"low": 25,
+				"medium": 50,
+				"high": 75
+			},
+
+			"format": "<big>󰋊</big><small><b>{percentage_used}%</b></small>",
+			"format-alt": "<big>󰋊</big><small><b>{used}/{total}</b></small>"
+		},
+
+		"battery#status": {
+			"tooltip": false,
+
+			"states": {
+				"full": 100,
+				"high": 75,
+				"medium": 50,
+				"low": 25,
+				"critical": 10
+			},
+
+			"format": "",
+			"format-charging": "<big></big>",
+			"format-discharging-critical": "<big>‼</big>",
+			"format-plugged": "<big></big>"
+		},
+
+		"battery#capacity": {
+			"tooltip": false,
+
+			"format-time": "{H}:{m}",
+
+			"states": {
+				"full": 100,
+				"high": 75,
+				"medium": 50,
+				"low": 25,
+				"critical": 10
+			},
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small><b>{capacity}%</b></small>",
+
+			"format-icons": ["", "", "", "", ""]
+		},
+
+		"network#ether": {
+			"interval": 300,
+			"tooltip": false,
+
+			"interface": "en*",
+
+			"format": "",
+			"format-ethernet": "<big></big>",
+			"format-alt": "<big></big><small><b>{ipaddr}</b></small>"
+		},
+
+		"network#wlan": {
+			"interval": 300,
+			"tooltip": false,
+
+			"interface": "wl*",
+
+			"on-click-right": "swaymsg -q exec 'footclient -N iwctl'",
+
+			"format": "<big>󰤮</big>",
+			"format-linked": "<big>{icon}</big>",
+			"format-wifi": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small><b>{ipaddr}</b></small>",
+
+			"format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+		},
+
+		"bluetooth": {
+			"tooltip": false,
+
+			"on-click-right": "swaymsg -q exec 'footclient -N bluetoothctl'",
+
+			"format": "<big>󰂯</big>",
+			"format-disabled": "<big>󰂲</big>",
+			"format-off": "<big>󰂲</big>",
+
+			"format-connected-battery": "<big>󰂯</big><small>{icon}</small>",
+
+			"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽","󰁾", "󰁿", "󰂀", "󰂁", "󰁹"]
+		},
+
+		"network#vpn": {
+			"interval": 300,
+			"tooltip": false,
+
+			"interface": "wg0",
+
+			"format": "",
+			"format-ethernet": "<big>󰖂</big>",
+			"format-alt": "<big>󰖂</big><small><b>{ipaddr}</b></small>"
+		},
+
+		"custom/wan" :{
+			"interval": 300,
+			"tooltip": false,
+
+			"exec": "curl -4qsL am.i.mullvad.net/ip",
+			"exec-on-event": true,
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small><b>{}</b></small>"
+		},
+
+		"pulseaudio#output": {
+			"tooltip": true,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-click": "swaymsg -q exec 'pamixer -t'",
+			"on-click-right": "swaymsg -q exec 'footclient -N pulsemixer'",
+
+			"on-scroll-up": "swaymsg -q exec 'pamixer -i5'",
+			"on-scroll-down": "swaymsg -q exec 'pamixer -d5'",
+
+			"format": "<big>{icon}</big><small><b>{volume}%</b></small>",
+			"format-muted": "<big>󰸈</big>",
+
+			"format-bluetooth": "<big>󰂰</big><small><b>{volume}%</b></small>",
+
+			"format-icons": {
+				"default": ["󰕿", "󰖀", "󰕾"]
+			}
+		},
+
+		"pulseaudio#input": {
+			"tooltip": false,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-click": "swaymsg -q exec 'pamixer -t --default-source'",
+			"on-click-right": "swaymsg -q exec 'footclient -N pulsemixer'",
+
+			"on-scroll-up": "swaymsg -q exec 'pamixer -i5 --default-source'",
+			"on-scroll-down": "swaymsg -q exec 'pamixer -d5 --default-source'",
+
+			"format": "{format_source}",
+			"format-muted": "{format_source}",
+			"format-source": "<big>󰍬</big><small><b>{volume}%</b></small>",
+			"format-source-muted": "<big>󰍭</big>"
+		},
+
+		"backlight": {
+			"tooltip": false,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-scroll-up": "swaymsg -q exec 'light -A 5'",
+			"on-scroll-down": "swaymsg -q exec 'light -U 5'",
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small><b>{percent}%</b></small>",
+
+			"format-icons": ["", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+		},
+
+		"clock": {
+			"timezone": "US/Eastern",
+
+			"tooltip-format": "<tt><small>{calendar}</small></tt>",
+
+			"format": "<big>󰥔</big><small><b>{:%H:%M}</b></small>",
+			"format-alt": "<big>󰃭</big><small><b>{:%Y-%m-%d}</b></small>",
+
+			"calendar": {
+				"mode": "month",
+				"mode-mon-col": 3,
+				"weeks-pos": "left",
+				"on-scroll": 1,
+				"on-click-right": "mode",
+				"format": {
+					"months": "<span color='#aa759f'><b><i>{}</i></b></span>",
+					"days": "{}",
+					"weeks": "<span color='#6a9fb5'><b>W{:%V}</b></span>",
+					"weekdays": "<span color='#f4bf75'><b><u>{}</u></b></span>",
+					"today": "<span color='#75b5aa'><b>{}</b></span>"
+				}
+			},
+
+			"actions": {
+				"on-click-right": "mode",
+				"on-click-forward": "tz_up",
+				"on-click-backward": "tz_down",
+				"on-scroll-up": "shift_up",
+				"on-scroll-down": "shift_down"
+			}
+		},
+
+		"tray": {
+			"icon-size": 21,
+			"show-passive-items": true,
+			"spacing": 2
+		},
+
+		"idle_inhibitor": {
+			"tooltip": false,
+
+			"timeout": -1,
+
+			"format": "<big>{icon}</big>",
+
+			"format-icons": {
+				"activated": "󰈈",
+				"deactivated": "󰈉"
+			}
+		}
+	}
+]

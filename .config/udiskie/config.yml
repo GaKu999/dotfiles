@@ -1,0 +1,35 @@
+# vim:ft=yaml:et:ts=2:sw=2:
+# man:udiskie(8)
+# file:$XDG_CONFIG_HOME/udiskie/config.yml
+#==============================================================================#
+
+
+program_options:
+  automount: true
+  notify:    true
+  tray:      false
+
+device_config:
+  - { is_crypto: true, ignore: false, automount: false }
+  - { is_loop:   true, ignore: false, autoclear: true }
+
+  - { id_type: btrfs,   ignore: false, options: [ nodev, noexec, nosuid, compress=zstd:1 ] }
+  - { id_type: exfat,   ignore: false, options: [ nodev, noexec, nosuid, dmask=0077, fmask=0177 ] }
+  - { id_type: ext2,    ignore: false, options: [ nodev, noexec, nosuid ] }
+  - { id_type: ext3,    ignore: false, options: [ nodev, noexec, nosuid ] }
+  - { id_type: ext4,    ignore: false, options: [ nodev, noexec, nosuid ] }
+  - { id_type: iso9660, ignore: false, options: [ nodev, noexec, nosuid ] }
+  - { id_type: udf,     ignore: false, options: [ nodev, noexec, nosuid ] }
+  - { id_type: vfat,    ignore: false, options: [ nodev, noexec, nosuid, dmask=0077, fmask=0177 ] }
+
+  - { ignore: true, options: [ nodev, noexec, nosuid ] }
+
+notifications:
+  timeout: 15
+
+quickmenu_actions: all
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

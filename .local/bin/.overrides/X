@@ -1,0 +1,52 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# man:Xorg(1)
+# file:$XDG_BIN_DIR/X
+#==============================================================================#
+
+
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauth"
+touch -- "$XAUTHORITY"
+
+_STTY="$(stty -g)"
+
+_cleanup() {
+	local r
+	if [ -n "$_XPID" ] && kill -0 "$_XPID" 2>/dev/null; then
+		kill -- "$_XPID"
+		wait -- "$_XPID"
+		r="$?"
+	fi
+	if ! stty "$_STTY"; then
+		stty sane
+	fi
+	xauth remove ":$XDG_VTNR"
+	return -- "${r:-0}"
+}
+
+
+#==============================================================================#
+
+
+main() {
+	trap '_cleanup; exit $?' EXIT
+	local sig
+	for sig in HUP INT QUIT TERM; do
+		trap "_cleanup; trap - $sig EXIT; kill -s$sig $$" "$sig"
+	done; unset -v sig
+	trap "DISPLAY=:$XDG_VTNR sh $HOME/.Xprofile $@ & wait \$!" USR1
+	xauth add ":$XDG_VTNR" MIT-MAGIC-COOKIE-1 "$(od -An -N16 -tx /dev/urandom | tr -d ' ')"
+	(trap '' USR1 && exec /usr/lib/Xorg ":$XDG_VTNR" "vt$XDG_VTNR" -keeptty -noreset -auth "$XAUTHORITY" -logfile /dev/stdout >/dev/null) & _XPID="$!"
+	wait -- "$_XPID"
+}
+
+if [ -n "$XDG_VTNR" ]; then
+	main "$@"
+else
+	exit 1
+fi
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
