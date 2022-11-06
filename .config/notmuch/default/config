@@ -1,0 +1,27 @@
+# vim:ft=confini:
+# man:notmuch-config(1)
+# file:$XDG_CONFIG_HOME/notmuch/default/config
+#==============================================================================#
+
+
+[database]
+path=.mail
+
+[user]
+name=GaKu999
+primary_email=#REDACTED
+other_email=#REDACTED
+
+[maildir]
+synchronize_flags=true
+
+[new]
+ignore=.mbsyncstate;.uidvalidity;
+
+[search]
+exclude_tags=deleted;spam;
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

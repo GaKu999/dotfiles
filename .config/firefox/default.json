@@ -1,0 +1,149 @@
+{
+	"policies": {
+		"AppAutoUpdate": false,
+		"AutofillAddressEnabled": false,
+		"AutofillCreditCardEnabled": false,
+		"BackgroundAppUpdate": false,
+		"BlockAboutProfiles": true,
+		"CaptivePortal": false,
+		"DisableAccounts": true,
+		"DisableAppUpdate": true,
+		"DisableFeedbackCommands": true,
+		"DisableFirefoxAccounts": true,
+		"DisableFirefoxScreenshots": true,
+		"DisableFirefoxStudies": true,
+		"DisableFormHistory": true,
+		"DisableMasterPasswordCreation": true,
+		"DisablePocket": true,
+		"DisablePrivateBrowsing": true,
+		"DisableProfileImport": true,
+		"DisableSafeMode": true,
+		"DisableSetDesktopBackground": true,
+		"DisableSystemAddonUpdate": true,
+		"DisableTelemetry": true,
+		"DisplayBookmarksToolbar": "always",
+		"DisplayMenuBar": "never",
+		"DontCheckDefaultBrowser": true,
+		"HardwareAcceleration": true,
+		"HttpsOnlyMode": "force_enabled",
+		"ManualAppUpdateOnly": true,
+		"NetworkPrediction": false,
+		"NewTabPage": false,
+		"NoDefaultBookmarks": true,
+		"OfferToSaveLogins": false,
+		"OverrideFirstRunPage": "",
+		"OverridePostUpdatePage": "",
+		"PasswordManagerEnabled": false,
+		"PostQuantumKeyAgreementEnabled": true,
+		"PrimaryPassword": false,
+		"PrintingEnabled": true,
+		"PromptForDownloadLocation": false,
+		"SearchSuggestEnabled": false,
+		"ShowHomeButton": true,
+		"StartDownloadsInTempDirectory": true,
+		"TranslateEnabled": true,
+		"UseSystemPrintDialog": false,
+		"DNSOverHTTPS": {
+			"Enabled": false,
+			"ProviderURL": "",
+			"Locked": true
+		},
+		"EnableTrackingProtection": {
+			"Value": true,
+			"Cryptomining": true,
+			"Fingerprinting": true,
+			"EmailTracking": true,
+			"Locked": true
+		},
+		"EncryptedMediaExtensions": {
+			"Enabled": false,
+			"Locked": true
+		},
+		"Extensions": {
+			"Install": [
+				"https://addons.mozilla.org/firefox/downloads/latest/canvasblocker/latest.xpi",
+				"https://addons.mozilla.org/firefox/downloads/latest/noscript/latest.xpi",
+				"https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
+			]
+		},
+		"FirefoxHome": {
+			"Search": false,
+			"TopSites": false,
+			"SponsoredTopSites": false,
+			"Highlights": false,
+			"Pocket": false,
+			"SponsoredPocket": false,
+			"Snippets": false,
+			"Locked": false
+		},
+		"FirefoxSuggest": {
+			"WebSuggestions": false,
+			"SponsoredSuggestions": false,
+			"ImproveSuggest": false,
+			"Locked": true
+		},
+		"Homepage": {
+			"URL": "https://start.duckduckgo.com/?k21=151515&k7=151515&k8=d0d0d0&k9=f4bf75&kaa=f4bf75&kj=151515&kx=6a9fb5&k18=1&k1=-1&k5=1&ka=n&kae=t&kaj=m&kak=-1&kao=-1&kap=-1&kaq=-1&kau=-1&kav=1&kax=-1&kay=b&kbd=-1&kbe=-1&kbg=-1&kd=-1&kf=-1&kg=p&kk=1&kl=wt-wt&kn=1&ko=1&kp=-2&kpsb=-1&ks=s&kt=n&kv=-1&kw=n",
+			"StartPage": "previous-session",
+			"Locked": true
+		},
+		"Permissions": {
+			"Camera": {
+				"BlockNewRequests": true,
+				"Locked": true
+			},
+			"Microphone": {
+				"BlockNewRequests": true,
+				"Locked": true
+			},
+			"Autoplay": {
+				"BlockNewRequests": true,
+				"Locked": true
+			},
+			"Location": {
+				"BlockNewRequests": true,
+				"Locked": true
+			},
+			"Notifications": {
+				"BlockNewRequests": true,
+				"Locked": true
+			},
+			"VirtualReality": {
+				"BlockNewRequests": true,
+				"Locked": true
+			}
+		},
+		"PictureInPicture": {
+			"Enabled": true,
+			"Locked": true
+		},
+		"PopupBlocking": {
+			"Default": true,
+			"Locked": true
+		},
+		"Proxy": {
+			"Mode": "none",
+			"Locked": true
+		},
+		"SanitizeOnShutdown": {
+			"Cache": true,
+			"Cookies": true,
+			"Downloads": true,
+			"FormData": true,
+			"History": false,
+			"Sessions": true,
+			"SiteSettings": false,
+			"OfflineApps": true,
+			"Locked": true
+		},
+		"UserMessaging": {
+			"WhatsNew": false,
+			"ExtensionRecommendations": false,
+			"FeatureRecommendations": false,
+			"UrlbarInterventions": false,
+			"SkipOnboarding": true,
+			"MoreFromMozilla": false,
+			"Locked": true
+		}
+	}
+}
