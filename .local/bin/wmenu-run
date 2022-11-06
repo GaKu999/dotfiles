@@ -1,0 +1,26 @@
+#!/bin/bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/wmenu-run
+#==============================================================================#
+
+
+function _lsprogs {
+	local path progs
+	local IFS
+	shopt -s nullglob
+	progs=()
+	IFS=':'; for path in $PATH; do
+		progs+=("$path/"*)
+	done; unset -v IFS
+	progs=("${progs[@]##*/}")
+	if (("${#progs[@]}")); then
+		printf "%s\n" "${progs[@]}" | sort -u
+	fi
+}
+
+exec $(_lsprogs | wmenu -p':')
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

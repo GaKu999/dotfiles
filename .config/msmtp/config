@@ -1,0 +1,25 @@
+# man:msmtp(1)
+# file:$XDG_CONFIG_HOME/msmtp/config
+#==============================================================================#
+
+
+defaults
+
+auth         on
+syslog       off
+tls          on
+tls_starttls off
+
+account      posteo
+eval "echo -n 'from '; secret-tool lookup posteo.de username"
+host         posteo.de
+passwordeval "secret-tool lookup posteo.de password"
+port         465
+eval "echo -n 'user '; secret-tool lookup posteo.de username"
+
+account default : posteo
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

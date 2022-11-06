@@ -1,0 +1,5 @@
+.config/aerc/accounts.conf     filter=aerc-redact
+.config/aria2/aria2-bt.conf    filter=aria2-bt-redact
+.config/git/config             filter=git-redact
+.config/notmuch/default/config filter=notmuch-redact
+.config/pacman/makepkg.conf    filter=makepkg-redact

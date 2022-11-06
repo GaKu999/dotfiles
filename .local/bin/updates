@@ -1,0 +1,79 @@
+#!/bin/bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# man:checkupdates(8)
+# man:pacman(8)
+# man:sudo(8)
+# file:$XDG_BIN_DIR/updates
+#==============================================================================#
+
+
+set -a
+: ${XDG_CACHE_HOME:=$HOME/.cache}
+: ${CHECKUPDATES_DB:=$XDG_CACHE_HOME/checkupdates}
+set +a
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+# [$1: EXIT CODE (0)]
+function _usage { local ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg <<ENDUSAGEMSG
+Usage: $_SELF [ACTION (show)]
+
+  ACTIONS:
+   check
+   count
+   notify
+   show
+   update
+ENDUSAGEMSG
+	printf "%s" "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# [$1: {count,notify,show,check,update} (show)]
+function main { local action="${1:-show}"
+	local updates
+	case "$action" in
+		count|notify|show)
+			mapfile -t updates < <(checkupdates -n)
+			if [[ "$action" == count ]]; then
+				echo "${#updates[@]}"
+			elif (("${#updates[@]}")); then
+				case "$action" in
+					show) printf "%s\n" "${updates[@]}" ;;
+					notify)
+						notify-send \
+							"${#updates[@]} update(s) available" \
+							"$(printf "%s\n" "${updates[@]}")"
+					;;
+				esac
+			fi
+		;;
+		check) checkupdates ;;
+		update)
+			sudo pacman -Syu
+			read -s -N1
+		;;
+		*)
+			echo "$_SELF: unknown action -- '$action'" >&2
+			_usage 2
+		;;
+	esac
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
