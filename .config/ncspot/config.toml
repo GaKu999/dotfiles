@@ -1,0 +1,84 @@
+# vim:ft=toml:
+# man:ncspot(1)
+# file:$XDG_CONFIG_HOME/ncspot/config.toml
+#==============================================================================#
+
+
+# command_key = ":"
+
+# initial_screen = "library"
+
+use_nerdfont = true
+
+# flip_status_indicators = false
+
+backend = "pulseaudio"
+# backend_device = ""
+
+# audio_cache = true
+audio_cache_size = 1024
+
+volnorm = true
+#volnorm_pregain = 0.0
+
+default_keybindings = true
+
+notify = true
+
+# bitrate = 320
+
+# gapless = true
+
+shuffle = true
+
+# repeat = "off"
+
+# playback_state = "Paused"
+
+# library_tabs = [ "tracks", "albums", "artists", "playlists", "podcasts", "browse" ]
+
+# cover_max_scale = 1.0
+
+hide_display_names = true
+
+statusbar_format = "%artists - %title"
+
+[keybindings]
+"Space" = "open selected; save; back; move down 1"
+
+[theme]
+background = "default"
+primary = "white"
+secondary = "light black"
+title = "light blue"
+playing = "light white"
+playing_selected = "light white"
+playing_bg = "light black"
+highlight = "light white"
+highlight_bg = "light black"
+error = "light white"
+error_bg = "red"
+statusbar = "light magenta"
+statusbar_progress = "light cyan"
+statusbar_bg = "default"
+cmdline = "light green"
+cmdline_bg = "default"
+search_match = "light white"
+
+[track_format]
+left = "%artists - %title"
+center = "%album"
+right = "%saved %duration"
+
+[notification_format]
+title = "Spotify: Now Playing"
+body = "%artists - %title"
+
+[credentials]
+username_cmd = "secret-tool lookup spotify.com username"
+password_cmd = "secret-tool lookup spotify.com password"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

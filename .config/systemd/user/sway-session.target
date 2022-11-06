@@ -1,0 +1,21 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.target(5)
+# man:systemd.special(7)
+# file:$XDG_CONFIG_HOME/systemd/user/sway-session.target
+#==============================================================================#
+
+
+[Unit]
+Description=Graphical session with sway
+Documentation=man:systemd.special(7)
+Documentation=man:sway(1)
+
+PartOf=graphical-session.target
+Requires=graphical-session-pre.target graphical-session.target
+After=graphical-session-pre.target graphical-session.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

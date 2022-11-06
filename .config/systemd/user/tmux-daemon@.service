@@ -1,0 +1,26 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/tmux-daemon@.service
+#==============================================================================#
+
+
+[Unit]
+Description=Terminal multiplexer daemon (%i)
+Documentation=man:tmux(1)
+
+[Service]
+ExecStart=/usr/bin/tmux -D -S %t/tmux-%i
+
+Slice=session-tmux.slice
+Restart=always
+
+Environment=TMUX_INSTANCE=%i
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

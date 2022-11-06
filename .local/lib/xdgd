@@ -1,0 +1,58 @@
+#!/usr/bin/python
+# vim:ft=python:noet:ts=3:sw=3:
+# file:$XDG_LIB_DIR/xdgd
+#==============================================================================#
+
+
+from os import environ as env
+from gi.repository import GLib
+from pydbus import SessionBus
+from subprocess import Popen
+from uuid import uuid1 as uuidgen
+import signal
+
+class XDGD(object):
+	"""
+		<node>
+			<interface name="net.gaku.XDGD">
+				<method name="Open">
+					<arg type="s" name="arg" direction="in"/>
+				</method>
+				<method name="Menu"/>
+				<method name="Quit"/>
+			</interface>
+		</node>
+	"""
+
+	def __init__(self, loop):
+		signal.signal(signal.SIGCHLD, signal.SIG_IGN)
+		self.__loop = loop
+		self.__protocol = env.get("XDG_SESSION_TYPE")
+
+	def __spawn(self, *argv):
+		Popen(["systemd-run", "--user", "-dqG", "--scope", "-uxdgd-spawn-{}".format(uuidgen()), "--slice-inherit", "--", *argv])
+
+	def Open(self, *argv):
+		self.__spawn("xdg-open", argv[0])
+
+	def Menu(self, *argv):
+		if self.__protocol == "wayland":
+			self.__spawn("wmenu-run")
+		elif self.__protocol == "x11":
+			self.__spawn("dmenu_run")
+		else:
+			return 3
+
+	def Quit(self):
+		self.__loop.quit()
+
+if __name__ == "__main__":
+	loop = GLib.MainLoop()
+	SessionBus().publish("net.gaku.XDGD", XDGD(loop))
+	loop.run()
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
+

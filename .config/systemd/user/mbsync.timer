@@ -1,0 +1,25 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/mbsync.timer
+#==============================================================================#
+
+
+[Unit]
+Description=Mailbox sync and notify
+
+[Timer]
+OnStartupSec=15m
+OnUnitActiveSec=30m
+
+AccuracySec=1us
+Persistent=true
+RandomizedDelaySec=1m
+
+[Install]
+WantedBy=timers.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,35 @@
+# vim:ft=gitconfig:
+# man:git-config(1)
+# file:$XDG_CONFIG_HOME/git/config
+#==============================================================================#
+
+
+[user]
+name=GaKu999
+email=#REDACTED
+
+[blame]
+date=format:%Y-%m-%d %H:%M
+
+[log]
+date=format:%Y-%m-%d %H:%M
+
+[format]
+numbered=auto
+
+[color]
+branch=yes
+diff=auto
+pager=yes
+status=auto
+
+[init]
+defaultBranch=main
+
+[pull]
+rebase=false
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

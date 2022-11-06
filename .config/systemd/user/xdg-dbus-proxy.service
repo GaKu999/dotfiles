@@ -1,0 +1,33 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/xdg-dbus-proxy.service
+#==============================================================================#
+
+
+[Unit]
+Description=XDG dbus proxy
+
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.local/lib/xdg-dbus-proxy unix:path=%t/bus %t/bus-proxy
+
+Slice=session.slice
+Restart=always
+
+LockPersonality=true
+NoNewPrivileges=true
+ProcSubset=pid
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=graphical-session.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

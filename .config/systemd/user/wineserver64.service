@@ -1,0 +1,47 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/wineserver64.service
+#==============================================================================#
+
+
+[Unit]
+Description=Wine server (x86_64)
+Documentation=man:wineserver(1)
+
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=%h/.local/bin/.overrides/wineserver64 -f -p300
+ExecStartPost=%h/.local/bin/.overrides/wineboot64 -i
+ExecStop=-%h/.local/bin/.overrides/wineboot64 -e
+ExecStop=-%h/.local/bin/.overrides/wineserver64 -k
+
+Slice=session.slice
+
+TimeoutStopSec=10s
+
+LockPersonality=true
+NoNewPrivileges=true
+ProcSubset=pid
+RestrictRealtime=true
+RestrictSUIDSGID=true
+
+ManagedOOMSwap=kill
+ManagedOOMMemoryPressure=kill
+
+Environment=WINEARCH=win64
+Environment=WINELOADER=/usr/bin/wine64
+Environment=WINESERVER=/usr/bin/wineserver
+Environment=WINEPREFIX=%h/.local/share/wine/win64
+
+Environment=LANG=en_US.UTF-8
+
+UnsetEnvironment=CLUTTER_BACKEND GDK_BACKEND QT_QPA_PLATFORM SDL_VIDEODRIVER WINIT_UNIX_BACKEND XDG_SESSION_TYPE WAYLAND_DISPLAY
+Environment=WINIT_X11_SCALE_FACTOR=1
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

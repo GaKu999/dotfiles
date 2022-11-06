@@ -1,0 +1,35 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/xdgd.service
+#==============================================================================#
+
+
+[Unit]
+Description=XDG daemon
+
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=dbus
+BusName=net.gaku.XDGD
+ExecStart=%h/.local/lib/xdgd
+
+Slice=session-xdgd.slice
+Restart=always
+
+LockPersonality=true
+NoNewPrivileges=true
+ProcSubset=pid
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=graphical-session.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

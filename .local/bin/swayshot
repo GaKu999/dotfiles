@@ -1,0 +1,90 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/swayshot
+#==============================================================================#
+
+
+set -a
+: ${XDG_PICTURES_DIR:=$HOME/Pictures}
+set +a
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+_herecat() {
+	local msg line
+	local LFCR="$(printf "%b" "\012\015")"
+	while IFS="$LFCR" read -r line; do
+		msg="$msg$line$LFCR"
+	done
+	printf "%s" "$msg"
+}
+
+# [$1: EXIT CODE (0)]
+_usage() { local ec="${1:-0}"
+	_herecat <<ENDUSAGEMSG
+Usage: $_SELF [-aow (o)] [-D SECONDS]
+
+  -a          capture all displays
+  -o          capture current output
+  -w          capture current window
+
+  -D SECONDS  delay before capture
+
+  -h          show this information
+ENDUSAGEMSG
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [-aow (o)] [-D SECONDS]
+main() {
+	if [ -n "$SWAYSOCK" ]; then
+		local delay mode out
+		local OPT OPTARG OPTIND
+		while getopts ":D:aowh" OPT; do
+			case "$OPT" in
+				'D') delay="$OPTARG" ;;
+				'a') mode="all" ;;
+				'o') mode="output" ;;
+				'w') mode="window" ;;
+				'h') _usage ;;
+				'?')
+					echo "$_SELF: invalid option -- '$OPTARG'" >&2
+					_usage 2
+				;;
+				':')
+					echo "$_SELF: missing argument -- '$OPTARG'" >&2
+					_usage 2
+				;;
+			esac
+		done; shift "$((OPTIND - 1))"
+		: ${delay:=0}
+		: ${mode:=output}
+		sleep "$delay"
+		out="$XDG_PICTURES_DIR/Screenshots/$(date "+%Y-%m-%d_%H%M%S").png"
+		mkdir -p -- "${out%/*}"
+		case "$mode" in
+			all) grim -- "$out" ;;
+			output) grim -o "$(swaymsg -tget_outputs | jq -r ".. | select(.focused?) | .name")" -- "$out" ;;
+			window) grim -g "$(swaymsg -tget_tree | jq -r '.. | select(.focused?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"')" -- "$out" ;;
+		esac
+	else
+		echo "$_SELF: Unable to retrieve socket path" >&2
+		return 1
+	fi
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
