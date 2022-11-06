@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+# man:mbsync(1)
+# man:notmuch(1)
+# file:$XDG_BIN_DIR/mails
+#==============================================================================#
+
+
+set -a
+: ${XDG_DATA_HOME:=$HOME/.local/share}
+: ${MAILDIR:=$HOME/.mail}
+set +a
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+# [$1: EXIT CODE (0)]
+function _usage { local ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg <<ENDUSAGEMSG
+Usage: $_SELF [ACTION (count all)]
+
+  ACTIONS:
+   count [{all,cur,new} (all)]
+   notify
+   sync [--all] [{--push,--pull}] [CHANNEL...]
+ENDUSAGEMSG
+	printf "%s" "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $1: {all, cur, new}
+function _count { local type="$1"
+	local mails path inboxes
+	shopt -s globstar nullglob
+	mails=()
+	inboxes=("$MAILDIR/"**/INBOX)
+	for path in "${inboxes[@]}"; do
+		case "$type" in
+			all)     mails+=("$path/"{cur,new}/*) ;;
+			cur|new) mails+=("$path/$type/"*) ;;
+			*)
+				echo "$_SELF: count: invalid option -- '$type'" >&2
+				_usage 2
+			;;
+		esac
+	done
+	echo "${#mails[@]}"
+}
+
+function _print {
+	local timestamp subject
+	while IFS=$'\t' read -r timestamp subject; do
+		printf "%s: %s\n" "$(date -d"@$timestamp" "+%Y-%m-%d %H:%M")" "${subject:-NO SUBJECT}"
+	done < <(jq -r '.[] | [.timestamp,.subject] | @tsv')
+}
+
+
+#==============================================================================#
+
+
+# $@: [{count,notify,sync} (count all)]
+function main { local action="${1:-count}"
+	local mails
+	case "$action" in
+		count) _count "${2:-all}" ;;
+		notify)
+			mails="$(_count new)"
+			if ((mails)); then
+				notify-send \
+					"$mails unread mail(s)" \
+					"$(notmuch search --format json tag:unread | _print)"
+			fi
+		;;
+		sync)
+			if [[ ! -t 1 || ! -t 2 ]]; then
+				exec >&/dev/null
+			fi
+			mbsync -nugfXq "${@:2}" && notmuch new --full-scan
+		;;
+		*)
+			echo "$_SELF: unknown action -- '$action'" >&2
+			_usage 2
+		;;
+	esac
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

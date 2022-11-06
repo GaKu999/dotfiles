@@ -1,0 +1,14 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/.overrides/wayvnc
+#==============================================================================#
+
+
+export XKB_DEFAULT_LAYOUT="us"
+export XKB_DEFAULT_OPTIONS="eurosign:5,lv3:ralt_switch_multikey"
+exec /usr/bin/wayvnc "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

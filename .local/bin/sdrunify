@@ -1,0 +1,182 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/sdrunify
+#==============================================================================#
+
+
+set -a
+: ${TMPDIR:=/tmp}
+: ${XDG_CACHE_HOME:=$HOME/.cache}
+: ${XDG_CONFIG_HOME:=$HOME/.config}
+: ${XDG_DATA_HOME:=$HOME/.local/share}
+: ${XDG_STATE_HOME:=$HOME/.local/state}
+
+: ${XDG_CONFIG_DIRS:=$XDG_CONFIG_HOME:/etc/xdg}
+: ${XDG_DATA_DIRS:=$XDG_DATA_HOME:/usr/local/share:/usr/share}
+
+: ${XDG_BIN_DIR:=$HOME/.local/bin}
+: ${XDG_LIB_DIR:=$HOME/.local/lib}
+
+: ${XDG_DOCUMENTS_DIR:=$HOME/Documents}
+: ${XDG_DOWNLOAD_DIR:=$HOME/Downloads}
+: ${XDG_GAMES_DIR:=$HOME/Games}
+: ${XDG_MEDIA_DIR:=/run/media/$USER}
+: ${XDG_MUSIC_DIR:=$HOME/Music}
+: ${XDG_PICTURES_DIR:=$HOME/Pictures}
+: ${XDG_PROJECTS_DIR:=$HOME/Projects}
+: ${XDG_TEMPLATES_DIR:=$HOME/Templates}
+: ${XDG_VIDEOS_DIR:=$HOME/Videos}
+
+: ${BWRAPIFY_HOME:=$XDG_CONFIG_HOME/bwrapify}
+: ${SDRUNIFY_HOME:=$XDG_CONFIG_HOME/sdrunify}
+set +a
+
+
+#==============================================================================#
+
+
+: ${GAMESCOPE:=0}
+
+BWRAPIFY_CONFIG=''
+COMMAND=''
+SYSTEMD_INSTANCE=''
+SYSTEMD_UNIT=''
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+#ARGS_FD
+_ARGS=()
+#SYSTEMD_ARGS_FD
+_SYSTEMD_ARGS=()
+#GAMESCOPE_ARGS_FD
+_GAMESCOPE_ARGS=()
+
+# [$1: EXIT CODE (0)]
+function _usage { local ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg <<ENDUSAGEMSG
+Usage: $_SELF [-d] [-B CONFIG] [-C CONFIG] COMMAND...
+
+  -d         use the default configurations (for testing)
+
+  -B CONFIG  path to the config file for bwrapify
+  -C CONFIG  path to the config file
+
+  -h         show this information
+ENDUSAGEMSG
+	printf "%s" "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $1: CONFIG
+function _load_config { local config="$1"
+	[[ -n "$config" ]] || return 2
+	if [[ -r "$config" ]]; then
+		if source "$config"; then
+			if [[ -v ARGS_FD ]]; then
+				mapfile -t -u"$ARGS_FD" _ARGS
+				exec {ARGS_FD}<&-; unset -v ARGS_FD
+			fi
+			if [[ -v SYSTEMD_ARGS_FD ]]; then
+				mapfile -t -u"$SYSTEMD_ARGS_FD" _SYSTEMD_ARGS
+				exec {SYSTEMD_ARGS_FD}<&-; unset -v SYSTEMD_ARGS_FD
+			fi
+			if [[ -v GAMESCOPE_ARGS_FD ]]; then
+				mapfile -t -u"$GAMESCOPE_ARGS_FD" _GAMESCOPE_ARGS
+				exec {GAMESCOPE_ARGS_FD}<&-; unset -v GAMESCOPE_ARGS_FD
+			fi
+			if [[ "$SYSTEMD_INSTANCE" == UUIDGEN ]]; then
+				SYSTEMD_INSTANCE="$(uuidgen -t)"
+			fi
+		else
+			return 126
+		fi
+	else
+		return 127
+	fi
+}
+
+# $@: UNIT COMMAND [ARGS...]
+function _spawn { local unit="$1" cmd="$2" args=("${@:3}")
+	[[ -n "$unit" && -n "$cmd" ]] || return 2
+	[[ -t 0 ]] &&
+		_SYSTEMD_ARGS=("-tdGq" "--wait" "${_SYSTEMD_ARGS[@]}") ||
+			_SYSTEMD_ARGS=("-dPGq" "--wait" "${_SYSTEMD_ARGS[@]}")
+	if [[ -n "$BWRAPIFY_CONFIG" && -r "$BWRAPIFY_CONFIG" ]]; then
+		if ((GAMESCOPE)); then
+			exec systemd-run --user -u"$unit" "${_SYSTEMD_ARGS[@]}" -- \
+				gamescope "${_GAMESCOPE_ARGS[@]}" -- bwrapify -C"$BWRAPIFY_CONFIG" -- \
+					"$cmd" "${_ARGS[@]}" "${args[@]}"
+		else
+			exec systemd-run --user -u"$unit" "${_SYSTEMD_ARGS[@]}" -- \
+				bwrapify -C"$BWRAPIFY_CONFIG" -- \
+					"$cmd" "${_ARGS[@]}" "${args[@]}"
+		fi
+	else
+		if ((GAMESCOPE)); then
+			exec systemd-run --user -u"$unit" "${_SYSTEMD_ARGS[@]}" -- \
+				gamescope "${_GAMESCOPE_ARGS[@]}" -- "$cmd" "${_ARGS[@]}" "${args[@]}"
+		else
+			exec systemd-run --user -u"$unit" "${_SYSTEMD_ARGS[@]}" -- \
+				"$cmd" "${_ARGS[@]}" "${args[@]}"
+		fi
+	fi
+}
+
+
+#==============================================================================#
+
+
+# $@: [-B CONFIG] [-C CONFIG] COMMAND...
+function main { local cmd args
+	local config unit
+	local OPT OPTARG OPTIND
+	while getopts ":B:C:dh" OPT; do
+		case "$OPT" in
+			'B') BWRAPIFY_CONFIG="$OPTARG" ;;
+			'C') config="$OPTARG" ;;
+			'd')
+				BWRAPIFY_CONFIG="$BWRAPIFY_HOME/default.conf"
+				config="$SDRUNIFY_HOME/default.conf"
+			;;
+			'h') _usage ;;
+			'?')
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':')
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done; shift "$((OPTIND - 1))"; cmd="$1" args=("${@:2}")
+	[[ -n "$cmd" ]] || _usage 2
+	if [[ -n "$config" ]]; then
+		_load_config "$config" || return
+	fi
+	unit="sdrunify-${cmd##*/}@$(uuidgen -t)"
+	_spawn "$unit" "$cmd" "${args[@]}"
+}
+
+if [[ "$_SELF" == sdrunify ]]; then
+	main "$@"
+else
+	_load_config "$SDRUNIFY_HOME/$_SELF.conf" || exit
+	: ${BWRAPIFY_CONFIG:=$BWRAPIFY_HOME/$_SELF.conf}
+	: ${COMMAND:=/usr/bin/$_SELF}
+	_spawn "$_SELF${SYSTEMD_INSTANCE:+@$SYSTEMD_INSTANCE}" "$COMMAND" "$@"
+fi
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

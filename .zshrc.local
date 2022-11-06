@@ -1,0 +1,979 @@
+#!/hint/zsh
+# vim:ft=zsh:noet:ts=3:sw=3:
+# man:zsh(1)
+# man:grmlzshrc(5)
+# file:$HOME/.zshrc.local
+#==============================================================================#
+
+
+# man:gpg-agent(1)
+export GPG_TTY=$TTY
+gpg-connect-agent UPDATESTARTUPTTY /bye &>/dev/null || : NOERR
+
+# man:dircolors(1)
+eval $(dircolors -b -- $XDG_CONFIG_HOME/dircolors.conf)
+
+# man:less(1)
+if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+	export LESS_TERMCAP_mb=$'\e[1;91m'
+	export LESS_TERMCAP_md=$'\e[1;91m'
+	export LESS_TERMCAP_so=$'\e[1;97;100m'
+	export LESS_TERMCAP_us=$'\e[1;92m'
+} else {
+	export LESS_TERMCAP_mb=$'\e[1;31m'
+	export LESS_TERMCAP_md=$'\e[1;31m'
+	export LESS_TERMCAP_so=$'\e[30;47m'
+	export LESS_TERMCAP_us=$'\e[1;32m'
+}
+
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_ue=$'\e[0m'
+
+
+#==============================================================================#
+
+
+# man:zshparam(1)
+HISTSIZE=10000
+KEYTIMEOUT=5
+MAILCHECK=0
+SAVEHIST=10000
+
+# man:cd(1p)
+cdpath=(. .. $HOME)
+
+# populated by _battery_info() and used by _battery_prompt()
+# (capacity\0status,...)
+_BATTERIES=()
+
+
+#==============================================================================#
+
+
+# man:stty(1)
+stty -ixon
+stty start undef
+stty stop  undef
+
+# freeze the tty
+ttyctl -f
+
+# man:set(1p)
+# man:zshoptions(1)
+set -5CHmT -o vi
+
+# man:zshoptions(1)
+setopt clobberempty globstarshort histallowclobber histignorealldups
+unsetopt promptsubst
+
+# command not found handler via `pacman
+# $1: COMMAND
+# man:zshmisc(1)
+function command_not_found_handler { local cmd=$argv[1]
+	local entries entry fields prev_pkg
+	[[ -n $cmd ]] || return 2
+	echo "zsh: $cmd: command not found" >&2
+	# (repo\0package\0version\0file,...)
+	entries=(${(f)"$(pacman -F --machinereadable -- /usr/bin/$cmd)"})
+	if (($#entries)) {
+		printf "\e[1m%s\e[0m may be found in the following packages:\n" $cmd
+		for entry ($entries) {
+			# (repo,package,version,file)
+			fields=(${(0)entry})
+			if [[ $prev_package != $fields[2] ]] {
+				printf "\e[1;35m%s/\e[0m\e[1m%s\e[0m \e[1;32m%s\e[0m\n" \
+					$fields[1,3]
+			}
+			printf "    /%s\n" $fields[4]
+			prev_package=$fields[2]
+		}
+	}
+	return 127
+}
+
+# populate $_BATTERIES
+function _battery_info {
+	local batteries bat fields charge_now charge_full
+	_BATTERIES=()
+	# (path,...)
+	batteries=(/sys/class/power_supply/BAT*(N))
+	if (($#batteries)) {
+		# (capacity,status)
+		fields=(0 '')
+		for bat ($batteries) {
+			if [[ -r $bat/capacity ]] {
+				fields[1]=$(<$bat/capacity)
+			} else {
+				charge_now=$(<$bat/charge_now)
+				charge_full=$(<$bat/charge_full)
+				fields[1]=$((100 * charge_now / charge_full))
+			}
+			[[ -r $bat/status ]] && fields[2]=$(<$bat/status) || fields[2]="Unknown"
+			_BATTERIES+=($fields[1]$'\0'$fields[2])
+		}
+	}
+}
+
+
+#==============================================================================#
+#                                    PROMPT                                    #
+#==============================================================================#
+
+
+# prompt token handlers
+# _battery_prompt(): info for battery via _battery_info() from $_BATTERIES
+# _power-profile_prompt(): info for power-profile
+# _tmux_prompt(): info for tmux from $TMUX_PANE
+# _vcs_prompt(): info for vcs via vcs_info() from $vcs_info_msg_0
+# _venv_prompt(): info for venv from $VIRTUAL_ENV
+if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+	function _battery_prompt {
+		local bat fields icon color
+		_battery_info
+		if (($#_BATTERIES)) {
+			for bat ($_BATTERIES) {
+				# (capacity,status)
+				fields=(${(0)bat})
+				if ((fields[1] > 75)) {
+					icon=''
+				} elif ((fields[1] > 50)) {
+					icon=''
+				} elif ((fields[1] > 25)) {
+					icon=''
+				} elif ((fields[1] > 10)) {
+					icon=''
+				} else {
+					icon=''
+				}
+				case $fields[2] {
+					Charging) color=10 icon=" $icon" ;;
+					Discharging)
+						if ((fields[1] > 75)) {
+							color=10
+						} elif ((fields[1] > 25)) {
+							color=11
+						} elif ((fields[1] > 10)) {
+							color=9
+						} else {
+							color=9 icon="‼$icon"
+						}
+					;;
+					"Not charging") color=10 icon=" $icon" ;;
+					*) color=8 ;;
+				}
+				REPLY="${REPLY:+$REPLY }%F{$color}$icon%f %B%F{$color}$fields[1]%%%f%b"
+			}
+			REPLY=${REPLY:+$REPLY }
+		}
+	}
+	function _power-profile_prompt {
+		local color icon
+		if [[ -f /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference ]]; then
+			case $(</sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference) {
+				performance) color=9 icon='󰓅' ;;
+				balance_performance) color=11 icon='󰾅' ;;
+				power) color=10 icon='󰾆' ;;
+			}
+			REPLY="%F{$color}$icon%f "
+		fi
+	}
+	function _tmux_prompt {
+		REPLY=${TMUX_PANE:+%F{11}%f %B%F{11}${TMUX_PANE#*%}%f%b }
+	}
+	function _vcs_prompt {
+		vcs_info
+		REPLY=${vcs_info_msg_0_:+%F{13}%f $vcs_info_msg_0_ }
+	}
+	function _venv_prompt {
+		REPLY=${VIRTUAL_ENV:+%F{13}%f %B%F{13}${VIRTUAL_ENV:t}%f%b }
+	}
+} else {
+	function _battery_prompt {
+		local bat fields icon color
+		_battery_info
+		if (($#_BATTERIES)) {
+			for bat ($_BATTERIES) {
+				# (capacity,status)
+				fields=(${(0)bat})
+				case $fields[2] {
+					Charging) color=2 icon='+' ;;
+					Discharging)
+						if ((fields[1] > 75)) {
+							color=2
+						} elif ((fields[1] > 25)) {
+							color=3
+						} elif ((fields[1] > 10)) {
+							color=1
+						} else {
+							color=1 icon="!!"
+						}
+					;;
+					"Not charging") color=2 icon='=' ;;
+					*) color=0 ;;
+				}
+				REPLY="${REPLY:+$REPLY }%B%F{$color}$icon$fields[1]%%%f%b"
+			}
+			REPLY=${REPLY:+%F{6}[%f$REPLY%F{6}]%f }
+		}
+	}
+	function _power-profile_prompt {
+		local color icon
+		if [[ -f /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference ]]; then
+			case $(</sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference) {
+				performance) color=1 icon='/' ;;
+				balance_performance) color=3 icon='|' ;;
+				power) color=2 icon='\' ;;
+			}
+			REPLY="%F{6}(%f%B%F{$color}$icon%f%b%F{6})%f "
+		fi
+	}
+	function _tmux_prompt {
+		REPLY=${TMUX_PANE:+%F{6}{%f%B%F{3}${TMUX_PANE#*%}%f%b%F{6}}%f }
+	}
+	function _vcs_prompt {
+		vcs_info
+		REPLY=${vcs_info_msg_0_:+%F{6}(%f$vcs_info_msg_0_%F{6})%f }
+	}
+	function _venv_prompt {
+		REPLY=${VIRTUAL_ENV:+%F{6}{%f%B%F{5}${VIRTUAL_ENV:t}%f%b%F{6}}%f }
+	}
+}
+
+# prompt token definitions
+# pre -> token -> post
+if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+	grml_prompt_pre_default=(
+		at            ''
+		battery       ''
+		datetime      "%F{14}"
+		host          "%F{9}"
+		in            ''
+		jobs          "%F{11}"
+		newline       ''
+		path          "%F{12}"
+		percent       "%F{15}"
+		power-profile ''
+		rc            "%F{9}"
+		rc-emote      "%F{15}"
+		tmux          ''
+		tty           "%F{13}"
+		user          "%F{%(!.9.11)}"
+		vcs           ''
+		venv          ''
+	)
+	grml_prompt_token_default=(
+		at            ' '
+		battery       ''
+		datetime      "󰃭 %B%D{%Y-%m-%d}%b 󰥔 %B%D{%H:%M}%b "
+		host          " %B%m%b"
+		in            ' '
+		jobs          "%1(j. %B%j%b .)"
+		newline       $'\n'
+		path          " %B%40<..<%~%<<%b "
+		percent       "%(!.%2(L..).%2(L..)) "
+		power-profile ''
+		rc            "%(?.. %B%?%b )"
+		rc-emote      "%(?..)"
+		tmux          ''
+		tty           "  %B%y%b"
+		user          " %B%n%b"
+		vcs           ''
+		venv          ''
+	)
+	grml_prompt_post_default=(
+		at            ''
+		battery       ''
+		datetime      "%f"
+		host          "%f"
+		in            ''
+		jobs          "%f"
+		newline       ''
+		path          "%f"
+		percent       "%f"
+		power-profile ''
+		rc            "%f"
+		rc-emote      "%f"
+		tmux          ''
+		tty           "%f"
+		user          "%f"
+		vcs           ''
+		venv          ''
+	)
+} else {
+	grml_prompt_pre_default=(
+		at            "%F{6}"
+		battery       ''
+		datetime      ''
+		host          "%B%F{1}"
+		in            "%F{6}"
+		jobs          ''
+		newline       ''
+		path          "%B%F{4}"
+		percent       "%B"
+		power-profile ''
+		rc            ''
+		rc-emote      "%B"
+		tmux          ''
+		tty           ''
+		user          "%B%F{%(!.1.3)}"
+		vcs           ''
+		venv          ''
+	)
+	grml_prompt_token_default=(
+		at            '@'
+		battery       ''
+		datetime      "%F{6}[%f%B%F{6}%D{%Y-%m-%d %H:%M}%f%b%F{6}]%f "
+		host          "%m"
+		in            ':'
+		jobs          "%1(j.%F{6}(%f%B%F{3}%j%f%b%F{6})%f .)"
+		newline       $'\n'
+		path          "%40<...<%~%<< "
+		percent       "%2(L.%#>.%#) "
+		power-profile ''
+		rc            "%(?..%F{6}<%f%B%F{1}%?%f%b%F{6}>%f )"
+		rc-emote      "%(?..:()"
+		tmux          ''
+		tty           "%F{6}{%f%B%F{5}%y%f%b%F{6}}%f"
+		user          "%n"
+		vcs           ''
+		venv          ''
+	)
+	grml_prompt_post_default=(
+		at            "%f"
+		battery       ''
+		datetime      ''
+		host          "%f%b"
+		in            "%f"
+		jobs          ''
+		newline       ''
+		path          "%f%b"
+		percent       "%b"
+		power-profile ''
+		rc            ''
+		rc-emote      "%b"
+		tmux          ''
+		tty           ''
+		user          "%f%b"
+		vcs           ''
+		venv          ''
+	)
+}
+
+# prompt token handlers
+grml_prompt_token_function=(
+	battery       _battery_prompt
+	power-profile _power-profile_prompt
+	tmux          _tmux_prompt
+	vcs           _vcs_prompt
+	venv          _venv_prompt
+)
+
+# setup the prompt
+zstyle ":prompt:grml:left:setup" items \
+	datetime power-profile battery tmux venv jobs rc newline \
+	user at host tty in path vcs newline \
+	percent
+zstyle ":prompt:grml:right:setup" items rc-emote
+
+# setup the backends for vcs_info()
+zstyle ":vcs_info:*" enable git cvs svn
+
+# setup vcs_info()
+if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+	zstyle ":vcs_info:*"              actionformats "%B%F{15}%s%f%%b%F{6}/%f%B%F{10}%b%f%%b%F{6}|%f%B%F{9}%a%f%%b"
+	zstyle ":vcs_info:*"              formats       "%B%F{15}%s%f%%b%F{6}/%f%B%F{10}%b%f%%b"
+	zstyle ":vcs_info:(sv[nk]|bzr):*" branchformat  "%b%F{6}:%f%B%F{11}%r%f%%%%b"
+} else {
+	zstyle ":vcs_info:*"              actionformats "%B%s%%b%F{6}/%f%B%F{2}%b%f%%b%F{6}|%f%B%F{1}%a%f%%b"
+	zstyle ":vcs_info:*"              formats       "%B%s%%b%F{6}/%f%B%F{2}%b%f%%b"
+	zstyle ":vcs_info:(sv[nk]|bzr):*" branchformat  "%b%F{6}:%f%B%F{3}%r%f%%%%b"
+}
+
+# secondary and selection prompts
+if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+	PS2="%F{3}%_%f%F{15}%f "
+	PS3="%F{5}%f "
+} else {
+	PS2="%F{3}%_%f%B>>%b "
+	PS3="%F{5}?%f "
+}
+
+# execution trace prompt
+PS4="+%x:%i:%N:%e:%_> "
+
+
+#==============================================================================#
+#                                    HOOKS                                     #
+#==============================================================================#
+
+
+# random chance for a colored `fortune
+function _fortune-cookie {
+	local color msg
+	local random=$RANDOM
+	if ((random > 31744)) {
+		color="1;3$((random % 6 + 1))m"
+		if ((random > 32512)) {
+			msg=$(fortune -l)
+		} else {
+			msg=$(fortune -s)
+		}
+		printf "\e[$color%s\e[0m\n" $msg
+	}
+}
+add-zsh-hook precmd _fortune-cookie
+
+# setup the dynamic title
+if [[ $TERM =~ (foot|xterm|tmux) ]] {
+	function _window-title-precmd {
+		local title="%n@%m{%y}:%40<...<%~%<<"
+		# user@host{tty}:cwd
+		printf "\e]2;%s\a" ${(%)title}
+	}
+	add-zsh-hook precmd _window-title-precmd
+
+	# $1: history string
+	# $2: short command
+	# $3: full command
+	function _window-title-preexec { local cmd=$argv[2]
+		local title="%n@%m{%y}"
+		# user@host{tty}$cmd
+		printf "\e]2;%s$%s\a" ${(%)title} $cmd
+	}
+	add-zsh-hook preexec _window-title-preexec
+}
+
+# setup OSC7-CWD
+if [[ $TERM == foot* ]] {
+	function _osc7-cwd-chpwd {
+		((ZSH_SUBSHELL == 0)) || return 127
+		emulate -L zsh
+		setopt extendedglob
+		local LC_ALL=C; unset -v LANGUAGE
+		# file://host/cwd
+		printf "\e]7;file://%s%s\e\\" $HOST ${PWD//(#m)([^@-Za-z&-;_~])/%${(l:2::0:)$(([##16]#MATCH))}}
+	}
+	add-zsh-hook -Uz chpwd _osc7-cwd-chpwd
+}
+
+
+#==============================================================================#
+#                                  ZLE Tweaks                                  #
+#==============================================================================#
+
+
+# vi-like keybinds
+bindkey -v
+
+# alt-h -> run-help()
+bindkey "\eh" run-help
+
+# cursor configuration
+# zle-keymap-select(): change the cursor shape for different modes
+# _reset-cursor(): restore the cursor shape before each prompt
+if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+	function zle-keymap-select {
+		case $KEYMAP {
+			vicmd) echo -ne "\e[1 q" ;;
+			main) echo -ne "\e[5 q" ;;
+		}
+	}
+	function _reset-cursor {
+		echo -ne "\e[5 q"
+	}
+} elif [[ $PARENT_TERM == linux* && $TERM != linux* ]] { # derped
+	function zle-keymap-select {
+		case $KEYMAP {
+			vicmd) echo -ne "\e[1 q" ;;
+			main) echo -ne "\e[2 q" ;;
+		}
+	}
+	function _reset-cursor {
+		echo -ne "\e[2 q"
+	}
+} else {
+	function zle-keymap-select {
+		case $KEYMAP {
+			vicmd) echo -ne "\e[?8c" ;;
+			main) echo -ne "\e[?0c" ;;
+		}
+	}
+	function _reset-cursor {
+		echo -ne "\e[?0c"
+	}
+}
+zle -N zle-keymap-select
+add-zsh-hook precmd _reset-cursor
+
+# vi-like menu navigation
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+# ctrl-q -> quote line
+function _quote-line {
+	zle beginning-of-line
+	zle forward-word
+	RBUFFER=${(q)RBUFFER}
+	zle end-of-line
+}
+zle -N _quote-line && bindkey "^Q" _quote-line
+
+# ctrl-alt-q -> unquote line
+function _unquote-line {
+	zle beginning-of-line
+	zle forward-word
+	RBUFFER=${(Q)RBUFFER}
+	zle end-of-line
+}
+zle -N _unquote-line && bindkey "\e^Q" _unquote-line
+
+# ... -> ../..
+function _rationalise-dot {
+	if [[ $LBUFFER =~ '(^|/| |	|'$'\n''|\||;|&)\.\.$' ]] {
+		LBUFFER+='/'
+		zle self-insert
+		zle self-insert
+	} else {
+		zle self-insert
+	}
+}
+zle -N _rationalise-dot && bindkey . _rationalise-dot &&
+	# prevent conflict with incremental history search
+	bindkey -M isearch . self-insert
+
+# alt-q -> push-line or push-input and get-line
+bindkey "\eq" push-line-or-edit
+
+if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+	# alt-home -> `cd $HOME`
+	function _cd-home {
+		pushd ~ &>/dev/null || : NOERR
+		zle reset-prompt
+	}
+	zle -N _cd-home && bindkey "\e[1;3H" _cd-home
+
+	# alt-left -> `cd $OLDPWD`
+	function _cd-up {
+		popd &>/dev/null || : NOERR
+		zle reset-prompt
+	}
+	zle -N _cd-up && bindkey "\e[1;3D" _cd-up
+
+	# alt-up -> `cd ..`
+	function _cd-parent {
+		pushd .. &>/dev/null || : NOERR
+		zle reset-prompt
+	}
+	zle -N _cd-parent && bindkey "\e[1;3A" _cd-parent
+
+	# ctrl-l -> clear and scroll back
+	function _clear-and-scrollback {
+		echoti civis >$TTY
+		echo -ne "\e[H\e[2J" >$TTY
+		zle .reset-prompt
+		zle -R
+		echo -ne "\e[3J" >$TTY
+		echoti cnorm >$TTY
+	}
+	zle -N _clear-and-scrollback && bindkey "^L" _clear-and-scrollback
+
+	# ctrl-d -> `exit
+	function _exit-zsh {
+		exit
+	}
+	zle -N _exit-zsh && bindkey "^D" _exit-zsh
+}
+
+
+#==============================================================================#
+#                                   ALIASES                                    #
+#==============================================================================#
+
+
+# global aliases
+alias -g "..."='../..'
+alias -g "...."='../../..'
+alias -g BG='&>/dev/null & disown'
+alias -g BGe='& disown && exit'
+alias -g C='| wc -l'
+alias -g E='| $EDITOR -'
+alias -g G='| grep'
+alias -g H='| head'
+alias -g Hl=' --help |& $PAGER'
+alias -g J='| jq'
+alias -g K='| keep'
+alias -g N='&>/dev/null'
+alias -g P='| $PAGER'
+alias -g R='| tr A-z N-za-m'
+alias -g S='| sort'
+alias -g Sn='| sort -n'
+alias -g T='| tail'
+
+# color
+alias diff='command diff -Ndu --color=auto'
+alias grep='command grep --color=auto'
+alias ip='command ip -d -h -s --color=auto'
+alias pacman='command pacman --color=auto'
+
+# `ls
+alias ls='command ls -bGv -F --color=auto'
+
+alias dir='ls -lSrAh'
+alias l='ls -l'
+alias la='ls -lA'
+alias lad='ls -d .*(/)'
+alias lh='ls -hAl'
+alias ll='ls -l '
+alias lsa='ls -A .*(.)'
+alias lsbig='ls -flh *(.OL[1,10])'
+alias lsd='ls -d *(/)'
+alias lse='ls -d *(/^F)'
+alias lsl='ls -l *(@)'
+alias lsnew='ls -rtlh *(D.om[1,10])'
+alias lsnewdir='ls -rthdl *(/om[1,10]) .*(D/om[1,10])'
+alias lsold='ls -rtlh *(D.Om[1,10])'
+alias lsolddir='ls -rthdl *(/Om[1,10]) .*(D/Om[1,10])'
+alias lss='ls -l *(s,S,t)'
+alias lssmall='ls -Srl *(.oL[1,10])'
+alias lsw='ls -ld *(R,W,X.^ND/)'
+alias lsx='ls -l *(*)'
+
+# `vi -> `nvim
+alias vi='nvim'
+alias vibin='nvim -b'
+alias vidiff='nvim -d'
+alias vir='nvim -r'
+alias vis='nvim -S'
+
+# `vim -> `nvim
+alias vim='nvim'
+alias vimbin='nvim -b'
+alias vimdiff='nvim -d'
+alias vimr='nvim -r'
+alias vims='nvim -S'
+
+# help -> run-help()
+alias help='run-help'
+
+# interactive
+alias cp='command cp -i --preserve=all --reflink=auto'
+alias ln='command ln -i'
+alias mv='command mv -i'
+alias rm='command rm -I'
+
+# logs
+alias llog='journalctl -b'
+alias paclog='paclog --color'
+alias tlog='journalctl -fb'
+
+# udiskie
+alias mnt='udiskie-mount -r'
+alias umnt='udiskie-umount -l'
+
+# `rsync
+alias cpr='rsync -ahh -@1 --partial --info=stats1,progress2'
+alias mvr='rsync -ahh -@1 --partial --info=stats1,progress2 --remove-source-files'
+
+# `du
+alias du='command du -h'
+alias da='du -cs'
+alias ds='du -ms -- * | sort -n | tail'
+
+# `df
+alias df='command df -h'
+alias dfs='df -xefivarfs -xdevtmpfs -xtmpfs'
+alias di='df -i'
+alias dis='df -i -xefivarfs -xdevtmpfs -xtmpfs'
+
+# config management
+alias dotfiles='git --bare --git-dir $HOME/.dotfiles --work-tree $HOME'
+alias etcfiles='sudo -E git --bare --git-dir /etc/.etcfiles --work-tree /etc'
+
+# `sudoedit and `nvim -d` for `pacdiff
+alias pacdiff='DIFFPROG=sudoedit SUDO_EDITOR="nvim -d" command pacdiff'
+
+# misc
+alias mntls='findmnt --real'
+alias dec='printf "%d\n"'
+alias hex='printf "%x\n"'
+alias oct='printf "%o\n"'
+alias uncomment='grep -Ev "^\s*#.*$|^\s*$"'
+
+# URL processing with `python
+alias urldec='python -c "import sys, urllib.parse as ul; print(ul.unquote(sys.argv[1]))"'
+alias urlenc='python -c "import sys, urllib.parse as ul; print(ul.quote(sys.argv[1]))"'
+
+
+#==============================================================================#
+#                                  FUNCTIONS                                   #
+#==============================================================================#
+
+
+# `cp then follow
+# $@: ARGS
+function cpf {
+	((ARGC)) || return 2
+	cp $argv && builtin cd -- $_
+}
+
+# `mv then follow
+# $@: ARGS
+function mvf {
+	((ARGC)) || return 2
+	mv $argv && builtin cd -- $_
+}
+
+# test internet connectivity
+# `drill -> `ping -> `curl
+# ipv4 -> ipv6
+function pong {
+	if drill -4DQ ping.archlinux.org A &>/dev/null; then
+		if ping -4q -c1 -w5 ping.archlinux.org &>/dev/null; then
+			curl -4qfs -o/dev/null --fail-early https://ping.archlinux.org ||
+				echo "IPv4 route failure" >&2
+		else
+			echo "IPv4 ping failure" >&2
+		fi
+	else
+		echo "IPv4 DNS failure" >&2
+	fi
+	if drill -6DQ ping.archlinux.org AAAA &>/dev/null; then
+		if ping -6q -c1 -w5 ping.archlinux.org &>/dev/null; then
+			curl -6qfs -o/dev/null --fail-early https://ping.archlinux.org ||
+				echo "IPv6 route failure" >&2
+		else
+			echo "IPv6 ping failure" >&2
+		fi
+	else
+		echo "IPv6 DNS failure" >&2
+	fi
+}
+
+# get IP addresses
+function ipls {
+	local ipv4 ipv6
+	ip -4 -br a |
+		awk '($1)!="lo" {printf("\033[1m%s:\033[0m \033[35m%s\033[0m\n", $1, $3)}'
+	ip -6 -br a |
+		awk '($1)!="lo" {printf("\033[1m%s:\033[0m \033[34m%s\033[0m\n", $1, $3)}'
+	ipv4=$(curl -4qsL am.i.mullvad.net 2>/dev/null)
+	if [[ -n $ipv4 ]] {
+		echo -e "\e[1mexternal:\e[0m \e[35m$ipv4\e[0m"
+	}
+	ipv6=$(curl -6qsL ipv6.am.i.mullvad.net 2>/dev/null)
+	if [[ -n $ipv6 ]] {
+		echo -e "\e[1mexternal:\e[0m \e[34m$ipv6\e[0m"
+	}
+}
+
+# get MAC addresses
+function macls {
+	ip -br l | awk '($1)!~"(lo|wg[0-9])" {printf("\033[1m%s:\033[0m \033[33m%s\033[0m\n", $1, $3)}'
+}
+
+# try to remove the current dir
+function rmwd {
+	pushd .. &>/dev/null
+	if rmdir -- $OLDPWD; then
+		popd -n &>/dev/null
+	else
+		popd &>/dev/null
+	fi
+}
+
+# `diff then `patch
+# $1: OLD FILE
+# $2: NEW FILE
+function merge { local old=$argv[1] new=$argv[2]
+	[[ -n $old && -n $new ]] || return 2
+	diff -dNu -- $old $new | patch -bsu -- $old
+}
+
+# `tmux helper
+# $@: [-I INSTANCE (graphical)] [-S SESSION (${1##*/)] [COMMAND... ($SHELL)]
+function mux { local cmd args
+	local session instance
+	local OPT OPTARG OPTIND
+	if [[ -n $TMUX ]] {
+		echo "refusing to nest tmux session, unset \$TMUX to force" >&2
+		return 1
+	}
+	while getopts ":I:S:" OPT; do
+		case $OPT {
+			'I') instance=$OPTARG ;;
+			'S') session=$OPTARG ;;
+			'?')
+				echo "invalid option -- '$OPTARG'" >&2
+				return 2
+			;;
+			':')
+				echo "missing argument -- '$OPTARG'" >&2
+				return 2
+			;;
+		}
+	done; shift $((OPTIND - 1)); cmd=$argv[1] args=($argv[2,-1])
+	: ${cmd:=$SHELL}
+	: ${session:=${cmd:t}}
+	: ${instance:=graphical}
+	if ! systemctl --user is-active tmux-daemon@$instance.service &>/dev/null; then
+		systemctl --user start tmux-daemon@$instance.service &>/dev/null
+		sleep 1
+	fi
+	tmux -S $XDG_RUNTIME_DIR/tmux-$instance \
+		new-session -A -s $session -- \
+			$cmd $args
+}
+
+# `vipe template to stdout
+# [$1: FORMAT (txt)]
+function template { local format=${argv[1]:-txt}
+	vipe <$XDG_TEMPLATES_DIR/$format
+}
+
+# `date with a different timezone
+# [$1: TIMEZONE (UTC)]
+function tzdate { local tz=${argv[1]:-UTC}
+	TZ=$tz date
+}
+
+# list timezones
+function tzls {
+	echo -e "\e[1;34mTimezones\e[0m"
+	tree -Cl --noreport /usr/share/zoneinfo | tail -n+2
+}
+
+# print unicode PUA block
+# $1: NAME {bmp, spua-a, spua-b}
+function unipua { local name=$argv[1]
+	case $name {
+		bmp) printf "%b " $(printf "\\\u%.4x\n" {57344..63743}) ;;
+		spua-a) printf "%b " $(printf "\\\U000f%.4x\n" {0..65535}) ;;
+		spua-b) printf "%b " $(printf "\\\U0010%.4x\n" {0..65535}) ;;
+		*) return 2 ;;
+	}
+}
+
+# search on yt
+# $*: SEARCH TERMS
+function yts { local terms="$argv"
+	local template
+	[[ -n $terms ]] || return 2
+	template=$'\e[1;33m'"%(title)s"$'\e[0m\n'
+	template+=$'\e[1;31m'"@%(channel)s"$'\e[0m '
+	template+=$'\e[1;36m'"(%(upload_date)s)"$'\e[0m '
+	template+=$'\e[1;35m'"[%(duration_string)s]"$'\e[0m\n'
+	template+=$'\e[1;34m'"https://youtu.be/%(id)s"$'\e[0m\n'
+	template+="%(description)s"
+	yt-dlp -i --no-warnings --max-downloads 10 --print $template "ytsearchall:$terms" || : NOERR
+}
+
+# knock on an IPv4 host
+# $@: HOST
+function knock4 { local host=$argv[1]
+	local port; shift
+	for port; do
+		nmap -4 -Pn -n --host-timeout 10 --max-retries 0 -p $port $host
+	done >&/dev/null
+}
+
+# knock on an IPv6 host
+# $@: HOST
+function knock6 { local host=$argv[1]
+	local port; shift
+	for port; do
+		nmap -6 -Pn -n --host-timeout 10 --max-retries 0 -p $port $host
+	done >&/dev/null
+}
+
+
+#==============================================================================#
+#                                   PLUGINS                                    #
+#==============================================================================#
+
+
+# $1: PLUGIN
+function _import { local plugin=$argv[1]
+	local dir
+	[[ -n $plugin ]] || return 2
+	for dir (${(s|:|)XDG_DATA_DIRS:-${XDG_DATA_HOME:-$HOME/.local/share}:/usr/local/share:/usr/share}) {
+		if [[ -r $dir/zsh/plugins/$plugin/$plugin.zsh ]] {
+			source $dir/zsh/plugins/$plugin/$plugin.zsh
+			return
+		}
+	}
+	return 127
+}
+
+# fish-like syntax highlighting
+if _import zsh-syntax-highlighting; then
+	if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+		ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]="fg=14"
+		ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]="fg=13"
+		ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=13"
+		ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]="fg=14"
+		ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=13"
+		ZSH_HIGHLIGHT_STYLES[autodirectory]="fg=12,underline"
+		ZSH_HIGHLIGHT_STYLES[path]="fg=12"
+	} else {
+		ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]="fg=6,bold"
+		ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]="fg=5,bold"
+		ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=5,bold"
+		ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]="fg=6,bold"
+		ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=5,bold"
+		ZSH_HIGHLIGHT_STYLES[autodirectory]="fg=4,bold,underline"
+		ZSH_HIGHLIGHT_STYLES[path]="fg=4,bold"
+	}
+fi
+
+# fish-like fast/unobtrusive autosuggestions for zsh
+if _import zsh-autosuggestions; then
+	if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+	} else {
+		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=0,bold"
+	}
+fi
+
+# fish-like history search
+if _import zsh-history-substring-search; then
+	if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+		HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="fg=15,bg=8"
+	} else {
+		HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="fg=0,bg=7"
+	}
+	HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND="none"
+	# keybinds
+	bindkey $terminfo[kcuu1] history-substring-search-up
+	bindkey $terminfo[kcud1] history-substring-search-down
+	bindkey -M vicmd 'k' history-substring-search-up
+	bindkey -M vicmd 'j' history-substring-search-down
+fi
+
+unset -f _import
+
+
+#==============================================================================#
+#                                   EXECUTE                                    #
+#==============================================================================#
+
+
+if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+	ponysay -Xo 2>/dev/null
+}
+
+_TODOS=$(todos)
+if [[ -n $_TODOS ]] {
+	if [[ $PARENT_TERM == foot* || $TERM == foot* ]] {
+		printf "\e[93m\e[0m\n%s\n" $_TODOS
+	} else {
+		printf "\e[1;33mTodos:\e[0m\n%s\n" $_TODOS
+	}
+}; unset -v _TODOS
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

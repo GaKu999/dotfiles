@@ -1,0 +1,172 @@
+#!/usr/bin/env bash
+# vim:ft=bash:fenc=utf-8:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/mkpkg
+#==============================================================================#
+
+
+source /usr/share/makepkg/util/config.sh
+source /usr/share/makepkg/util/error.sh
+source /usr/share/makepkg/util/message.sh
+
+colorize
+load_makepkg_config
+
+# bail early
+if ((EUID == 0)); then
+	error "running as root is not allowed" >&2
+	exit "$E_ROOT"
+fi
+
+
+#==============================================================================#
+
+
+: ${REPODEST:=$HOME/.makepkg/pkg}
+
+_UMASK="$(umask)"
+umask 0022
+trap 'umask "$_UMASK"' EXIT
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+_INSTALL=()
+
+declare -A _ERRORS
+
+# [$1: EXIT CODE (0)]
+function _usage { local ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg <<ENDUSAGEMSG
+Usage: $_SELF [-su] [-A ARCH] [-C PATH] [-I PKG[ -I PKG...] [-R PATH] [-W PATH] [PATH...]
+
+  -s       make a source package
+  -u       update before building
+
+  -A ARCH  build architecture
+  -C PATH  build chroot
+  -I FILE  package to install
+  -R PATH  repository location
+  -W PATH  work directory
+
+  -h       show this information
+ENDUSAGEMSG
+	printf "%s" "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $1: CHROOT DIR
+function _update { local chrootdir="$1"
+	if [[ -d "$chrootdir" ]]; then
+		arch-nspawn -- "$chrootdir" -- pacman -Syu
+	else
+		error "$chrootdir: no such directory" >&2
+		return 1
+	fi
+}
+
+# $1: PKGBUILD DIR
+# $2: WORK DIR
+# [$3: MAKE SOURCE PACKAGE (0)]
+function _build { local srcdir="$1" workdir="$2" mksrcpkg="${3:-0}"
+	local binopts srcopts
+	if [[ -f "$srcdir/PKGBUILD" ]]; then
+		binopts=("${_INSTALL[@]}" -T -r "$workdir")
+		srcopts=("-fLo" "--allsource" "--force" "--holdver" "--noprepare" "--sign" "--verifysource")
+		if [[ -d "$REPODEST" ]]; then
+			binopts+=("-D" "$(realpath -eq -- "$REPODEST")")
+		else
+			warning "$REPODEST: no such directory"
+		fi
+		pushd "$srcdir" &>/dev/null
+		makechrootpkg "${binopts[@]}" || _ERRORS["${srcdir##*/}-bin"]="$?"
+		if ((mksrcpkg)); then
+			makepkg "${srcopts[@]}" || _ERRORS["${srcdir##*/}-srcpkg"]="$?"
+		fi
+		popd &>/dev/null
+	else
+		error "PKGBUILD does not exist"
+		return 1
+	fi
+}
+
+
+#==============================================================================#
+
+
+# $@: [-su] [-A ARCH] [-C PATH] [-I PKG[ -I PKG...] [-R PATH] [-W PATH] [PATH...]
+function main { local path
+	local arch devchroot pkg repo workdir mksrcpkg updchroot err
+	local OPT OPTARG OPTIND
+	while getopts ":A:C:I:R:W:suh" OPT; do
+		case "$OPT" in
+			'A') arch="$OPTARG" ;;
+			'C') devchroot="$OPTARG" ;;
+			'I')
+				pkg="$OPTARG"
+				if [[ -f "$pkg" ]]; then
+					_INSTALL+=("-I" "$(realpath -eq -- "$pkg")")
+				else
+					warning "$pkg: no such file"
+				fi
+			;;
+			'R') REPODEST="$OPTARG" ;;
+			'W') workdir="$OPTARG" ;;
+			's') mksrcpkg=1 ;;
+			'u') updchroot=1 ;;
+			'h') _usage ;;
+			'?')
+				error "invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':')
+				error "missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done; shift "$((OPTIND - 1))"
+	: ${arch:=$(uname -m)}
+	: ${devchroot:=/var/lib/archbuild/$arch}
+	: ${workdir:=/var/lib/archbuild/$USER-$arch}
+	if ((updchroot)); then
+		if ! _update "$devchroot"; then
+			error "update failed" >&2
+			return 1
+		fi
+	fi
+	if ! mkdir -vp -- "$workdir" || ! ln -vfTs -- "$devchroot" "$workdir/root"; then
+		error "preparation failed" >&2
+		return 1
+	fi
+	if (("$#")); then
+		for path; do
+			_build "$(realpath -eq "$path")" "$(realpath -eq "$workdir")" "$mksrcpkg"
+		done
+	elif [[ -f ./PKGBUILD ]]; then
+		_build "$PWD" "$(realpath -eq "$workdir")" "$mksrcpkg"
+	else
+		error "PKGBUILD does not exist"
+		return 1
+	fi
+	if (("${#_ERRORS[@]}")); then
+		for err in "${!_ERRORS[@]}"; do
+			error "$err: reported error '${_ERRORS[$err]}'" >&2
+		done
+		return 1
+	fi
+}
+
+main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

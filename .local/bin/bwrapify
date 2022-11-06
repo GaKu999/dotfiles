@@ -1,0 +1,348 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# man:bwrap(1)
+# file:$XDG_BIN_DIR/bwrapify
+#==============================================================================#
+
+
+set -a
+: ${TMPDIR:=/tmp}
+: ${XDG_CACHE_HOME:=$HOME/.cache}
+: ${XDG_CONFIG_HOME:=$HOME/.config}
+: ${XDG_DATA_HOME:=$HOME/.local/share}
+: ${XDG_STATE_HOME:=$HOME/.local/state}
+
+: ${XDG_CONFIG_DIRS:=$XDG_CONFIG_HOME:/etc/xdg}
+: ${XDG_DATA_DIRS:=$XDG_DATA_HOME:/usr/local/share:/usr/share}
+
+: ${XDG_BIN_DIR:=$HOME/.local/bin}
+: ${XDG_LIB_DIR:=$HOME/.local/lib}
+
+: ${XDG_DOCUMENTS_DIR:=$HOME/Documents}
+: ${XDG_DOWNLOAD_DIR:=$HOME/Downloads}
+: ${XDG_GAMES_DIR:=$HOME/Games}
+: ${XDG_MEDIA_DIR:=/run/media/$USER}
+: ${XDG_MUSIC_DIR:=$HOME/Music}
+: ${XDG_PICTURES_DIR:=$HOME/Pictures}
+: ${XDG_PROJECTS_DIR:=$HOME/Projects}
+: ${XDG_TEMPLATES_DIR:=$HOME/Templates}
+: ${XDG_VIDEOS_DIR:=$HOME/Videos}
+
+: ${BWRAPIFY_HOME:=$XDG_CONFIG_HOME/bwrapify}
+: ${BWRAPIFY_DATA:=$HOME/.bwrapify}
+: ${BWRAPIFY_RUNDIR:=$XDG_RUNTIME_DIR/bwrapify}
+set +a
+
+
+#==============================================================================#
+
+
+COMMAND=''
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+#BWRAP_ARGS_FD
+_BWRAP_ARGS=()
+
+# [$1: EXIT CODE (0)]
+function _usage { local ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg <<ENDUSAGEMSG
+Usage: $_SELF [-d] [-C CONFIG] COMMAND...
+
+  -d         use the default configurations (for testing)
+
+  -C CONFIG  path to the config file
+
+  -h         show this information
+ENDUSAGEMSG
+	printf "%s" "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $*: ARGS...
+function _add_args { _BWRAP_ARGS+=("$@"); }
+
+# without args
+for name in unshare-user unshare-user-try unshare-ipc unshare-pid unshare-net unshare-uts unshare-cgroup unshare-cgroup-try unshare-all share-net disable-userns assert-userns-disabled clearenv new-session die-with-parent as-pid-1; do
+	eval "function bwrap-$name { _add_args --$name; }"
+done; unset -v name
+
+# with 1 arg
+for name in userns userns2 chdir pidns uid gid hostname chdir unsetenv lock-file sync-fd perms size remount-ro proc dev tmpfs mqueue dir seccomp add-seccomd-fd exec-label file-label block-fd userns-block-fd info-fd json-status-fd cap-add cap-drop; do
+	eval "function bwrap-$name { _add_args --$name \"\$1\"; }"
+done; unset -v name
+
+# with 2 args
+for name in setenv bind bind-try dev-bind dev-bind-try ro-bind ro-bind-try file bind-data ro-bind-data symlink chmod; do
+	eval "function bwrap-$name { _add_args --$name \"\$1\" \"\$2\"; }"
+done; unset -v name
+
+
+#==============================================================================#
+
+
+# 2 args to 1 arg
+for name in bind bind-try dev-bind dev-bind-try ro-bind ro-bind-try; do
+	eval "function bwrapify-$name { bwrap-$name \"\$1\" \"\$1\"; }"
+done; unset -v name
+
+# $*: ENV...
+function bwrapify-unsetenv { local name
+	for name; do
+		bwrap-unsetenv "$name"
+	done
+}
+
+# $@: [-defaults] [-fixes] [+fixes[-{wayland,x11}]] [{-,+}{wayland,x11}]
+function bwrapify-setenv { local arg
+	for arg; do
+		case "$arg" in
+			-defaults) bwrapify-unsetenv CLUTTER_BACKEND GDK_BACKEND QT_QPA_PLATFORM SDL_VIDEODRIVER WINIT_UNIT_BACKEND XDG_SESSION_TYPE ;;
+			-fixes) bwrapify-unsetenv WINIT_X11_SCALE_FACTOR _JAVA_AWT_WM_NONREPARENTING ;;
+			+fixes-wayland) bwrap-setenv _JAVA_AWT_WM_NONREPARENTING 1 ;;
+			+fixes-x11) bwrap-setenv WINIT_X11_SCALE_FACTOR 1 ;;
+			+fixes)
+				bwrap-setenv _JAVA_AWT_WM_NONREPARENTING 1
+				bwrap-setenv WINIT_X11_SCALE_FACTOR 1
+			;;
+			+prime) bwrap-setenv DRI_PRIME pci-0000_03_00_0 ;;
+			-wayland) bwrapify-unsetenv WAYLAND_DISPLAY _JAVA_AWT_WM_NONREPARENTING ;;
+			+wayland)
+				bwrap-setenv CLUTTER_BACKEND wayland
+				bwrap-setenv GDK_BACKEND wayland
+				bwrap-setenv QT_QPA_PLATFORM wayland
+				bwrap-setenv SDL_VIDEODRIVER wayland
+				bwrap-setenv WINIT_UNIX_BACKEND wayland
+				bwrap-setenv XDG_SESSION_TYPE wayland
+			;;
+			-x11) bwrapify-unsetenv DISPLAY WINIT_X11_SCALE_FACTOR ;;
+			+x11)
+				bwrap-setenv CLUTTER_BACKEND x11
+				bwrap-setenv GDK_BACKEND x11
+				bwrap-setenv QT_QPA_PLATFORM xcb
+				bwrap-setenv SDL_VIDEODRIVER x11
+				bwrap-setenv WINIT_UNIX_BACKEND x11
+				bwrap-setenv XDG_SESSION_TYPE x11
+			;;
+		esac
+	done
+}
+
+# $@: PATH [TARGET ($1)]
+function bwrapify-dir { local path="$1" target="${2:-$1}"
+	mkdir -p -m0700 -- "$path"
+	bwrap-bind "$path" "$target"
+}
+
+# $@: PATH
+function bwrapify-tmpfs { local path="$1"
+	bwrap-perms 0700
+	bwrap-tmpfs "$path"
+}
+
+# $1: [NAME] [+transient]
+function bwrapify-base { local name="$1" flag="$2"
+	bwrapify-ro-bind /usr/bin
+	bwrap-symlink /usr/bin /bin
+	bwrap-symlink /usr/bin /sbin
+	bwrap-symlink /usr/bin /usr/sbin
+	bwrapify-ro-bind /usr/local/bin
+	bwrapify-ro-bind /usr/local/sbin
+	bwrapify-ro-bind /usr/lib
+	bwrap-symlink /usr/lib /lib
+	bwrap-symlink /usr/lib /lib64
+	bwrap-symlink /usr/lib /usr/lib64
+	bwrapify-ro-bind /usr/local/lib
+	bwrapify-ro-bind-try /usr/lib32
+	bwrap-symlink /usr/lib32 /lib32
+	bwrapify-ro-bind /etc
+	bwrapify-ro-bind /usr/share
+	bwrapify-ro-bind /usr/local/share
+	bwrap-proc /proc
+	bwrap-dev /dev
+	if [[ -n "$name" ]]; then
+		if [[ "$flag" == +transient ]]; then
+			bwrapify-tmpfs "$HOME"
+		else
+			bwrapify-dir "$BWRAPIFY_DATA/$name" "$HOME"
+		fi
+		bwrapify-dir "$BWRAPIFY_RUNDIR/$name" "$XDG_RUNTIME_DIR"
+		bwrap-bind "$BWRAPIFY_RUNDIR/$name" "$TMPDIR"
+	else
+		bwrapify-tmpfs "$HOME"
+	fi
+	bwrapify-ro-bind-try "$XDG_BIN_DIR"
+	bwrapify-ro-bind-try "$XDG_LIB_DIR"
+	bwrap-ro-bind-try "$(type -P xdgctl)" "$(type -P xdg-open)"
+}
+
+# $*: PATH...
+function bwrapify-dev-binds { local path
+	for path; do
+		bwrapify-dev-bind-try "/dev/$path"
+	done
+}
+
+# $*: PATH...
+function bwrapify-proc-binds { local path
+	for path; do
+		bwrapify-ro-bind-try "/proc/$path"
+	done
+}
+
+# $@: PATH...
+function bwrapify-run-binds { local arg
+	for arg; do
+		case "$arg" in
+			*) bwrapify-ro-bind-try "/run/$arg" ;;
+		esac
+	done
+}
+
+# $@: [+devices] [+pci] PATH...
+function bwrapify-sys-binds { local arg
+	for arg; do
+		case "$arg" in
+			+devices)
+				bwrapify-ro-bind-try /sys/bus
+				bwrapify-ro-bind-try /sys/class/input
+				bwrapify-ro-bind-try /sys/dev/char
+				bwrapify-ro-bind-try /sys/devices
+			;;
+			+pci)
+				bwrapify-ro-bind-try /sys/bus/pci
+				bwrapify-ro-bind-try /sys/bus/pci_express
+			;;
+			*) bwrapify-ro-bind-try "/sys/$arg" ;;
+		esac
+	done
+}
+
+# $*: PATH...
+function bwrapify-var-binds { local path
+	for path; do
+		bwrapify-ro-bind-try "/var/$path"
+	done
+}
+
+# $@: [+audio] [+dbus] [+dconf] [+wayland] PATH...
+function bwrapify-rundir-binds { local arg
+	for arg; do
+		case "$arg" in
+			+audio)
+				bwrapify-ro-bind-try "$XDG_RUNTIME_DIR/pipewire-0"
+				bwrapify-ro-bind-try "$XDG_RUNTIME_DIR/pulse/native"
+				bwrapify-bind-try "$XDG_CONFIG_HOME/pulse/cookie"
+			;;
+			+dbus)
+				bwrap-ro-bind-try "$XDG_RUNTIME_DIR/bus-proxy" "$XDG_RUNTIME_DIR/at-spi"
+				bwrap-ro-bind-try "$XDG_RUNTIME_DIR/bus-proxy" "$XDG_RUNTIME_DIR/bus"
+			;;
+			+dconf) bwrapify-bind-try "$XDG_RUNTIME_DIR/dconf/user" ;;
+			+wayland)
+				if [[ -n "$WAYLAND_DISPLAY" ]]; then
+					bwrapify-ro-bind-try "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY"
+				fi
+			;;
+			+x11)
+				if [[ -n "$XAUTHORITY" ]]; then
+					bwrapify-ro-bind-try "$XAUTHORITY"
+				fi
+			;;
+			*) bwrapify-ro-bind-try "$XDG_RUNTIME_DIR/$arg" ;;
+		esac
+	done
+}
+
+# $@: [+x11] PATH...
+function bwrapify-tmpdir-binds { local arg
+	for arg; do
+		case "$arg" in
+			+x11)
+				if [[ -n "$DISPLAY" ]]; then
+					bwrapify-ro-bind-try "$TMPDIR/.X11-unix/X${DISPLAY/:/}"
+				fi
+			;;
+			*) bwrapify-ro-bind-try "$TMPDIR/$arg" ;;
+		esac
+	done
+}
+
+
+#==============================================================================#
+
+
+# $1: CONFIG
+function _load_config { local config="$1"
+	[[ -n "$config" ]] || return 2
+	if [[ -r "$config" ]]; then
+		if source "$config" && (("${#_BWRAP_ARGS[@]}")); then
+			exec {BWRAP_ARGS_FD}< <(printf "%s\0" "${_BWRAP_ARGS[@]}")
+		else
+			return 126
+		fi
+	else
+		return 127
+	fi
+}
+
+
+#==============================================================================#
+
+
+# $@: [-d] [-C CONFIG] COMMAND...
+function main { local cmd args
+	local config
+	local OPT OPTARG OPTIND
+	while getopts ":C:dh" OPT; do
+		case "$OPT" in
+			'C') config="$OPTARG" ;;
+			'd') config="$BWRAPIFY_HOME/default.conf" ;;
+			'h') _usage ;;
+			'?')
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':')
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done; shift "$((OPTIND - 1))"; cmd="$1" args=("${@:2}")
+	[[ -n "$cmd" ]] || _usage 2
+	if [[ -n "$config" ]]; then
+		_load_config "$config" || return
+	fi
+	if [[ -v BWRAP_ARGS_FD ]]; then
+		bwrap --args "$BWRAP_ARGS_FD" -- "$cmd" "${args[@]}"
+	else
+		return 6
+	fi
+}
+
+if [[ "$_SELF" == bwrapify ]]; then
+	main "$@"
+else
+	_load_config "$BWRAPIFY_HOME/$_SELF.conf" || exit
+	if [[ -v BWRAP_ARGS_FD ]]; then
+		: ${COMMAND:=/usr/bin/$_SELF}
+		bwrap --args "$BWRAP_ARGS_FD" -- "$COMMAND" "$@"
+	else
+		exit 6
+	fi
+fi
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
