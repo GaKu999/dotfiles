@@ -1,0 +1,58 @@
+# vim:ft=confini:
+# man:imv(5)
+# file:$XDG_CONFIG_HOME/imv/config
+#==============================================================================#
+
+
+[options]
+background=checks
+overlay_background_alpha=f2
+overlay_background_color=151515
+overlay_font=sans-serif:12
+overlay_position_bottom=true
+overlay_text_alpha=ff
+overlay_text_color=d0d0d0
+suppress_default_binds=true
+
+[binds]
+<Left>=prev
+<bracketleft>=prev
+<Right>=next
+<bracketright>=next
+gg=goto 0
+<Shift+G>=goto -1
+
+j=pan 0 -50
+k=pan 0 50
+h=pan 50 0
+l=pan -50 0
+c=center
+
+a=zoom actual
+<Up>=zoom 1
+<Shift+plus>=zoom 1
+i=zoom 1
+<Down>=zoom -1
+<minus>=zoom -1
+o=zoom -1
+
+<Shift+S>=upscaling next
+s=scaling next
+
+d=overlay
+f=fullscreen
+p=exec echo "${imv_current_file}"
+q=quit
+r=reset
+x=close
+
+<period>=next_frame
+<space>=toggle_playing
+
+t=slideshow +1
+<Shift+T>=slideshow -1
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

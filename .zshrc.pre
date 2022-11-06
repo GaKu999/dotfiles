@@ -1,0 +1,17 @@
+#!/hint/zsh
+# vim:ft=zsh:noet:ts=3:sw=3:
+# man:grmlzshrc(5)
+# file:$HOME/.zshrc.pre
+#==============================================================================#
+
+
+# don't register any 'precmd' or 'preexec' hooks
+NOPRECMD=1
+
+# redundant/unnecessary on arch
+ZSH_NO_DEFAULT_LOCALE=1
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

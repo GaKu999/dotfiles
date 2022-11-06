@@ -1,0 +1,43 @@
+# vim:ft=confini:
+# man:mako(5)
+# file:$XDG_CONFIG_HOME/mako/config
+#==============================================================================#
+
+
+anchor=top-right
+layer=overlay
+max-visible=8
+
+sort=-priority
+sort=-time
+
+icons=0
+
+font=sans-serif 12
+markup=1
+
+actions=0
+
+background-color=#151515f2
+border-color=#505050
+text-color=#d0d0d0
+
+border-size=2
+margin=2
+padding=0
+
+default-timeout=15000
+ignore-timeout=1
+
+height=1024
+width=512
+
+format=<b>%s</b>\n%b
+
+[urgency=critical]
+border-color=#f4bf75
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

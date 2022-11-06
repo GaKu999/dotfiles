@@ -1,0 +1,37 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/transmission-daemon@.service
+#==============================================================================#
+
+
+[Unit]
+Description=Transmission BitTorrent Daemon (%i)
+Documentation=man:transmission-daemon(1)
+
+[Service]
+ExecStart=%h/.local/bin/.overrides/transmission-daemon -f --log-level=error
+
+Slice=session-transmission.slice
+Restart=on-failure
+
+LockPersonality=true
+NoNewPrivileges=true
+ProcSubset=pid
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+
+ManagedOOMSwap=kill
+ManagedOOMMemoryPressure=kill
+
+Environment=LANG=en_US.UTF-8
+Environment=TRANSMISSION_INSTANCE=%i
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
