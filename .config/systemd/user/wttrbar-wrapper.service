@@ -1,0 +1,20 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/wttrbar-wrapper.service
+#==============================================================================#
+
+
+[Service]
+Type=oneshot
+ExecStart=%E/systemd/scripts/wttrbar-wrapper
+
+Slice=background.slice
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

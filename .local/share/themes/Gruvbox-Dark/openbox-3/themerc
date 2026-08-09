@@ -1,0 +1,81 @@
+!! vim:ft=xdefaults:noet:ts=3:sw=3:
+!! file:$XDG_DATA_HOME/themes/gruvbox-dark/openbox-3/themerc
+!!============================================================================!!
+
+
+!! Menu background
+menu.items.bg: flat border
+menu.items.bg.color: #1d2021
+menu.items.bg.border.color: #282828
+menu.separator.color: #282828
+
+!! Menu text
+menu.items.text.color: #ebdbb2
+menu.items.justify: left
+menu.items.disabled.text.color: #928374
+
+!! Menu headers
+menu.title.bg: flat border
+menu.title.bg.color: #1d2021
+menu.title.bg.border.color: #282828
+menu.title.text.color: #ebdbb2
+menu.title.text.justify: center
+
+!! Selected menu item
+menu.items.active.bg: flat
+menu.items.active.bg.color: #282828
+menu.items.active.text.color: #ebdbb2
+
+!! Titlebar
+window.active.title.bg: flat border
+window.active.title.bg.color: #282828
+window.active.title.bg.border.color: #ebdbb2
+window.inactive.title.bg: flat border
+window.inactive.title.bg.color: #282828
+window.inactive.title.bg.border.color: #282828
+
+!! Titlebar text
+window.label.text.justify: center
+window.active.label.bg: parentrelative
+window.active.label.text.color: #ebdbb2
+window.inactive.label.bg: parentrelative
+window.inactive.label.text.color: #928374
+
+!! Window buttons
+window.*.button.*.bg: parentrelative
+window.active.button.*.hover.bg: flat border
+window.inactive.button.*.hover.bg: parentrelative
+window.*.button.*.pressed.bg: flat border
+
+window.active.button.*.hover.bg.color: #282828
+window.active.button.*.hover.bg.border.color: #fbdbb2
+
+window.active.button.*.pressed.bg.color: #282828
+window.active.button.*.pressed.image.color: #ebdbb2
+window.active.button.*.pressed.bg.border.color: #ebdbb2
+window.inactive.button.*.pressed.bg.color: #282828
+window.inactive.button.*.pressed.image.color: #a89984
+window.inactive.button.*.pressed.bg.border.color: #a89984
+
+window.active.button.*.image.color: #ebdbb2
+window.active.button.disabled.image.color: #a89984
+window.inactive.button.*.image.color: #a89984
+window.inactive.button.disabled.image.color: #282828
+
+!! Borders
+window.active.border.color: #282828
+window.inactive.border.color: #282828
+window.inactive.title.separator.color: #282828
+border.width: 1
+padding.width: 1
+window.handle.width: 0
+window.active.client.color:  #ebdbb2
+window.inactive.client.color:  #282828
+window.client.padding.width: 1
+window.client.padding.height: 1
+menu.overlap: 0
+
+
+!!============================================================================!!
+!!                                END OF FILE                                 !!
+!!============================================================================!!

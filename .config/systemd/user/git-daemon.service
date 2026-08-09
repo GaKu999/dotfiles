@@ -1,0 +1,26 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/git-daemon.service
+#==============================================================================#
+
+
+[Unit]
+Documentation=man:git-daemon(1)
+Documentation=man:git(1)
+
+[Service]
+ExecStart=/usr/bin/git daemon --verbose --reuseaddr --informative-errors --export-all --base-path=%h/.git-daemon --enable=receive-pack --enable=upload-archive --listen=127.0.0.1 --port=9418
+
+Restart=on-failure
+
+ManagedOOMSwap=kill
+ManagedOOMMemoryPressure=kill
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/screensaver
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+declare -i _PID
+_PIDFILE="$XDG_RUNTIME_DIR/$_SELF.pid"
+if [[ -s "$_PIDFILE" ]] ; then
+	_PID="$( < "$_PIDFILE" )"
+else
+	rm -f -- "$_PIDFILE"
+fi
+
+# [$1: EXIT CODE (0)]
+function _usage { local -ir ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg << ENDUSAGEMSG || : EOF
+Usage: $_SELF [{run [TIME],kill} (run)]
+ENDUSAGEMSG
+	printf '%s' "$msg"
+	exit "$ec"
+}
+
+function _cleanup {
+	if (( _PID )) && kill -n 0 -- "$_PID" &> /dev/null ; then
+		kill -- "$_PID"
+		wait -- "$_PID"
+	fi
+	rm -f -- "$_PIDFILE"
+}
+
+
+#==============================================================================#
+
+
+# [$1: {run,kill} (run)]
+function main { local -r action="${1:-run}"
+	local sig ; local -ir random="$RANDOM"
+	case "$action" in
+		run )
+			if (( _PID )) && kill -n 0 -- "$_PID" &> /dev/null ; then
+				echo "$_SELF: already running" >&2
+				return 1
+			else
+				if [[ "$XDG_SESSION_TYPE" == wayland && -n "$WAYLAND_DISPLAY" ]] ; then
+					if (( random > 24575 )) ; then
+						foot -a screensaver -T screensaver -o colors-dark.background=000000 -o colors-dark.regular0=000000 -- \
+							sh -c 'sleep 0.1 ; conway-screensaver' &> /dev/null & _PID="$!"
+					elif (( random < 8192 )) ; then
+						foot -a screensaver -T screensaver -o colors-dark.background=000000 -o colors-dark.regular0=000000 -- \
+							sh -c 'sleep 0.1 ; cpipes -f30' &> /dev/null & _PID="$!"
+					else
+						foot -a screensaver -T screensaver -o colors-dark.background=000000 -o colors-dark.regular0=000000 -- \
+							sh -c 'sleep 0.1 ; cmatrix -bs -Cblue -u5' &> /dev/null & _PID="$!"
+					fi
+				elif [[ "$XDG_SESSION_TYPE" == x11 && -n "$DISPLAY" ]] ; then
+					brightnessctl -q s 1%
+					if (( random > 24575 )) ; then
+						alacritty -T screensaver --class screensaver -o 'colors.primary.background="#000000"' -o 'colors.normal.black="#000000"' -e \
+							sh -c 'sleep 0.1 ; conway-screensaver' &> /dev/null & _PID="$!"
+					elif (( random < 8192 )) ; then
+						alacritty -T screensaver --class screensaver -o 'colors.primary.background="#000000"' -o 'colors.normal.black="#000000"' -e \
+							sh -c 'sleep 0.1 ; cpipes -f30' &> /dev/null & _PID="$!"
+					else
+						alacritty -T screensaver --class screensaver -o 'colors.primary.background="#000000"' -o 'colors.normal.black="#000000"' -e \
+							sh -c 'sleep 0.1 ; cmatrix -bs -Cblue -u5' &> /dev/null & _PID="$!"
+					fi
+				else
+					echo "$_SELF: not a graphical session" >&2
+					return 1
+				fi
+				echo "$_PID" >| "$_PIDFILE"
+				trap "_cleanup ; exit '$?'" EXIT
+				for sig in HUP INT QUIT TERM ; do
+					trap "_cleanup ; trap - '$sig' EXIT ; kill -s '$sig' '$_PID'" "$sig"
+				done
+				wait -- "$_PID"
+			fi
+		;;
+		kill )
+			if (( _PID )) && kill -n 0 -- "$_PID" &> /dev/null ; then
+				kill -- "$_PID"
+			else
+				echo "$_SELF: not running" >&2
+				return 1
+			fi
+		;;
+		* )
+			echo "$_SELF: unknown action -- '$action'" >&2
+			_usage 2
+		;;
+	esac
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

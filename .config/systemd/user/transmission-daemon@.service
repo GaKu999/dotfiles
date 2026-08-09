@@ -1,0 +1,30 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/transmission-daemon@.service
+#==============================================================================#
+
+
+[Unit]
+Documentation=man:transmission-daemon(1)
+
+[Service]
+ExecStart=/usr/bin/transmission-daemon -f --log-level=warn
+
+Slice=background.slice
+Restart=on-failure
+
+ManagedOOMSwap=kill
+ManagedOOMMemoryPressure=kill
+
+Environment=TRANSMISSION_HOME=%E/transmission-daemon/%i
+
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

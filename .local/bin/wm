@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/wm
+# $@: WM [WM_ARGS]
+#==============================================================================#
+
+
+set -a
+	: ${XDG_CONFIG_HOME:=$HOME/.config}
+set +a
+
+# Who am I?
+_SELF="${0##*/}"
+
+# bail early
+case "$_SELF" in
+	xi )
+		if [[ -z "$XDG_VTNR" ]] ; then
+			echo "$_SELF: XDG_VTNR: parameter not set" >&2
+			exit 1
+		fi
+	;;
+esac
+
+_STTY="$( stty -g )"
+
+declare -i _CPID
+
+if [[ -f "$XDG_CONFIG_HOME/wm/functions" ]] ; then
+	. "$XDG_CONFIG_HOME/wm/functions"
+else
+	function prepare-session { : ; }
+	function prepare-Xorg { : ; }
+	function start-session { : ; }
+	function stop-session { : ; }
+fi
+
+function _cleanup {
+	local -i r=0
+	if (( _CPID )) && kill -0 -- "$_CPID" 2> /dev/null ; then
+		kill -- "$_CPID"
+		wait -- "$_CPID"
+		r="$?"
+	fi
+	if [[ -n "$XAUTHORITY" ]] ; then
+		xauth remove ":$XDG_VTNR"
+	fi
+	stty -- "$_STTY" &> /dev/null || stty sane
+	stop-session
+	return -- "$r"
+}
+
+
+#==============================================================================#
+
+
+# $@: WM [WM_ARGS]
+declare -a _WMARGS
+readonly _WM="$1" _WMARGS=( "${@:2}" )
+function main {
+	local sig
+	[[ -n "$_WM" ]] || return 2
+	trap '_cleanup ; exit "$?"' EXIT
+	for sig in HUP INT QUIT TERM ; do
+		trap "_cleanup ; trap - '$sig' EXIT ; kill -s '$sig' '$$'" "$sig"
+	done
+	case "$_SELF" in
+		wm ) ( prepare-session wayland ; start-session ) & _CPID="$!" ;;
+		xi )
+			export XAUTHORITY="$HOME/.Xauthority"
+			touch -- "$XAUTHORITY"
+			xauth add ":$XDG_VTNR" MIT-MAGIC-COOKIE-1 "$( od -An -N16 -tx /dev/urandom | tr -d ' ' )"
+			trap '( export DISPLAY=":$XDG_VTNR" ; prepare-session x11 ; prepare-Xorg ; start-session ) & wait "$!"' USR1
+			( trap '' USR1 && exec nice -n-10 /usr/lib/Xorg ":$XDG_VTNR" "vt$XDG_VTNR" -keeptty -noreset -auth "$XAUTHORITY" ) & _CPID="$!"
+		;;
+	esac
+	wait -- "$_CPID"
+	if [[ -f "$XDG_RUNTIME_DIR/.graphical-restart" ]] ; then
+		rm -f -- "$XDG_RUNTIME_DIR/.graphical-restart"
+		_cleanup
+		main
+	fi
+} ; main
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

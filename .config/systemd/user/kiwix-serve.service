@@ -1,0 +1,25 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/kiwix-serve.service
+#==============================================================================#
+
+
+[Unit]
+Documentation=man:kiwix-serve(1)
+
+[Service]
+ExecStart=/usr/bin/kiwix-serve -M -b -p 8080 -k -l %D/kiwix-desktop/library.xml
+
+Restart=on-failure
+
+ManagedOOMSwap=kill
+ManagedOOMMemoryPressure=kill
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,70 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# man:plocate(1)
+# file:$XDG_BIN_DIR/search
+#==============================================================================#
+
+
+set -a
+	: ${XDG_CACHE_HOME:=$HOME/.cache}
+	: ${SEARCH_DB:=$XDG_CACHE_HOME/locate.db}
+	: ${SEARCH_PATH:=$HOME}
+set +a
+
+# Who am I?
+_SELF="${0##*/}"
+
+_herecat() {
+	local msg line lfcr
+	lfcr="$( printf '%b' "\012\015" )"
+	while IFS="$lfcr" read -r line ; do
+		msg="$msg$line$lfcr"
+	done
+	printf '%s' "$msg"
+}
+
+# [$1: EXIT CODE (0)]
+_usage() { local ec="${1:-0}"
+	_herecat << ENDUSAGEMSG
+Usage: $_SELF [r] TERM...
+
+  -r  refresh the database
+
+  -h  show this information
+ENDUSAGEMSG
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [-r] TERM...
+main() {
+	local update OPT OPTARG OPTIND
+	while getopts ':rh' OPT ; do
+		case "$OPT" in
+			'r' ) update=1 ;;
+			'h' ) _usage ;;
+			'?' )
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':' )
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done ; shift "$(( OPTIND - 1 ))"
+	: ${update:=0}
+	if [ "$update" -gt 0 ] ; then
+		updatedb -U "$SEARCH_PATH" -o "$SEARCH_DB" -lno --prune-bind-mounts no
+	fi
+	[ "$#" -gt 0 ] || _usage 2
+	locate -ei -d "$SEARCH_DB" "$@" | sed "s|$SEARCH_PATH/\?||g"
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

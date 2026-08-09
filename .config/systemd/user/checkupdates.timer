@@ -1,0 +1,22 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/checkupdates.timer
+#==============================================================================#
+
+
+[Timer]
+OnStartupSec=30m
+OnUnitActiveSec=12h
+
+AccuracySec=1us
+Persistent=true
+RandomizedDelaySec=15m
+
+[Install]
+WantedBy=timers.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

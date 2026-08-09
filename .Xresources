@@ -1,0 +1,53 @@
+! vim:ft=xdefaults:
+! man:xrdb(1)
+! file:$HOME/.Xresources
+!==============================================================================!
+
+
+!! cursor
+Xcursor.theme: Bibata-Modern-Classic
+Xcursor.size:  16
+
+!! mirror fontconfig
+Xft.antialias: 1
+Xft.autohint:  0
+Xft.dpi:       96
+Xft.hinting:   1
+Xft.hintstyle: hintfull
+Xft.lcdfilter: lcddefault
+Xft.rgba:      rgb
+
+!! use sans-serif, let fontconfig handle the rest
+*font:           xft:sans-serif:style=Regular:size=10
+*boldFont:       xft:sans-serif:style=Bold:size=10
+*italicFont:     xft:sans-serif:style=Italic:size=10
+*boldItalicFont: xft:sans-serif:style=Bold Italic:size=10
+*letterSpace:    -1
+
+!! colors
+XTerm*cursorBlink: true
+
+*background: rgb:1d/20/21
+*foreground: rgb:eb/db/b2
+
+*color0: rgb:28/28/28
+*color1: rgb:cc/24/1d
+*color2: rgb:98/97/1a
+*color3: rgb:d7/99/21
+*color4: rgb:45/85/88
+*color5: rgb:b1/62/86
+*color6: rgb:68/9d/6a
+*color7: rgb:a8/99/84
+*color8: rgb:92/83/74
+*color9: rgb:fb/49/34
+*color10: rgb:b8/bb/26
+*color11: rgb:fa/bd/2f
+*color12: rgb:83/a5/98
+*color13: rgb:d3/86/98
+*color14: rgb:8e/c0/7c
+*color15: rgb:eb/db/b2
+
+
+!==============================================================================!
+!                                 END OF FILE                                  !
+!==============================================================================!

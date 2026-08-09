@@ -1,0 +1,25 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/wireplumber-keep-hdmi-alive.service
+#==============================================================================#
+
+
+[Unit]
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/play -q -r 48000 -n -t alsa -b 16 -c 2 synth sin 10 vol -50dB
+
+Slice=session.slice
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,26 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/xdg-prompt
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+if [ "$XDG_SESSION_TYPE" = wayland ] && [ -n "$WAYLAND_DISPLAY" ] ; then
+	case "$( printf '%s\n' Yes No | wmenu -p "$*" )" in
+		[Yy]* ) exit 0 ;;
+	esac
+elif [ "$XDG_SESSION_TYPE" = x11 ] && [ -n "$DISPLAY" ] ; then
+	case "$( printf '%s\n' Yes No | dmenu -p "$*" )" in
+		[Yy]*) exit 0 ;;
+	esac
+else
+	echo "$_SELF: not a graphical session" >&2
+	exit 1
+fi ; exit 1
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

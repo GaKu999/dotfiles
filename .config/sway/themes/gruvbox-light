@@ -1,0 +1,16 @@
+# vim:ft=swayconfig:noet:ts=3:sw=3:
+# man:sway(5)
+# file:$XDG_CONFIG_HOME/sway/themes/gruvbox-light
+#==============================================================================#
+
+
+client.focused #3c3836 #fbf1c7f2 #3c3836 #427b58 #3c3836
+client.focused_inactive #fbf1c7 #1d2021f2 #928374 #427b58 #fbf1c7
+client.focused_tab_title #3c3836 #fbf1c7f2 #3c3836
+client.unfocused #fbf1c7 #1d2021f2 #928374 #427b58 #fbf1c7
+client.urgent #b57614 #1d2021f2 #b57614 #427b58 #b57614
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

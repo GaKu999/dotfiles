@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/gamerun
+#==============================================================================#
+
+
+if (( "$( < /sys/class/power_supply/ACAD/online )" )) ; then
+	unset -v DRI_PRIME
+else
+	DRI_PRIME="integrated"
+fi
+
+: ${GAMERUN_NMODE:=1920x1080@120}
+
+_GAMERUN_NMODE="${GAMERUN_NMODE%@*}"
+_GAMERUN_NMODER="${GAMERUN_NMODE#*@}"
+
+if [[ "$DRI_PRIME" == integrated ]] ; then
+	DRI_PRIME="pci-0000_c5_00_0"
+	MESA_VK_DEVICE_SELECT="1002:15bf!"
+	_GAMERUN_VKDEVICE="1002:15bf"
+else
+	DRI_PRIME="pci-0000_03_00_0"
+	MESA_VK_DEVICE_SELECT="1002:7480!"
+	_GAMERUN_VKDEVICE="1002:7480"
+fi ; export DRI_PRIME MESA_VK_DEVICE_SELECT
+
+if [[ -n "$GAMERUN_HDR" ]] ; then
+	export DXVK_HDR=1
+fi
+
+exec 2>/dev/null
+_LD_RELOAD="/usr/lib/libgamemodeauto.so.0:$LD_PRELOAD"
+unset -v LD_PRELOAD
+#export ENABLE_GAMESCOPE_WSI=0
+exec gamescope -f ${GAMERUN_OMODE:+-W${GAMERUN_OMODE%x*} -H${GAMERUN_OMODE#*x}} -w${_GAMERUN_NMODE%x*} -h${_GAMERUN_NMODE#*x} -r$_GAMERUN_NMODER ${GAMERUN_HDR:+--hdr-enabled --hdr-itm-enable} ${GAMERUN_VRR:+--adaptive-sync} ${GAMERUN_ALLOWTEARING:+--immediate-flips} ${GAMERUN_GRABCURSOR:+--force-grab-cursor --cursor-scale-height ${_GAMERUN_NMODE#*x}} ${GAMERUN_MANGO:+--mangoapp} --prefer-vk-device "$_GAMERUN_VKDEVICE" -- ${GAMERUN_OFFLINE:+unshare -r -n} env LD_PRELOAD="$_LD_PRELOAD" "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

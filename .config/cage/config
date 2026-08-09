@@ -1,0 +1,26 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_CONFIG_HOME/cage/config
+#==============================================================================#
+
+
+(
+	systemctl -q --user import-environment DISPLAY WAYLAND_DISPLAY
+	dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY
+	systemctl -q --user start cage-session.target
+) &
+
+# man:wlr-randr(1)
+for o in $( wlr-randr --json | jq -r '.[].name' ) ; do
+	case "$o" in
+		eDP-2 ) wlr-randr --output eDP-2 --mode 2560x1600@165Hz --pos 0,0 --transform normal --scale 2.0 --adaptive-sync disabled --preferred ;;
+		* ) wlr-randr --output "$o" --off ;;
+	esac
+done ; unset -v o
+
+exec cool-retro-term
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
