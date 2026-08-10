@@ -1,0 +1,640 @@
+// vim:ft=jsonc:noet:ts=3:sw=3:
+// man:waybar(5)
+// file:$XDG_CONFIG_HOME/waybar/config-sway.jsonc
+[
+	{
+		"layer": "top",
+		"position": "top",
+
+		"modules-left": [
+			"systemd-failed-units",
+			"custom/logo",
+			"sway/scratchpad",
+			"custom/separator",
+			"sway/workspaces",
+			"custom/separator",
+			"sway/language",
+			"sway/mode",
+			"custom/separator"
+		],
+
+		"modules-center": [
+			"sway/window"
+		],
+
+		"modules-right": [
+			"custom/separator",
+			"mpris",
+			"custom/mails#new",
+			"custom/mails#cur",
+			"custom/updates",
+			"custom/separator",
+			"cpu",
+			"memory",
+			"custom/gpu",
+			"disk",
+			"custom/separator",
+			"temperature#cpu",
+			"custom/separator",
+			//"custom/gamemode",
+			"power-profiles-daemon",
+			"battery#status",
+			"battery#capacity",
+			"custom/separator",
+			"network#ether",
+			"network#wlan",
+			"bluetooth",
+			"network#vpn",
+			"custom/wan",
+			"custom/separator",
+			"pulseaudio#output",
+			"pulseaudio#input",
+			"custom/separator",
+			"backlight",
+			"custom/separator",
+			"custom/weather",
+			"clock",
+			"tray",
+			"privacy",
+			"custom/separator",
+			"inhibitor"
+		],
+
+		"custom/separator": {
+			"tooltip": false,
+
+			"format": "│"
+		},
+
+		"custom/logo": {
+			"tooltip": false,
+
+			"on-click-right": "swaymsg -q exec -- xdgctl -A menu",
+
+			"format": "<big></big>",
+
+			"menu": "on-click",
+			"menu-file": "~/.config/waybar/menu-sway.xml",
+
+			"menu-actions": {
+				"term/vim": "swaymsg -q exec -- footclient -N vim",
+				"term/nvim": "swaymsg -q exec -- footclient -N nvim",
+				"term/nano": "swaymsg -q exec -- footclient -N nano",
+				"term/vi": "swaymsg -q exec -- footclient -N vi",
+				"gimp": "swaymsg -q exec -- xdg-run gimp",
+
+				"lowriter": "swaymsg -q exec -- xdg-run lowriter",
+				"localc": "swaymsg -q exec -- xdg-run localc",
+				"loimpress": "swaymsg -q exec -- xdg-run loimpress",
+				"lodraw": "swaymsg -q exec -- xdg-run lodraw",
+				"lomath": "swaymsg -q exec -- xdg-run lomath",
+				"lobase": "swaymsg -q exec -- xdg-run lobase",
+
+				"pcmanfm": "swaymsg -q exec -- pcmanfm",
+				"term/vifm": "swaymsg -q exec -- footclient -N vifm",
+				"term/mc": "swaymsg -q exec -- footclient -N mc",
+				"xarchiver": "swaymsg -q exec -- xdg-run xarchiver",
+				"baobab": "swaymsg -q exec -- xdg-run baobab",
+				"catfish": "swaymsg -q exec -- xdg-run catfish",
+				"keepassxc": "swaymsg -q exec -- xdg-run keepassxc",
+				"gnome-calculator": "swaymsg -q exec -- xdg-run gnome-calculator",
+				"seahorse": "swaymsg -q exec -- xdg-run seahorse",
+				"gucharmap": "swaymsg -q exec -- xdg-run gucharmap",
+				"kiwix-desktop": "swaymsg -q exec -- xdg-run kiwix-desktop",
+				"ventoy": "swaymsg -q exec -- xdg-run ventoygui",
+
+				"firefox": "swaymsg -q exec -- xdg-run firefox",
+				"thunderbird": "swaymsg -q exec -- xdg-run thunderbird",
+				"term/aerc": "swaymsg -q exec -- footclient -N aerc",
+				"transmission-gtk": "swaymsg -q exec -- xdg-run transmission-gtk",
+				"term/stig": "swaymsg -q exec -- footclient -N stig",
+				"remmina": "swaymsg -q exec -- xdg-exec remmina",
+				"moonlight": "swaymsg -q exec -- xdg-exec moonlight",
+
+				"flatseal": "swaymsg -q exec -- xdg-run flatseal",
+				"iwgtk": "swaymsg -q exec -- xdg-run iwgtk",
+				"term/impala": "swaymsg -q exec -- footclient -N impala",
+				"blueman-manaegr": "swaymsg -q exec -- xdg-run blueman-manager",
+				"term/bluetui": "swaymsg -q exec -- footclient -N bluetui",
+				"libfm-pref-apps": "swaymsg -q exec -- xdg-run libfm-pref-apps",
+				"qt5ct": "swaymsg -q exec -- xdg-run qt5ct",
+				"qt6ct": "swaymsg -q exec -- xdg-run qt6ct",
+				"dconf-editor": "swaymsg -q exec -- xdg-run dconf-editor",
+
+				"mpv": "swaymsg -q exec -- xdg-run mpv --player-operation-mode=pseudo-gui",
+				"vlc": "swaymsg -q exec -- xdg-run vlc",
+				"term/nvlc": "swaymsg -q exec -- footclient -N nvlc",
+				"delfin": "swaymsg -q exec -- xdg-run delfin",
+				"term/ncspot": "swaymsg -q exec -- footclient -N ncspot",
+				"tenacity": "swaymsg -q exec -- xdg-run tenacity",
+				"ghb": "swaymsg -q exec -- xdg-run ghb",
+				"mkvtoolnix-gui": "swaymsg -q exec -- xdg-run mkvtoolnix-gui",
+				"mediaelch": "swaymsg -q exec -- xdg-run mediaelch",
+
+				"kooha": "swaymsg -q exec -- xdg-run kooha",
+				"obs": "swaymsg -q exec -- xdg-run obs",
+				"pavucontrol": "swaymsg -q exec -- xdg-run pavucontrol",
+				"term/pulsemixer": "swaymsg -q exec -- footclient -N pulsemixer",
+				"term/wiremix": "swaymsg -q exec -- footclient -N wiremix",
+				"helvum": "swaymsg -q exec -- xdg-run helvum",
+				"qpwgraph": "swaymsg -q exec -- xdg-run qpwgraph",
+
+				"gnome-system-monitor": "swaymsg -q exec -- xdg-run gnome-system-monitor",
+				"term/top": "swaymsg -q exec -- footclient -N top",
+				"gnome-logs": "swaymsg -q exec -- xdg-run gnome-logs",
+				"term/systemctl-tui": "swaymsg -q exec -- footclient -N systemctl-tui",
+				"term/journalctl": "swaymsg -q exec -- footclient -N journalctl",
+				"term/sudo/dmesg": "swaymsg -q exec -- footclient -N sudo dmesg -Hx",
+				"sudo/gtk-lshw": "swaymsg -q exec -- xdg-run sudo -AE gtk-lshw",
+				"gnome-nettool": "swaymsg -q exec -- xdg-run gnome-nettool",
+				"gnome-power-statistics": "swaymsg -q exec -- xdg-run gnome-power-statistics",
+				"term/sudo/powertop": "swaymsg -q exec -- footclient -N sudo powertop",
+				"gnome-software": "swaymsg -q exec -- xdg-run gnome-software",
+				"gnome-firmware": "swaymsg -q exec -- xdg-run gnome-firmware",
+				"gnome-disks": "swaymsg -q exec -- xdg-run gnome-disks",
+				"gnome-font-viewer": "swaymsg -q exec -- xdg-run gnome-font-viewer",
+				"font-manager": "swaymsg -q exec -- xdg-run font-manager",
+				"yelp": "swaymsg -q exec -- xdg-run yelp",
+				"foot": "swaymsg -q exec -- xdg-run foot",
+
+				"launch": "swaymsg -q exec -- xdgctl -A menu",
+				"run": "swaymsg -q exec -- xdg-exec",
+
+				"reload": "swaymsg -q reload",
+
+				"lock": "swaymsg -q exec -- xdg-lock",
+				"logout": "swaymsg -q exit",
+				"reboot": "swaymsg -q exec -- systemctl reboot",
+				"poweroff": "swaymsg -q exec -- systemctl poweroff"
+			}
+		},
+
+		"custom/mails#new": {
+			"interval": 60,
+			"tooltip": false,
+
+			"exec": "mails count new",
+			"exec-on-event": true,
+
+			"on-click": "swaymsg -q exec -- xdg-run thunderbird",
+			"on-click-right": "swaymsg -q exec -- mails sync --pull posteo-inbox",
+
+			"format": "<big></big><small>{}</small>"
+		},
+
+		"custom/mails#cur": {
+			"interval": 60,
+			"tooltip": false,
+
+			"exec": "mails count cur",
+			"exec-on-event": true,
+
+			"on-click": "swaymsg -q exec -- xdg-run thunderbird",
+			"on-click-right": "swaymsg -q exec -- mails sync --push posteo-inbox",
+
+			"format": "<big></big><small>{}</small>"
+		},
+
+		"custom/updates": {
+			"interval": 60,
+			"tooltip": false,
+
+			"exec": "updates count",
+			"exec-on-event": true,
+
+			"on-click": "swaymsg -q exec -- updates notify",
+			"on-click-right": "swaymsg -q exec -- updates check",
+			"on-click-middle": "swaymsg -q exec -- footclient -N updates update",
+
+			"format": "<big>󰏓</big><small>{}</small>"
+		},
+
+		"systemd-failed-units": {
+			"format": ""
+		},
+
+		"sway/scratchpad": {
+			"show-empty": false,
+
+			"on-click-right": "swaymsg -q scratchpad show",
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small>{count}</small>"
+		},
+
+		"sway/language": {
+			"tooltip": false,
+
+			"format": "<big>󰌌</big><small>{short}</small>",
+			"format-alt": "<big>󰌌</big><small>{long}</small>"
+		},
+
+		"sway/workspaces": {
+			"tooltip": false,
+
+			"all-outputs": true,
+
+			"format": "<big>{value}</big>"
+		},
+
+		"sway/mode": {
+			"tooltip": false,
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small><i>{}</i></small>"
+		},
+
+		"sway/window": {
+			"tooltip": false,
+
+			"all-outputs": true,
+			"max-length": 50,
+
+			"format": "<small>{title}</small>"
+		},
+
+		"mpris": {
+			"format": "<big>{player_icon}</big><small>{status_icon}</small>",
+			"tooltip-format": "{dynamic}",
+
+			"player-icons": {
+				"firefox": "",
+				"mpv": "",
+				"spotifyd": "",
+				"vlc": "󰕼"
+			},
+
+			"status-icons": {
+				"playing": "",
+				"paused": ""
+			}
+		},
+
+		"cpu": {
+			"tooltip": false,
+
+			"on-click-right": "swaymsg -q exec -- xdg-run gnome-system-monitor",
+
+			"states": {
+				"low": 25,
+				"medium": 50,
+				"high": 75
+			},
+
+			"format": "<big></big><small>{usage}%</small>",
+			"format-alt": "<big></big><small>{avg_frequency}GHz</small>"
+		},
+
+		"memory": {
+			"tooltip": false,
+
+			"on-click-right": "swaymsg -q exec -- xdg-run gnome-system-monitor",
+
+			"states": {
+				"low": 25,
+				"medium": 50,
+				"high": 75
+			},
+
+			"format": "<big></big><small>{percentage}%</small>",
+			"format-alt": "<big></big><small>{used:0.1f}GiB/{total:0.1f}GiB</small>"
+		},
+
+		"custom/gpu": {
+			"interval": 10,
+			"tooltip": false,
+
+			"exec-if": "grep -q D0 /sys/class/drm/card1/device/power_state && test -f /sys/class/drm/card1/device/gpu_busy_percent",
+			"exec": "cat /sys/class/drm/card1/device/gpu_busy_percent",
+			"exec-on-event": true,
+
+			"format": "<big>󰢮</big><small>{}%</small>"
+		},
+
+		"disk": {
+			"interval": 60,
+			"tooltip": false,
+
+			"on-click-right": "swaymsg -q exec -- pcmanfm",
+			"on-click-middle": "swaymsg -q exec -- xdg-run baobab",
+
+			"path": "/home",
+
+			"states": {
+				"low": 25,
+				"medium": 50,
+				"high": 75
+			},
+
+			"format": "<big>󰋊</big><small>{percentage_used}%</small>",
+			"format-alt": "<big>󰋊</big><small>{used}/{total}</small>"
+		},
+
+		"temperature#cpu": {
+			"tooltip": false,
+
+			"thermal-zone": 0,
+			"critical-threshold": 100,
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{temperatureC}℃</small>",
+
+			"format-icons": ["", "", "", "", ""]
+		},
+
+		"temperature#sys": {
+			"tooltip": false,
+
+			"thermal-zone": 2,
+			"critical-threshold": 80,
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{temperatureC}℃</small>",
+
+			"format-icons": ["", "", "", "", ""]
+		},
+
+		"temperature#gpu": {
+			"tooltip": false,
+
+			"thermal-zone": 5,
+			"critical-threshold": 100,
+
+			"format": "<big>󰢮{icon}</big>",
+			"format-alt": "<big>󰢮{icon}</big><small>{temperatureC}℃</small>",
+
+			"format-icons": ["", "", "", "", ""]
+		},
+
+		/* "gamemode": {
+			"tooltip": false,
+
+			"hide-not-running": true,
+			"use-icon": false,
+			"icon-size": 0,
+			"icon-spacing": 0,
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small>{count}</small>"
+		}, */
+
+		/* "custom/gamemode": {
+			"interval": 10,
+			"tooltip": false,
+
+			"exec-if": "test $(gamemodelist | wc -l) -gt 0",
+			"exec": "gamemodelist | wc -l",
+			"exec-on-event": true,
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small>{}</small>"
+		}, */
+
+		"power-profiles-daemon": {
+			"tooltip": false,
+
+			"format": "<big>{icon}</big>",
+
+			"format-icons": {
+				"performance": "󰓅",
+				"balanced": "󰾅",
+				"power-saver": "󰾆"
+			}
+		},
+
+		"battery#status": {
+			"tooltip": false,
+
+			"states": {
+				"full": 100,
+				"high": 75,
+				"medium": 50,
+				"low": 25,
+				"critical": 10
+			},
+
+			"format": "",
+			"format-charging": "<big></big>",
+			"format-discharging-critical": "<big>‼</big>",
+			"format-plugged": "<big></big>"
+		},
+
+		"battery#capacity": {
+			"tooltip": false,
+
+			"on-click-right": "swaymsg -q exec -- xdg-run gnome-power-statistics",
+
+			"states": {
+				"full": 100,
+				"high": 75,
+				"medium": 50,
+				"low": 25,
+				"critical": 10
+			},
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{capacity}%</small>",
+
+			"format-icons": ["", "", "", "", ""]
+		},
+
+		"network#ether": {
+			"interval": 60,
+			"tooltip": false,
+
+			"interface": "en*",
+
+			"on-click-middle": "swaymsg -q exec -- xdg-run gnome-nettool",
+
+			"format": "",
+			"format-ethernet": "<big></big>",
+			"format-alt": "<big></big><small>{ipaddr}</small>"
+		},
+
+		"network#wlan": {
+			"interval": 60,
+			"tooltip": false,
+
+			"interface": "wl*",
+
+			"on-click-right": "swaymsg -q exec -- xdg-run iwgtk",
+			"on-click-middle": "swaymsg -q exec -- xdg-run gnome-nettool",
+
+			"format": "",
+			"format-wifi": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{ipaddr}</small>",
+
+			"format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+		},
+
+		"bluetooth": {
+			"tooltip": false,
+
+			"on-click-right": "swaymsg -q exec -- xdg-run blueman-manager",
+
+			"format": "<big>󰂯</big>",
+			"format-disabled": "<big>󰂲</big>",
+			"format-off": "<big>󰂲</big>",
+
+			"format-connected-battery": "<big>󰂯</big><small>{icon}</small>",
+
+			"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽","󰁾", "󰁿", "󰂀", "󰂁", "󰁹"]
+		},
+
+		"network#vpn": {
+			"interval": 60,
+			"tooltip": false,
+
+			"interface": "wg0",
+
+			"on-click-middle": "swaymsg -q exec -- xdg-run gnome-nettool",
+
+			"format": "",
+			"format-ethernet": "<big>󰖂</big>",
+			"format-alt": "<big>󰖂</big><small>{ipaddr}</small>"
+		},
+
+		"custom/wan" :{
+			"interval": 3600,
+			"tooltip": false,
+
+			"exec": "curl -4qsL am.i.mullvad.net/ip",
+			"exec-on-event": true,
+
+			"on-click-middle": "swaymsg -q exec -- xdg-run gnome-nettool",
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small>{}</small>"
+		},
+
+		"pulseaudio#output": {
+			"tooltip": true,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-click": "swaymsg -q exec -- wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+			"on-click-right": "swaymsg -q exec -- xdg-run pavucontrol",
+			"on-click-middle": "swaymsg -q exec -- xdg-run helvum",
+
+			"on-scroll-up": "swaymsg -q exec -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+			"on-scroll-down": "swaymsg -q exec -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+
+			"format": "<big>{icon}</big><small>{volume}%</small>",
+			"format-muted": "<big>󰸈</big>",
+
+			"format-bluetooth": "<big>󰂰</big><small>{volume}%</small>",
+
+			"format-icons": {
+				"default": ["󰕿", "󰖀", "󰕾"]
+			}
+		},
+
+		"pulseaudio#input": {
+			"tooltip": false,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-click": "swaymsg -q exec -- wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+			"on-click-right": "swaymsg -q exec -- xdg-run pavucontrol",
+			"on-click-middle": "swaymsg -q exec -- xdg-run helvum",
+
+			"on-scroll-up": "swaymsg -q exec -- wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
+			"on-scroll-down": "swaymsg -q exec -- wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-",
+
+			"format": "{format_source}",
+			"format-muted": "{format_source}",
+			"format-source": "<big>󰍬</big><small>{volume}%</small>",
+			"format-source-muted": "<big>󰍭</big>"
+		},
+
+		"backlight": {
+			"tooltip": false,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-scroll-up": "swaymsg -q exec -- brightnessctl -q set 5%+",
+			"on-scroll-down": "swaymsg -q exec -- brightnessctl -q set 5%-",
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{percent}%</small>",
+
+			"format-icons": ["", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+		},
+
+		"custom/weather": {
+			"interval": 60,
+
+			"exec-if": "test -f $XDG_STATE_HOME/wttrbar.json",
+			"exec": "cat $XDG_STATE_HOME/wttrbar.json",
+			"return-type": "json",
+
+			"format": "{}"
+		},
+
+		"clock": {
+			"timezone": "US/Eastern",
+
+			"tooltip-format": "<tt><small>{calendar}</small></tt>",
+
+			"format": "<big>󰥔</big><small>{:%H:%M}</small>",
+			"format-alt": "<big>󰃭</big><small>{:%Y-%m-%d}</small>",
+
+			"calendar": {
+				"mode": "month",
+				"mode-mon-col": 3,
+				"weeks-pos": "left",
+				"on-scroll": 1,
+				"on-click-right": "mode",
+				"format": {
+					"months": "<span color='#aa759f'><i>{}</i></span>",
+					"days": "{}",
+					"weeks": "<span color='#6a9fb5'>W{:%V}</span>",
+					"weekdays": "<span color='#f4bf75'><u>{}</u></span>",
+					"today": "<span color='#75b5aa'>{}</span>"
+				}
+			},
+
+			"actions": {
+				"on-click-right": "mode",
+				"on-click-forward": "tz_up",
+				"on-click-backward": "tz_down",
+				"on-scroll-up": "shift_up",
+				"on-scroll-down": "shift_down"
+			}
+		},
+
+		"tray": {
+			"show-passive-items": true,
+			"icon-size": 16,
+			"spacing": 2
+		},
+
+		"privacy": {
+			"icon-size": 16,
+			"icon-spacing": 2,
+			"transition-duration": 250,
+			"modules": [
+				{
+					"type": "screenshare",
+					"tooltip": true,
+					"tooltip-icon-size": 16
+				},
+				{
+					"type": "audio-in",
+					"tooltip": true,
+					"tooltip-icon-size": 16
+				}
+			]
+		},
+
+		"inhibitor": {
+			"what": ["idle", "shutdown", "sleep"],
+
+			"tooltip": false,
+
+			"format": "<big>{icon}</big>",
+
+			"format-icons": {
+				"activated": "󰈈",
+				"deactivated": "󰈉"
+			}
+		}
+	}
+]

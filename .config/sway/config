@@ -1,0 +1,362 @@
+# vim:ft=swayconfig:noet:ts=3:sw=3:
+# man:sway(5)
+# file:$XDG_CONFIG_HOME/sway/config
+#==============================================================================#
+
+
+default_orientation auto
+workspace_layout default
+xwayland force
+
+include ~/.config/sway/themes/default
+
+default_border pixel 2
+default_floating_border pixel 2
+
+floating_modifier Mod4
+
+font pango:sans-serif 15
+
+force_display_urgency_hint 500
+
+titlebar_border_thickness 2
+titlebar_padding 2
+
+gaps inner 4
+gaps outer 2
+
+smart_borders on
+smart_gaps on
+
+title_align center
+
+workspace_auto_back_and_forth yes
+
+
+#==============================================================================#
+#                                   OUTPUTS                                    #
+#==============================================================================#
+
+
+# man:sway-output(5)
+# man:swaybg(1)
+output * bg ~/.wallpaper fill #1d2021
+
+seat * {
+	hide_cursor 3000
+	xcursor_theme Bibata-Modern-Classic 24
+}
+
+
+#==============================================================================#
+#                                    INPUTS                                    #
+#==============================================================================#
+
+
+# man:sway-input(5)
+# man:xkeyboard-config(7)
+input type:keyboard {
+	xkb_layout us,es
+	xkb_options eurosign:5,grp:alt_space_toggle,lv3:ralt_switch_multikey,terminate:ctrl_alt_bksp
+	repeat_delay 200
+	repeat_rate 30
+	xkb_numlock enabled
+}
+
+focus_follows_mouse yes
+focus_on_window_activation smart
+focus_wrapping workspace
+mouse_warping container
+
+# man:sway-input(5)
+input type:touchpad {
+	tap enabled
+	drag_lock enabled
+	pointer_accel 0.5
+}
+
+bindswitch --locked --no-warn lid:on exec swaydpms all off
+bindswitch --locked --no-warn lid:off exec swaydpms all on
+
+
+#==============================================================================#
+#                                   KEYBINDS                                   #
+#==============================================================================#
+
+
+bindsym --no-repeat {
+	Ctrl+Alt+r reload
+
+	Ctrl+Alt+BackSpace exit
+
+	Super+Delete kill
+
+	Super+Escape exec xdg-lock
+
+	Super+Shift+semicolon exec xdg-exec
+
+	Super+h focus left
+	Super+j focus down
+	Super+k focus up
+	Super+l focus right
+
+	Super+Alt+h focus output left
+	Super+Alt+j focus output down
+	Super+Alt+k focus output up
+	Super+Alt+l focus output right
+
+	Super+Left focus left
+	Super+Down focus down
+	Super+Up focus up
+	Super+Right focus right
+
+	Super+Alt+Left focus output left
+	Super+Alt+Down focus output down
+	Super+Alt+Up focus output up
+	Super+Alt+Right focus output right
+
+	Super+Shift+h move left
+	Super+Shift+j move down
+	Super+Shift+k move up
+	Super+Shift+l move right
+
+	Super+Shift+Left move left
+	Super+Shift+Down move down
+	Super+Shift+Up move up
+	Super+Shift+Right move right
+
+	Super+1 workspace number 1
+	Super+2 workspace number 2
+	Super+3 workspace number 3
+	Super+4 workspace number 4
+	Super+5 workspace number 5
+	Super+6 workspace number 6
+	Super+7 workspace number 7
+	Super+8 workspace number 8
+	Super+9 workspace number 9
+
+	Super+comma workspace prev
+	Super+period workspace next
+
+	Super+u workspace next_on_output
+	Super+i workspace prev_on_output
+
+	Super+Shift+1 move container workspace number 1
+	Super+Shift+2 move container workspace number 2
+	Super+Shift+3 move container workspace number 3
+	Super+Shift+4 move container workspace number 4
+	Super+Shift+5 move container workspace number 5
+	Super+Shift+6 move container workspace number 6
+	Super+Shift+7 move container workspace number 7
+	Super+Shift+8 move container workspace number 8
+	Super+Shift+9 move container workspace number 9
+
+	Super+Shift+comma move container workspace prev
+	Super+Shift+period move container workspace next
+
+	Super+Shift+u move container workspace next_on_output
+	Super+Shift+i move container workspace prev_on_output
+
+	Super+m mode move
+	Super+r mode size
+
+	Super+b splith
+	Super+v splitv
+
+	Super+s layout stacking
+	Super+w layout tabbed
+	Super+e layout toggle split
+
+	Super+f fullscreen
+
+	Super+Shift+space floating toggle
+	Super+Ctrl+Shift+space sticky toggle
+
+	Super+space focus mode_toggle
+
+	Super+minus resize shrink width 20px
+	Super+equal resize grow width 20px
+	Super+Shift+minus resize shrink width 50px
+	Super+Shift+equal resize grow width 50px
+	Super+Ctrl+minus resize shrink width 5px
+	Super+Ctrl+equal resize grow width 5px
+
+	Super+a move scratchpad
+	Super+Shift+a scratchpad show
+
+	Super+grave exec footclient -N
+
+	Menu exec xdgctl -A menu
+	Super_R exec xdgctl -A menu
+
+	Print exec swayshot
+	Alt+Print exec glurp
+	Ctrl+Print exec swayshot -w
+	Shift+Print exec swayshot -a
+
+	Alt+Insert exec emoji type
+	Ctrl+Insert exec unicode type
+
+	XF86Calculator exec xdg-run gnome-calculator
+
+	Super+slash exec pcmanfm
+	XF86HomePage exec pcmanfm
+
+	Super+backslash exec xdg-run firefox
+	XF86Explorer exec xdg-run firefox
+
+	XF86Mail exec xdg-run thunderbird
+
+	XF86Search exec xdg-run catfish
+}
+
+bindsym --inhibited --no-repeat Super+Alt+i seat * shortcuts_inhibitor toggle
+
+bindsym --locked {
+	XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+	XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+	XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+	XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+	XF86MonBrightnessUp exec brightnessctl -q s 5%+
+	XF86MonBrightnessDown exec brightnessctl -q s 5%-
+
+	XF86AudioPlay exec playerctl play
+	XF86AudioPause exec playerctl pause
+	XF86AudioPrev exec playerctl previous
+	XF86AudioNext exec playerctl next
+
+	XF86Sleep exec sd-sleep
+	XF86PowerOff exec sd-sleep
+}
+
+bindsym --locked --no-repeat Super+p exec swaydpms all toggle
+bindsym --locked --no-repeat Super+Alt+p exec swaydpms current toggle
+
+
+#==============================================================================#
+#                                    MODES                                     #
+#==============================================================================#
+
+
+mode size {
+	bindsym --to-code {
+		h resize shrink width 20px
+		j resize grow height 20px
+		k resize shrink height 20px
+		l resize grow width 20px
+
+		Left resize shrink width 20px
+		Down resize grow height 20px
+		Up resize shrink height 20px
+		Right resize grow width 20px
+
+		Shift+h resize shrink width 50px
+		Shift+j resize grow height 50px
+		Shift+k resize shrink height 50px
+		Shift+l resize grow width 50px
+
+		Shift+Left resize shrink width 50px
+		Shift+Down resize grow height 50px
+		Shift+Up resize shrink height 50px
+		Shift+Right resize grow width 50px
+
+		Ctrl+h resize shrink width 5px
+		Ctrl+j resize grow height 5px
+		Ctrl+k resize shrink height 5px
+		Ctrl+l resize grow width 5px
+
+		Ctrl+Left resize shrink width 5px
+		Ctrl+Down resize grow height 5px
+		Ctrl+Up resize shrink height 5px
+		Ctrl+Right resize grow width 5px
+
+		Return mode default
+		Escape mode default
+	}
+}
+
+mode move {
+	bindsym --to-code {
+		h move left 20px
+		j move down 20px
+		k move up 20px
+		l move right 20px
+
+		Left move left 20px
+		Down move down 20px
+		Up move up 20px
+		Right move right 20px
+
+		Shift+h move left 50px
+		Shift+j move down 50px
+		Shift+k move up 50px
+		Shift+l move right 50px
+
+		Shift+Left move left 50px
+		Shift+Down move down 50px
+		Shift+Up move up 50px
+		Shift+Right move right 50px
+
+		Ctrl+h move left 5px
+		Ctrl+j move down 5px
+		Ctrl+k move up 5px
+		Ctrl+l move right 5px
+
+		Ctrl+Left move left 5px
+		Ctrl+Down move down 5px
+		Ctrl+Up move up 5px
+		Ctrl+Right move right 5px
+
+		Return mode default
+		Escape mode default
+	}
+}
+
+mode passthrough {
+	bindsym --to-code Super+Pause mode default ; floating_modifier Mod4
+}
+bindsym --to-code Super+Pause mode passthrough ; floating_modifier none
+
+
+#==============================================================================#
+#                                    RULES                                     #
+#==============================================================================#
+
+
+for_window [floating=true] resize set 800 600
+
+for_window [app_id="^screensaver$"] {
+	floating enable
+	fullscreen enable
+}
+
+for_window [app_id="^blueman-manager$"] floating enable
+for_window [app_id="^imv$"] floating enable
+for_window [app_id="^org.gnome.Calculator$"] floating enable
+for_window [app_id="^org.pulseaudio.pavucontrol$"] floating enable
+for_window [app_id="^org.twosheds.iwgtk$"] floating enable
+
+for_window [app_id="^com.moonlight_stream.Moonlight$"] inhibit_idle focus
+for_window [app_id="^jellyfin$"] inhibit_idle visible
+for_window [app_id="^mpv$"] inhibit_idle visible
+for_window [instance="^vlc$"] inhibit_idle visible
+
+for_window [app_id="^wlvncc$"] {
+	move --no-auto-back-and-forth window to workspace 9
+	fullscreen enable
+	inhibit_idle focus
+}
+
+
+#==============================================================================#
+#                                   STARTUP                                    #
+#==============================================================================#
+
+
+exec "~/.config/sway/startup"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

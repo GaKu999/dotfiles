@@ -1,0 +1,25 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/checkupdates.service
+#==============================================================================#
+
+
+[Unit]
+Documentation=man:checkupdates(8)
+Documentation=man:notify-send(1)
+
+[Service]
+Type=oneshot
+ExecStart=-%h/.local/bin/updates check
+ExecStartPost=-%h/.local/bin/updates notify
+
+Slice=background.slice
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

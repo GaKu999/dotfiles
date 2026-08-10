@@ -1,0 +1,25 @@
+# man:msmtp(1)
+# file:$XDG_CONFIG_HOME/msmtp/config
+#==============================================================================#
+
+
+defaults
+
+auth on
+syslog off
+tls on
+tls_starttls off
+
+account posteo
+from #REDACTED
+user #REDACTED
+passwordeval #REDACTED
+host posteo.de
+port 465
+
+account default : posteo
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,124 @@
+#!/hint/bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$HOME/.bashenv
+#==============================================================================#
+
+
+# store the current terminal device
+# man:tty(1)
+readonly TTY="$( tty )"
+
+set -a
+	# man:systemd-environment-d-generator(8)
+	eval "$( /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator )"
+
+	# XDG user dirs
+	: ${XDG_CACHE_HOME:=$HOME/.cache}
+	: ${XDG_CONFIG_HOME:=$HOME/.config}
+	: ${XDG_DATA_HOME:=$HOME/.local/share}
+	: ${XDG_STATE_HOME:=$HOME/.local/state}
+
+	: ${XDG_BIN_DIR:=$HOME/.local/bin}
+	: ${XDG_LIB_DIR:=$HOME/.local/lib}
+
+	: ${XDG_DESKTOP_DIR:=$HOME/Desktop}
+	: ${XDG_DOCUMENTS_DIR:=$HOME/Documents}
+	: ${XDG_DOWNLOAD_DIR:=$HOME/Downloads}
+	: ${XDG_MUSIC_DIR:=$HOME/Music}
+	: ${XDG_PICTURES_DIR:=$HOME/Pictures}
+	: ${XDG_TEMPLATES_DIR:=$HOME/Templates}
+	: ${XDG_VIDEOS_DIR:=$HOME/Videos}
+
+	XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:${XDG_CONFIG_DIRS:-/etc/xdg}"
+	XDG_DATA_DIRS="$XDG_DATA_HOME:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+set +a
+
+# default to dumb
+[[ -n "$TERM" ]] || export TERM="dumb"
+
+# enable 16 color support in the linux console
+# bold is bright foreground, blink is bright background
+if [[ "$TERM" =~ linux ]] ; then
+	export TERM="linux-16color"
+fi
+
+# always use 256color
+if [[ "$TERM" =~ xterm ]] ; then
+	export TERM="xterm-256color"
+fi
+
+# prepend a dir to $PATH
+# $*: PATHS
+function _prepend_paths { local path
+	local _PATH="$PATH"
+	for path ; do
+		[[ -d "$path" ]] || return 2
+		if [[ ":$_PATH:" != *":$path:"* ]] ; then
+			_PATH="$path${_PATH:+:$_PATH}"
+		fi
+	done
+	if [[ "$_PATH" != "$PATH" ]] ; then
+		PATH="$_PATH"
+	fi
+}
+
+# append a dir to $PATH
+# $*: PATHS
+function _append_paths { local path
+	local _PATH="$PATH"
+	for path ; do
+		[[ -d "$path" ]] || return 2
+		if [[ ":$_PATH:" != *":$path:"* ]] ; then
+			_PATH="${_PATH:+$_PATH:}$path"
+		fi
+	done
+	if [[ "$_PATH" != "$PATH" ]] ; then
+		PATH="$_PATH"
+	fi
+}
+
+# setup $PATH
+_prepend_paths "$XDG_BIN_DIR/.overrides" "$XDG_BIN_DIR/.bwrapify"
+_append_paths "$XDG_BIN_DIR"
+export PATH ; unset -f _prepend_paths _append_paths
+
+# use cache or probe and cache capabilities for $TERM
+# man:terminfo(5) man:tput(1)
+declare -A terminfo
+if [[ -s "$XDG_CACHE_HOME/bash/terminfo.$TERM" ]] ; then
+	while IFS='=' read -r str cap ; do
+		terminfo[$str]="$cap"
+	done < "$XDG_CACHE_HOME/bash/terminfo.$TERM"
+else
+	mkdir -p -- "$XDG_CACHE_HOME/bash"
+	touch -- "$XDG_CACHE_HOME/bash/terminfo.$TERM"
+	for str in U8 colors cols it lines ncv pairs BD BE Cr Cs E3 Ms PE PS RV Se Ss TS XM XR acsc bel blink bold cbt civis clear cnorm cr csr cub cub1 cud cud1 cuf cuf1 cup cuu cuu1 cvvis dch dch1 dim dl dl1 dsl ech ed el el1 enacs fd fe flash fsl home hpa ht hts ich ich1 il il1 ind indn initc invis is2 kDC kDC3 kDC4 kDC5 kDC6 kDC7 kDN kDN3 kDN4 kDN5 kDN6 kDN7 kEND kEND3 kEND4 kEND5 kEND6 kEND7 kHOM kHOM3 kHOM4 kHOM5 kHOM6 kHOM7 kIC kIC3 kIC4 kIC5 kIC6 kIC7 kLFT kLFT3 kLFT4 kLFT5 kLFT6 kLFT7 kNXT kNXT3 kNXT4 kNXT5 kNXT6 kNXT7 kPRV kPRV3 kPRV4 kPRV5 kPRV6 kPRV7 kRIT kRIT3 kRIT4 kRIT5 kRIT6 kRIT7 kUP kUP3 kUP4 kUP5 kUP6 kUP7 ka1 ka2 ka3 kb1 kb2 kb3 kbeg kbs kc1 kc2 kc3 kcbt kcbt2 kcub1 kcud1 kcuf1 kcuu1 kdch1 kend kent kf1 kf10 kf11 kf12 kf13 kf14 kf15 kf16 kf17 kf18 kf19 kf2 kf20 kf21 kf22 kf23 kf24 kf25 kf26 kf27 kf28 kf29 kf3 kf30 kf31 kf32 kf33 kf34 kf35 kf36 kf37 kf38 kf39 kf4 kf40 kf41 kf42 kf43 kf44 kf45 kf46 kf47 kf48 kf49 kf5 kf50 kf51 kf52 kf53 kf54 kf55 kf56 kf57 kf58 kf59 kf6 kf60 kf61 kf62 kf63 kf7 kf8 kf9 khome kich1 kind kmous knp kp5 kpADD kpCMA kpDIV kpDOT kpMUL kpSUB kpZRO kpp kri kspd kxIN kxOUT mc0 mc4 mc5 meml memu mgc nel oc op reset rc rep rev ri rin ritm rmacs rmam rmcup rmir rmkx rmm rmpch rmso rmul rmxx rs1 rs2 rv sc setab setaf setb setf sgr sgr0 sitm smacs smam smcup smglp smglr smgrp smir smkx smm smpch smso smul smxx tbc tsl u6 u7 u8 u9 vpa xm xr ; do
+		cap="$( tput "$str" 2> /dev/null | tr -d '\0' )"
+		if [[ -n "$cap" ]] ; then
+			terminfo[$str]="$cap"
+			printf '%s=%s\n' "$str" "$cap" >> "$XDG_CACHE_HOME/bash/terminfo.$TERM"
+		fi
+	done
+fi ; unset -v str cap ; readonly terminfo
+
+# $1: CAPABILITY
+function echoti { echo -n "${terminfo[$1]}" ; }
+
+# color setup
+mapfile -t setaf < <( printf 'setaf %s\nind\n' {0..255} | tput -S 2> /dev/null )
+mapfile -t setab < <( printf 'setab %s\nind\n' {0..255} | tput -S 2> /dev/null )
+readonly setaf setab
+
+# $1: CODE {0..255}
+function setaf { local -ir i="$1" ; echo -n "${setaf[$i]}" ; }
+function setab { local -ir i="$1" ; echo -n "${setab[$i]}" ; }
+
+# plain color codes
+mapfile -t _af < <( printf '%s\n' "${setaf[@]}" | tr -d '\033[m' )
+mapfile -t _ab < <( printf '%s\n' "${setab[@]}" | tr -d '\033[m' )
+readonly _af _ab
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

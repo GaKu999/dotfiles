@@ -1,0 +1,30 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/gclip
+#==============================================================================#
+
+
+if [ "$#" -gt 0 ] ; then
+	if [ "$XDG_SESSION_TYPE" = wayland ] && [ -n "$WAYLAND_DISPLAY" ] ; then
+		echo -n "$*" | wl-copy -t text/plain -n
+	elif [ "$XDG_SESSION_TYPE" = x11 ] && [ -n "$DISPLAY" ] ; then
+		echo -n "$*" | xclip -i -r -selection clipboard
+	else
+		echo "$_SELF: not a graphical session" >&2
+		exit 1
+	fi
+else
+	if [ "$XDG_SESSION_TYPE" = wayland ] && [ -n "$WAYLAND_DISPLAY" ] ; then
+		wl-copy -t text/plain -n
+	elif [ "$XDG_SESSION_TYPE" = x11 ] && [ -n "$DISPLAY" ] ; then
+		xclip -i -r -selection clipboard
+	else
+		echo "$_SELF: not a graphical session" >&2
+		exit 1
+	fi
+fi
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

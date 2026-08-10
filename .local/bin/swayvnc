@@ -1,0 +1,90 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/swayvnc
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+_herecat() {
+	local msg line lfcr
+	lfcr="$( printf '%b' "\012\015" )"
+	while IFS="$lfcr" read -r line ; do
+		msg="$msg$line$lfcr"
+	done
+	printf '%s' "$msg"
+}
+
+# [$1: EXIT CODE (0)]
+_usage() { local ec="${1:-0}"
+	_herecat << ENDUSAGEMSG
+Usage: $_SELF {start,stop} [{current,OUTPUT} (current)]
+ENDUSAGEMSG
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: {start,stop} [{current,OUTPUT} (current)]
+main() { local action="$1" output="${2:-current}"
+	local active
+	if [ -n "$SWAYSOCK" ] ; then
+		[ "$output" = current ] && output="$( swaymsg -t get_outputs | jq -r '.[] | select(.focused==true).name' )"
+		active="$( swaymsg -t get_outputs | jq -r ".[] | select(.name==\"$output\").active" )"
+		case "$action" in
+			start )
+				if [ "$output" = HEADLESS-1 ] ; then
+					if [ -z "$active" ] ; then
+						swaymsg -q create_output
+						swaymsg -q output "$output" mode 1600x900@30Hz
+					elif [ "$active" = false ] ; then
+						swaymsg -q output "$output" enable
+						swaymsg -q output "$output" mode 1600x900@30Hz
+					fi
+					while sleep 0.05 ; do
+						active="$( swaymsg -t get_outputs | jq -r ".[] | select(.name==\"$output\").active" )"
+						[ "$active" = false ] || break
+					done
+				fi
+				if ! wayvncctl version > /dev/null 2>&1 ; then
+					rm -f -- "$XDG_RUNTIME_DIR/sway-vnc.sock"
+					if [ "$active" = true ] ; then
+						XKB_DEFAULT_LAYOUT="us" \
+						XKB_DEFAULT_OPTIONS="lv3:ralt_switch_multikey" \
+						exec wayvnc -u -o "$output" -f30 "$XDG_RUNTIME_DIR/sway-vnc.sock"
+					else
+						echo "$_SELF: $output doesn't exist or is disabled" >&2
+						return 1
+					fi
+				else
+					echo "$_SELF: already started"
+				fi
+			;;
+			stop )
+				if wayvncctl version >/dev/null 2>&1 ; then
+					wayvncctl wayvnc-exit >/dev/null 2>&1
+				else
+					echo "$_SELF: already stopped"
+				fi
+				if [ "$output" = HEADLESS-1 ] && [ "$active" = true ] ; then
+					swaymsg -q output "$output" disable
+				fi
+			;;
+			* )
+				echo "$_SELF: unknown action -- '$action'" >&2
+				_usage 2
+			;;
+		esac
+	else
+		echo "$_SELF: Unable to retrieve socket path" >&2
+		return 1
+	fi
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

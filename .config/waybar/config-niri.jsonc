@@ -1,0 +1,621 @@
+// vim:ft=jsonc:noet:ts=3:sw=3:
+// man:waybar(5)
+// file:$XDG_CONFIG_HOME/waybar/config-niri.jsonc
+[
+	{
+		"layer": "top",
+		"position": "top",
+
+		"modules-left": [
+			"systemd-failed-units",
+			"custom/logo",
+			"custom/separator",
+			"niri/workspaces",
+			"custom/separator",
+			"niri/language",
+			"custom/separator"
+		],
+
+		"modules-center": [
+			"niri/window"
+		],
+
+		"modules-right": [
+			"custom/separator",
+			"mpris",
+			"custom/mails#new",
+			"custom/mails#cur",
+			"custom/updates",
+			"custom/separator",
+			"cpu",
+			"memory",
+			"custom/gpu",
+			"disk",
+			"custom/separator",
+			"temperature#cpu",
+			"custom/separator",
+			//"custom/gamemode",
+			"power-profiles-daemon",
+			"battery#status",
+			"battery#capacity",
+			"custom/separator",
+			"network#ether",
+			"network#wlan",
+			"bluetooth",
+			"network#vpn",
+			"custom/wan",
+			"custom/separator",
+			"pulseaudio#output",
+			"pulseaudio#input",
+			"custom/separator",
+			"backlight",
+			"custom/separator",
+			"custom/weather",
+			"clock",
+			"tray",
+			"privacy",
+			"custom/separator",
+			"inhibitor"
+		],
+
+		"custom/separator": {
+			"tooltip": false,
+
+			"format": "│"
+		},
+
+		"custom/logo": {
+			"tooltip": false,
+
+			"on-click-right": "nirimsg action spawn -- xdgctl -A menu",
+
+			"format": "<big></big>",
+
+			"menu": "on-click",
+			"menu-file": "~/.config/waybar/menu-niri.xml",
+
+			"menu-actions": {
+				"term/vim": "nirimsg action spawn -- footclient -N vim",
+				"term/nvim": "nirimsg action spawn -- footclient -N nvim",
+				"term/nano": "nirimsg action spawn -- footclient -N nano",
+				"term/vi": "nirimsg action spawn -- footclient -N vi",
+				"gimp": "nirimsg action spawn -- xdg-run gimp",
+
+				"lowriter": "nirimsg action spawn -- xdg-run lowriter",
+				"localc": "nirimsg action spawn -- xdg-run localc",
+				"loimpress": "nirimsg action spawn -- xdg-run loimpress",
+				"lodraw": "nirimsg action spawn -- xdg-run lodraw",
+				"lomath": "nirimsg action spawn -- xdg-run lomath",
+				"lobase": "nirimsg action spawn -- xdg-run lobase",
+
+				"pcmanfm": "nirimsg action spawn -- pcmanfm",
+				"term/vifm": "nirimsg action spawn -- footclient -N vifm",
+				"term/mc": "nirimsg action spawn -- footclient -N mc",
+				"xarchiver": "nirimsg action spawn -- xdg-run xarchiver",
+				"baobab": "nirimsg action spawn -- xdg-run baobab",
+				"catfish": "nirimsg action spawn -- xdg-run catfish",
+				"keepassxc": "nirimsg action spawn -- xdg-run keepassxc",
+				"gnome-calculator": "nirimsg action spawn -- xdg-run gnome-calculator",
+				"seahorse": "nirimsg action spawn -- xdg-run seahorse",
+				"gucharmap": "nirimsg action spawn -- xdg-run gucharmap",
+				"kiwix-desktop": "nirimsg action spawn -- xdg-run kiwix-desktop",
+				"ventoy": "nirimsg action spawn -- xdg-run ventoygui",
+
+				"firefox": "nirimsg action spawn -- xdg-run firefox",
+				"thunderbird": "nirimsg action spawn -- xdg-run thunderbird",
+				"term/aerc": "nirimsg action spawn -- footclient -N aerc",
+				"transmission-gtk": "nirimsg action spawn -- xdg-run transmission-gtk",
+				"term/stig": "nirimsg action spawn -- footclient -N stig",
+				"remmina": "nirimsg action spawn -- xdg-exec remmina",
+				"moonlight": "nirimsg action spawn -- xdg-exec moonlight",
+
+				"flatseal": "nirimsg action spawn -- xdg-run flatseal",
+				"iwgtk": "nirimsg action spawn -- xdg-run iwgtk",
+				"term/impala": "nirimsg action spawn -- footclient -N impala",
+				"blueman-manaegr": "nirimsg action spawn -- xdg-run blueman-manager",
+				"term/bluetui": "nirimsg action spawn -- footclient -N bluetui",
+				"libfm-pref-apps": "nirimsg action spawn -- xdg-run libfm-pref-apps",
+				"qt5ct": "nirimsg action spawn -- xdg-run qt5ct",
+				"qt6ct": "nirimsg action spawn -- xdg-run qt6ct",
+				"dconf-editor": "nirimsg action spawn -- xdg-run dconf-editor",
+
+				"mpv": "nirimsg action spawn -- xdg-run mpv --player-operation-mode=pseudo-gui",
+				"vlc": "nirimsg action spawn -- xdg-run vlc",
+				"term/nvlc": "nirimsg action spawn -- footclient -N nvlc",
+				"delfin": "nirimsg action spawn -- xdg-run delfin",
+				"term/ncspot": "nirimsg action spawn -- footclient -N ncspot",
+				"tenacity": "nirimsg action spawn -- xdg-run tenacity",
+				"ghb": "nirimsg action spawn -- xdg-run ghb",
+				"mkvtoolnix-gui": "nirimsg action spawn -- xdg-run mkvtoolnix-gui",
+				"mediaelch": "nirimsg action spawn -- xdg-run mediaelch",
+
+				"kooha": "nirimsg action spawn -- xdg-run kooha",
+				"obs": "nirimsg action spawn -- xdg-run obs",
+				"pavucontrol": "nirimsg action spawn -- xdg-run pavucontrol",
+				"term/pulsemixer": "nirimsg action spawn -- footclient -N pulsemixer",
+				"term/wiremix": "nirimsg action spawn -- footclient -N wiremix",
+				"helvum": "nirimsg action spawn -- xdg-run helvum",
+				"qpwgraph": "nirimsg action spawn -- xdg-run qpwgraph",
+
+				"gnome-system-monitor": "nirimsg action spawn -- xdg-run gnome-system-monitor",
+				"term/top": "nirimsg action spawn -- footclient -N top",
+				"gnome-logs": "nirimsg action spawn -- xdg-run gnome-logs",
+				"term/systemctl-tui": "nirimsg action spawn -- footclient -N systemctl-tui",
+				"term/journalctl": "nirimsg action spawn -- footclient -N journalctl",
+				"term/sudo/dmesg": "nirimsg action spawn -- footclient -N sudo dmesg -Hx",
+				"sudo/gtk-lshw": "nirimsg action spawn -- xdg-run sudo -AE gtk-lshw",
+				"gnome-nettool": "nirimsg action spawn -- xdg-run gnome-nettool",
+				"gnome-power-statistics": "nirimsg action spawn -- xdg-run gnome-power-statistics",
+				"term/sudo/powertop": "nirimsg action spawn -- footclient -N sudo powertop",
+				"gnome-software": "nirimsg action spawn -- xdg-run gnome-software",
+				"gnome-firmware": "nirimsg action spawn -- xdg-run gnome-firmware",
+				"gnome-disks": "nirimsg action spawn -- xdg-run gnome-disks",
+				"gnome-font-viewer": "nirimsg action spawn -- xdg-run gnome-font-viewer",
+				"font-manager": "nirimsg action spawn -- xdg-run font-manager",
+				"yelp": "nirimsg action spawn -- xdg-run yelp",
+				"foot": "nirimsg action spawn -- xdg-run foot",
+
+				"launch": "nirimsg action spawn -- xdgctl -A menu",
+				"run": "nirimsg action spawn -- xdg-exec",
+
+				"lock": "nirimsg action spawn -- xdg-lock",
+				"logout": "nirimsg action quit -s",
+				"reboot": "nirimsg action spawn -- systemctl reboot",
+				"poweroff": "nirimsg action spawn -- systemctl poweroff"
+			}
+		},
+
+		"custom/mails#new": {
+			"interval": 60,
+			"tooltip": false,
+
+			"exec": "mails count new",
+			"exec-on-event": true,
+
+			"on-click": "nirimsg action spawn -- xdg-run thunderbird",
+			"on-click-right": "nirimsg action spawn -- mails sync --pull posteo-inbox",
+
+			"format": "<big></big><small>{}</small>"
+		},
+
+		"custom/mails#cur": {
+			"interval": 60,
+			"tooltip": false,
+
+			"exec": "mails count cur",
+			"exec-on-event": true,
+
+			"on-click": "nirimsg action spawn -- xdg-run thunderbird",
+			"on-click-right": "nirimsg action spawn -- mails sync --push posteo-inbox",
+
+			"format": "<big></big><small>{}</small>"
+		},
+
+		"custom/updates": {
+			"interval": 60,
+			"tooltip": false,
+
+			"exec": "updates count",
+			"exec-on-event": true,
+
+			"on-click": "nirimsg action spawn -- updates notify",
+			"on-click-right": "nirimsg action spawn -- updates check",
+			"on-click-middle": "nirimsg action spawn -- footclient -N updates update",
+
+			"format": "<big>󰏓</big><small>{}</small>"
+		},
+
+		"systemd-failed-units": {
+			"format": ""
+		},
+
+		"niri/language": {
+			"tooltip": false,
+
+			"format": "<big>󰌌</big><small>{short}</small>",
+			"format-alt": "<big>󰌌</big><small>{long}</small>"
+		},
+
+		"niri/workspaces": {
+			"tooltip": false,
+
+			"all-outputs": true,
+			"current-only": true,
+
+			"format": "<big>{value}</big><small>[{output}]</small>"
+		},
+
+		"niri/window": {
+			"tooltip": false,
+
+			"separate-outputs": false,
+			"icon": false,
+
+			"format": "<small>{title}</small>"
+		},
+
+		"mpris": {
+			"format": "<big>{player_icon}</big><small>{status_icon}</small>",
+			"tooltip-format": "{dynamic}",
+
+			"player-icons": {
+				"firefox": "",
+				"mpv": "",
+				"spotifyd": "",
+				"vlc": "󰕼"
+			},
+
+			"status-icons": {
+				"playing": "",
+				"paused": ""
+			}
+		},
+
+		"cpu": {
+			"tooltip": false,
+
+			"on-click-right": "nirimsg action spawn -- xdg-run gnome-system-monitor",
+
+			"states": {
+				"low": 25,
+				"medium": 50,
+				"high": 75
+			},
+
+			"format": "<big></big><small>{usage}%</small>",
+			"format-alt": "<big></big><small>{avg_frequency}GHz</small>"
+		},
+
+		"memory": {
+			"tooltip": false,
+
+			"on-click-right": "nirimsg action spawn -- xdg-run gnome-system-monitor",
+
+			"states": {
+				"low": 25,
+				"medium": 50,
+				"high": 75
+			},
+
+			"format": "<big></big><small>{percentage}%</small>",
+			"format-alt": "<big></big><small>{used:0.1f}GiB/{total:0.1f}GiB</small>"
+		},
+
+		"custom/gpu": {
+			"interval": 10,
+			"tooltip": false,
+
+			"exec-if": "grep -q D0 /sys/class/drm/card1/device/power_state && test -f /sys/class/drm/card1/device/gpu_busy_percent",
+			"exec": "cat /sys/class/drm/card1/device/gpu_busy_percent",
+			"exec-on-event": true,
+
+			"format": "<big>󰢮</big><small>{}%</small>"
+		},
+
+		"disk": {
+			"interval": 60,
+			"tooltip": false,
+
+			"on-click-right": "nirimsg action spawn -- pcmanfm",
+			"on-click-middle": "nirimsg action spawn -- xdg-run baobab",
+
+			"path": "/home",
+
+			"states": {
+				"low": 25,
+				"medium": 50,
+				"high": 75
+			},
+
+			"format": "<big>󰋊</big><small>{percentage_used}%</small>",
+			"format-alt": "<big>󰋊</big><small>{used}/{total}</small>"
+		},
+
+		"temperature#cpu": {
+			"tooltip": false,
+
+			"thermal-zone": 0,
+			"critical-threshold": 100,
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{temperatureC}℃</small>",
+
+			"format-icons": ["", "", "", "", ""]
+		},
+
+		"temperature#sys": {
+			"tooltip": false,
+
+			"thermal-zone": 2,
+			"critical-threshold": 80,
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{temperatureC}℃</small>",
+
+			"format-icons": ["", "", "", "", ""]
+		},
+
+		"temperature#gpu": {
+			"tooltip": false,
+
+			"thermal-zone": 5,
+			"critical-threshold": 100,
+
+			"format": "<big>󰢮{icon}</big>",
+			"format-alt": "<big>󰢮{icon}</big><small>{temperatureC}℃</small>",
+
+			"format-icons": ["", "", "", "", ""]
+		},
+
+		/* "gamemode": {
+			"tooltip": false,
+
+			"hide-not-running": true,
+			"use-icon": false,
+			"icon-size": 0,
+			"icon-spacing": 0,
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small>{count}</small>"
+		}, */
+
+		/* "custom/gamemode": {
+			"interval": 10,
+			"tooltip": false,
+
+			"exec-if": "test $(gamemodelist | wc -l) -gt 0",
+			"exec": "gamemodelist | wc -l",
+			"exec-on-event": true,
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small>{}</small>"
+		}, */
+
+		"power-profiles-daemon": {
+			"tooltip": false,
+
+			"format": "<big>{icon}</big>",
+
+			"format-icons": {
+				"performance": "󰓅",
+				"balanced": "󰾅",
+				"power-saver": "󰾆"
+			}
+		},
+
+		"battery#status": {
+			"tooltip": false,
+
+			"states": {
+				"full": 100,
+				"high": 75,
+				"medium": 50,
+				"low": 25,
+				"critical": 10
+			},
+
+			"format": "",
+			"format-charging": "<big></big>",
+			"format-discharging-critical": "<big>‼</big>",
+			"format-plugged": "<big></big>"
+		},
+
+		"battery#capacity": {
+			"tooltip": false,
+
+			"on-click-right": "nirimsg action spawn -- xdg-run gnome-power-statistics",
+
+			"states": {
+				"full": 100,
+				"high": 75,
+				"medium": 50,
+				"low": 25,
+				"critical": 10
+			},
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{capacity}%</small>",
+
+			"format-icons": ["", "", "", "", ""]
+		},
+
+		"network#ether": {
+			"interval": 60,
+			"tooltip": false,
+
+			"interface": "en*",
+
+			"on-click-middle": "nirimsg action spawn -- xdg-run gnome-nettool",
+
+			"format": "",
+			"format-ethernet": "<big></big>",
+			"format-alt": "<big></big><small>{ipaddr}</small>"
+		},
+
+		"network#wlan": {
+			"interval": 60,
+			"tooltip": false,
+
+			"interface": "wl*",
+
+			"on-click-right": "nirimsg action spawn -- xdg-run iwgtk",
+			"on-click-middle": "nirimsg action spawn -- xdg-run gnome-nettool",
+
+			"format": "",
+			"format-wifi": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{ipaddr}</small>",
+
+			"format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+		},
+
+		"bluetooth": {
+			"tooltip": false,
+
+			"on-click-right": "nirimsg action spawn -- xdg-run blueman-manager",
+
+			"format": "<big>󰂯</big>",
+			"format-disabled": "<big>󰂲</big>",
+			"format-off": "<big>󰂲</big>",
+
+			"format-connected-battery": "<big>󰂯</big><small>{icon}</small>",
+
+			"format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽","󰁾", "󰁿", "󰂀", "󰂁", "󰁹"]
+		},
+
+		"network#vpn": {
+			"interval": 60,
+			"tooltip": false,
+
+			"interface": "wg0",
+
+			"on-click-middle": "nirimsg action spawn -- xdg-run gnome-nettool",
+
+			"format": "",
+			"format-ethernet": "<big>󰖂</big>",
+			"format-alt": "<big>󰖂</big><small>{ipaddr}</small>"
+		},
+
+		"custom/wan" :{
+			"interval": 3600,
+			"tooltip": false,
+
+			"exec": "curl -4qsL am.i.mullvad.net/ip",
+			"exec-on-event": true,
+
+			"on-click-middle": "nirimsg action spawn -- xdg-run gnome-nettool",
+
+			"format": "<big></big>",
+			"format-alt": "<big></big><small>{}</small>"
+		},
+
+		"pulseaudio#output": {
+			"tooltip": true,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-click": "nirimsg action spawn -- wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+			"on-click-right": "nirimsg action spawn -- xdg-run pavucontrol",
+			"on-click-middle": "nirimsg action spawn -- xdg-run helvum",
+
+			"on-scroll-up": "nirimsg action spawn -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+			"on-scroll-down": "nirimsg action spawn -- wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+
+			"format": "<big>{icon}</big><small>{volume}%</small>",
+			"format-muted": "<big>󰸈</big>",
+
+			"format-bluetooth": "<big>󰂰</big><small>{volume}%</small>",
+
+			"format-icons": {
+				"default": ["󰕿", "󰖀", "󰕾"]
+			}
+		},
+
+		"pulseaudio#input": {
+			"tooltip": false,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-click": "nirimsg action spawn -- wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+			"on-click-right": "nirimsg action spawn -- xdg-run pavucontrol",
+			"on-click-middle": "nirimsg action spawn -- xdg-run helvum",
+
+			"on-scroll-up": "nirimsg action spawn -- wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+",
+			"on-scroll-down": "nirimsg action spawn -- wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-",
+
+			"format": "{format_source}",
+			"format-muted": "{format_source}",
+			"format-source": "<big>󰍬</big><small>{volume}%</small>",
+			"format-source-muted": "<big>󰍭</big>"
+		},
+
+		"backlight": {
+			"tooltip": false,
+			"smooth-scrolling-threshold": 0.5,
+
+			"on-scroll-up": "nirimsg action spawn -- brightnessctl -q set 5%+",
+			"on-scroll-down": "nirimsg action spawn -- brightnessctl -q set 5%-",
+
+			"format": "<big>{icon}</big>",
+			"format-alt": "<big>{icon}</big><small>{percent}%</small>",
+
+			"format-icons": ["", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+		},
+
+		"custom/weather": {
+			"interval": 60,
+
+			"exec-if": "test -f $XDG_STATE_HOME/wttrbar.json",
+			"exec": "cat $XDG_STATE_HOME/wttrbar.json",
+			"return-type": "json",
+
+			"format": "{}"
+		},
+
+		"clock": {
+			"timezone": "US/Eastern",
+
+			"tooltip-format": "<tt><small>{calendar}</small></tt>",
+
+			"format": "<big>󰥔</big><small>{:%H:%M}</small>",
+			"format-alt": "<big>󰃭</big><small>{:%Y-%m-%d}</small>",
+
+			"calendar": {
+				"mode": "month",
+				"mode-mon-col": 3,
+				"weeks-pos": "left",
+				"on-scroll": 1,
+				"on-click-right": "mode",
+				"format": {
+					"months": "<span color='#aa759f'><i>{}</i></span>",
+					"days": "{}",
+					"weeks": "<span color='#6a9fb5'>W{:%V}</span>",
+					"weekdays": "<span color='#f4bf75'><u>{}</u></span>",
+					"today": "<span color='#75b5aa'>{}</span>"
+				}
+			},
+
+			"actions": {
+				"on-click-right": "mode",
+				"on-click-forward": "tz_up",
+				"on-click-backward": "tz_down",
+				"on-scroll-up": "shift_up",
+				"on-scroll-down": "shift_down"
+			}
+		},
+
+		"tray": {
+			"show-passive-items": true,
+			"icon-size": 16,
+			"spacing": 2
+		},
+
+		"privacy": {
+			"icon-size": 16,
+			"icon-spacing": 2,
+			"transition-duration": 250,
+			"modules": [
+				{
+					"type": "screenshare",
+					"tooltip": true,
+					"tooltip-icon-size": 16
+				},
+				{
+					"type": "audio-in",
+					"tooltip": true,
+					"tooltip-icon-size": 16
+				}
+			]
+		},
+
+		"inhibitor": {
+			"what": ["idle", "shutdown", "sleep"],
+
+			"tooltip": false,
+
+			"format": "<big>{icon}</big>",
+
+			"format-icons": {
+				"activated": "󰈈",
+				"deactivated": "󰈉"
+			}
+		}
+	}
+]

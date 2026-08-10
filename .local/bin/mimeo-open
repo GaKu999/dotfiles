@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/mimeo-open
+#==============================================================================#
+
+
+set -a
+	: ${XDG_DATA_HOME:=$HOME/.local/share}
+	: ${XDG_DATA_DIRS:=$XDG_DATA_HOME:/usr/local/share:/usr/share}
+set +a
+
+# Who am I?
+_SELF="${0##*/}"
+
+# [$1: EXIT CODE (0)]
+function _usage { local -ir ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg << ENDUSAGEMSG || : EOF
+Usage: $_SELF [-cp] [FILE|URL]...
+
+  -c   change the handler
+  -p   prompt before opening
+
+  -h   show this information
+ENDUSAGEMSG
+	printf '%s' "$msg"
+	exit "$ec"
+}
+
+function _lsapps {
+	local path ; local -a apps
+	shopt -s nullglob
+	IFS=':' ; for path in $XDG_DATA_DIRS ; do
+		apps+=( "$path/applications/"*.desktop )
+	done ; unset -v IFS
+	apps=( "${apps[@]##*/}" )
+	apps=( "${apps[@]%.desktop}" )
+	(( "${#apps[@]}" )) && printf '%s\n' "${apps[@]}" | sort -u
+}
+
+
+#==============================================================================#
+
+
+# $@: [-cp] [FILE|URL]...
+function main {
+	local arg OPT OPTARG OPTIND ; local -i change prompt ; local -a args opts sdargs
+	while getopts ':cph' OPT ; do
+		case "$OPT" in
+			'c' ) change=1 ;;
+			'p' ) prompt=1 ;;
+			'h' ) _usage ;;
+			'?' )
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':' )
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done ; shift "$(( OPTIND - 1 ))"
+	: ${change:=1} ${prompt:=1}
+	if (( "$#" )) ; then
+		args=( "$@" )
+	elif [[ ! -t 0 ]] ; then
+		tmpfile="$( mktemp -u --tmpdir xdg-open.XXXXXXXX )"
+		cat > "$tmpfile"
+		trap 'rm -f -- "$tmpfile"' EXIT
+		args=( "$tmpfile" )
+		opts=( "--by-content-only" )
+	else
+		_usage 2
+	fi
+	for arg in "${args[@]}" ; do
+		if [[ -e "$arg" && -r "$arg" ]] ; then
+			arg="$( realpath -eq -- "$arg" )"
+		fi
+		mimetype="$( mimeo -m "${opts[@]}" --swap -- "$arg" | head -n1 )"
+		if (( prompt )) ; then
+			xdg-prompt "Open $arg [$mimetype]?:" || continue
+		fi
+		if (( change )) ; then
+			if [[ "$XDG_SESSION_TYPE" = wayland && -n "$WAYLAND_DISPLAY" ]] ; then
+				handler="$( _lsapps | wmenu -p"Select handler for [$mimetype]:" )"
+			elif [[ "$XDG_SESSION_TYPE" = x11 && -n "$DISPLAY" ]] ; then
+				handler="$( _lsapps | dmenu -p "Select handler for [$mimetype]:" )"
+			else
+				echo "$_SELF: not a graphical session" >&2
+				return 1
+			fi
+			if [[ "$handler" == clear ]] ; then
+				mimeo --clear "$mimetype"
+			elif [[ -n "$handler" ]] ; then
+				mimeo --clear "$mimetype"
+				mimeo --prefer "$mimetype" "$handler.desktop"
+			fi
+		fi
+		if [[ -t 0 ]] ; then
+			sdargs=( "--pty" )
+		else
+			sdargs=( "--pipe" )
+		fi
+		systemd-run --user -dGq -u "$_SELF-$( uuidgen )" "${sdargs[@]}" --wait --slice=app-xdg -pManagedOOMSwap=kill -pManagedOOMMemoryPressure=kill -- \
+			mimeo "${opts[@]}" -- "$arg"
+	done
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

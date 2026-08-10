@@ -1,0 +1,33 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_CONFIG_HOME/niri/startup
+#==============================================================================#
+
+
+(
+	systemctl -q --user import-environment NIRI_SOCKET DISPLAY WAYLAND_DISPLAY
+	dbus-update-activation-environment --systemd NIRI_SOCKET DISPLAY WAYLAND_DISPLAY
+	systemctl -q --user start niri-session.target
+) &
+
+# man:swaybg(1)
+swaybg -o '*' -i "$HOME/.wallpaper" -m fill -c "#1d2021" &
+
+# man:swayidle(1) man:swaylock(1)
+swayidle -w \
+	before-sleep "nirimsg action spawn -- swaylock -f" \
+	lock "nirimsg action spawn -- swaylock -f" \
+	unlock "nirimsg action spawn -- killall -q -sUSR1 swaylock" \
+	timeout 58 "nirimsg action spawn -- brightnessctl -s" \
+	timeout 59 "nirimsg action spawn -- brightnessctl s 0%" \
+		resume "nirimsg action spawn -- brightnessctl -r" \
+	timeout 60 "nirimsg action spawn -- screensaver run" \
+		resume "nirimsg action spawn -- screensaver kill" \
+	timeout 298 "nirimsg action spawn -- niridpms all off" \
+	timeout 299 "nirimsg action spawn -- swaylock -f" \
+	idlehint 300 &
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

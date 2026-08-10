@@ -1,0 +1,81 @@
+!! vim:ft=xdefaults:noet:ts=3:sw=3:
+!! file:$XDG_DATA_HOME/themes/gruvbox-light/openbox-3/themerc
+!!============================================================================!!
+
+
+!! Menu background
+menu.items.bg: flat border
+menu.items.bg.color: #f2e5bc
+menu.items.bg.border.color: #fbf1c7
+menu.separator.color: #fbf1c7
+
+!! Menu text
+menu.items.text.color: #3c3836
+menu.items.justify: left
+menu.items.disabled.text.color: #928374
+
+!! Menu headers
+menu.title.bg: flat border
+menu.title.bg.color: #f2e5bc
+menu.title.bg.border.color: #fbf1c7
+menu.title.text.color: #3c3836
+menu.title.text.justify: center
+
+!! Selected menu item
+menu.items.active.bg: flat
+menu.items.active.bg.color: #fbf1c7
+menu.items.active.text.color: #3c3836
+
+!! Titlebar
+window.active.title.bg: flat border
+window.active.title.bg.color: #fbf1c7
+window.active.title.bg.border.color: #3c3836
+window.inactive.title.bg: flat border
+window.inactive.title.bg.color: #fbf1c7
+window.inactive.title.bg.border.color: #fbf1c7
+
+!! Titlebar text
+window.label.text.justify: center
+window.active.label.bg: parentrelative
+window.active.label.text.color: #3c3836
+window.inactive.label.bg: parentrelative
+window.inactive.label.text.color: #928374
+
+!! Window buttons
+window.*.button.*.bg: parentrelative
+window.active.button.*.hover.bg: flat border
+window.inactive.button.*.hover.bg: parentrelative
+window.*.button.*.pressed.bg: flat border
+
+window.active.button.*.hover.bg.color: #fbf1c7
+window.active.button.*.hover.bg.border.color: #3c3836
+
+window.active.button.*.pressed.bg.color: #fbf1c7
+window.active.button.*.pressed.image.color: #3c3836
+window.active.button.*.pressed.bg.border.color: #3c3836
+window.inactive.button.*.pressed.bg.color: #fbf1c7
+window.inactive.button.*.pressed.image.color: #7c6f64
+window.inactive.button.*.pressed.bg.border.color: #7c6f64
+
+window.active.button.*.image.color: #3c3836
+window.active.button.disabled.image.color: #7c6f64
+window.inactive.button.*.image.color: #7c6f64
+window.inactive.button.disabled.image.color: #fbf1c7
+
+!! Borders
+window.active.border.color: #fbf1c7
+window.inactive.border.color: #fbf1c7
+window.inactive.title.separator.color: #fbf1c7
+border.width: 1
+padding.width: 1
+window.handle.width: 0
+window.active.client.color:  #3c3836
+window.inactive.client.color:  #fbf1c7
+window.client.padding.width: 1
+window.client.padding.height: 1
+menu.overlap: 0
+
+
+!!============================================================================!!
+!!                                END OF FILE                                 !!
+!!============================================================================!!

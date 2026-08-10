@@ -1,0 +1,36 @@
+# vim:ft=yaml:et:ts=2:sw=2:
+# man:udiskie(8)
+# file:$XDG_CONFIG_HOME/udiskie/config.yml
+#==============================================================================#
+
+
+program_options:
+  automount: true
+  notify: true
+  tray: false
+  menu: "nested"
+
+device_config:
+  - { is_drive: true, ignore: false, automount: false }
+  - { is_systeminternal: true, ignore: false, automount: false }
+  - { is_crypto: true, ignore: false, automount: false }
+  - { is_loop: true, ignore: false, autoclear: true }
+
+  - { id_type: btrfs, ignore: false, options: [ noatime, lazytime, nodev, noexec, nosuid, commit=60, flushoncommit ] }
+  - { id_type: exfat, ignore: false, options: [ noatime, lazytime, nodev, noexec, nosuid, dmask=0077, fmask=0177, iocharset=utf8, errors=remount-ro ] }
+  - { id_type: ext2, ignore: false, options: [ noatime, lazytime, nodev, noexec, nosuid, errors=remount-ro ] }
+  - { id_type: ext3, ignore: false, options: [ noatime, lazytime, nodev, noexec, nosuid, errors=remount-ro ] }
+  - { id_type: ext4, ignore: false, options: [ noatime, lazytime, nodev, noexec, nosuid, data=writeback, journal_async_commit, errors=remount-ro ] }
+  - { id_type: iso9660, ignore: false, options: [ ro, nodev, noexec, nosuid, iocharset=utf8 ] }
+  - { id_type: udf, ignore: false, options: [ ro, nodev, noexec, nosuid, iocharset=utf8 ] }
+  - { id_type: vfat, ignore: false, options: [ noatime, lazytime, nodev, noexec, nosuid, flush, dmask=0077, fmask=0177, shortname=mixed, utf8, errors=remount-ro ] }
+
+  - { is_filesystem: true, ignore: true, options: [ nodev, noexec, nosuid ] }
+
+notifications:
+  timeout: 15
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

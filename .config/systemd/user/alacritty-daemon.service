@@ -1,0 +1,31 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/alacritty-daemon.service
+#==============================================================================#
+
+
+[Unit]
+Documentation=man:alacritty(1)
+
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+ConditionEnvironment=DISPLAY
+
+[Service]
+ExecStartPre=-/usr/bin/rm -f %t/alacritty${DISPLAY}.sock
+ExecStart=/usr/bin/alacritty --daemon --socket %t/alacritty${DISPLAY}.sock
+
+Restart=on-failure
+
+UnsetEnvironment=ALACRITTY_LOG ALACRITTY_SOCKET ALACRITTY_WINDOW_ID
+
+[Install]
+WantedBy=graphical-session.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

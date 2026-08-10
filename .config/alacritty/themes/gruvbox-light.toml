@@ -1,0 +1,51 @@
+# vim:ft=confini:
+# man:alacritty(5)
+# man:alacritty-bindings(5)
+# file:$XDG_CONFIG_HOME/alacritty/themes/gruvbox-light.toml
+#==============================================================================#
+
+
+[window]
+opacity = 0.95
+
+[colors]
+line_indicator = { foreground = "#3c3836", background = "#fbf1c7" }
+footer_bar = { foreground = "#3c3836", background = "#fbf1c7" }
+selection = { text = "#9d0006", background = "#fbf1c7" }
+
+[colors.primary]
+background = "#f2e5bc"
+foreground = "#3c3836"
+
+[colors.normal]
+black = "#fbf1c7"
+red = "#cc241d"
+green = "#98971a"
+yellow = "#d79921"
+blue = "#458588"
+magenta = "#b16286"
+cyan = "#689d6a"
+white = "#7c6f64"
+
+[colors.bright]
+black = "#928374"
+red = "#9d0006"
+green = "#79740e"
+yellow = "#b57614"
+blue = "#076678"
+magenta = "#8f3f71"
+cyan = "#427b58"
+white = "#3c3836"
+
+[colors.search]
+matches = { foreground = "#9d0006", background = "#fbf1c7" }
+focused_match = { foreground = "#9d0006", background = "#fbf1c7" }
+
+[colors.hints]
+start = { foreground = "#b57614", background = "#fbf1c7" }
+end = { foreground = "#b57614", background = "#fbf1c7" }
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

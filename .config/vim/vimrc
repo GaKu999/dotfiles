@@ -1,0 +1,219 @@
+"!/hint/vim
+" vim:ft=vim:noet:ts=3:sw=3:
+" file:$XDG_CONFIG_HOME/vim/vimrc
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+let g:cachedir = $XDG_CACHE_HOME . "/vim"
+let g:configdir = $XDG_CONFIG_HOME . "/vim"
+let g:rundir = $XDG_RUNTIME_DIR
+
+set encoding=utf-8
+
+set background=dark
+set notermguicolors
+colorscheme default
+
+syntax enable
+filetype indent plugin on
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   OPTIONS                                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+let &viminfofile = cachedir . "/viminfo"
+set history=10000
+
+set backup
+let &backupdir = cachedir . "/backup"
+let &backupskip = "/tmp/*,/var/tmp/*,/run/*,/dev/shm/*," . rundir . "/*"
+set backupext=.bak
+
+set undofile
+set undolevels=10000
+
+set dictionary=spell
+
+set splitbelow
+set splitright
+
+let &fillchars = "stl:─,stlnc:─,vert:│,fold:─,foldopen:-,foldclose:+,foldsep:│,diff:─,eob:~,lastline:@,trunc:>,truncrl:<,tpl_vert:│"
+let &listchars = "eol:$,tab:==>,space: ,multispace:-,lead:-,leadmultispace:-,trail:-,extends:>,precedes:<,conceal: ,nbsp: "
+set concealcursor=nc
+set conceallevel=2
+set display=truncate
+
+set nowrap
+set scrolljump=4
+set scrolloff=4
+set sidescroll=4
+set sidescrolloff=4
+
+set matchpairs=<:>,{:},(:),[:]
+set showmatch
+
+set whichwrap=b,s,<,>,[,]
+
+set wildmode=longest,full
+
+set number
+set foldclose=all
+set foldcolumn=3
+set foldlevel=2
+set foldmethod=indent
+set autoindent
+set linebreak
+set shiftwidth=3
+set smartindent
+set smarttab
+set tabstop=3
+
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+
+set laststatus=2
+set noruler
+let &statusline = "%n:%f{%M%R%H%W%Y,%{&ff}}%=(0x%O:0x%B)\%=[%c:%l/%L]"
+
+set autochdir
+set autoshelldir
+
+set autowrite
+set autowriteall
+
+let &guicursor = ""
+if $TERM =~ 'linux'
+	let &t_SI = "\e[?0c"
+	let &t_SR = "\e[?0c"
+	let &t_EI = "\e[?8c"
+	let &t_ti ..= "\e[?8c"
+	let &t_te ..= "\e[?8c"
+else
+	let &t_SI = "\e[5 q"
+	let &t_SR = "\e[5 q"
+	let &t_EI = "\e[1 q"
+	let &t_ti ..= "\e[1 q"
+	let &t_te ..= "\e[1 q"
+endif
+let &t_ve = "\e[?25h"
+let &t_vi = "\e[?25l"
+
+if $TERM =~ 'alacritty\|foot\|konsole\|tmux\|xterm'
+	set title
+	let &titlestring = "vim:%f{%M%R%H%W%Y,%{&ff}}"
+endif
+
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+let g:netrw_browsex_viewer = "xdgctl"
+let g:netrw_dirhistmax = 0
+let g:netrw_hide = 1
+let g:netrw_list_hide = "^\..*$"
+let g:netrw_liststyle = 3
+let g:netrw_preview = 1
+let g:netrw_winsize = 20
+
+set colorcolumn=0
+let s:oldcolorcolumn = 80
+
+let s:oldfiletype = ''
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                  FUNCTIONS                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+function Alias( name, cmd )
+	exec 'cnoreabbrev <expr> ' . a:name
+		\ . ' ((getcmdtype() is# ":" && getcmdline() is# "' . a:name . '")'
+		\ . '? ("' . a:cmd . '") : ("' . a:name . '"))'
+endfunction
+
+function BindOptionKey( key, option )
+	let l:cmd = ':set ' . a:option . '! \| set ' . a:option . "?\<CR>"
+	exec 'nnoremap ' . a:key . ' ' . cmd
+	exec 'inoremap ' . a:key . " \<C-O>" . cmd
+endfunction
+
+command -nargs=+ BindOptionKey call BindOptionKey( <f-args> )
+
+function s:ToggleColorColumn()
+	if s:oldcolorcolumn
+		windo let &colorcolumn = s:oldcolorcolumn
+		let s:oldcolorcolumn = 0
+	else
+		let s:oldcolorcolumn = &colorcolumn
+		windo let &colorcolumn = 0
+	endif
+endfunction
+
+function s:ToggleBinary()
+	if &binary
+		%!xxd -r
+		let &filetype = s:oldfiletype
+		let s:oldfiletype = ''
+		set nobinary
+	else
+		%!xxd
+		let s:oldfiletype = &filetype
+		set filetype=xxd
+		set binary
+	endif
+endfunction
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 AUTOCOMMANDS                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+if &diff | syntax off | endif
+
+autocmd BufReadPost * silent! normal! g`"zv
+
+augroup Binary
+	autocmd!
+	autocmd BufReadPre   *.bin let &binary = 1
+	autocmd BufReadPost  *.bin if &binary | %!xxd
+	autocmd BufReadPost  *.bin set filetype=xxd | endif
+	autocmd BufWritePre  *.bin if &binary | %!xxd -r
+	autocmd BufWritePre  *.bin endif
+	autocmd BufWritePost *.bin if &binary | %!xxd
+	autocmd BufWritePost *.bin set nomodified | endif
+augroup END
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                   KEYBINDS                                   "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+nnoremap <silent> <F11> :bprevious<CR>
+nnoremap <silent> <F12> :bnext<CR>
+
+nnoremap <silent> <Space> :nohlsearch<CR>
+
+call Alias( "rmtw", '%s/\\(\\S\\)\\s\\+$/\\1/e' )
+
+call Alias( "hex", 'call <SID>ToggleBinary()<CR>' )
+
+BindOptionKey <F2> number
+BindOptionKey <F3> cursorline
+BindOptionKey <F4> cursorcolumn
+BindOptionKey <F5> list
+BindOptionKey <F6> spell
+BindOptionKey <F7> hlsearch
+BindOptionKey <F8> paste
+BindOptionKey <F9> wrap
+
+nnoremap <silent> <BAR> :call <SID>ToggleColorColumn()<CR>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 END OF FILE                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

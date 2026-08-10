@@ -1,0 +1,1132 @@
+#!/hint/zsh
+# vim:ft=zsh:noet:ts=3:sw=3:
+# man:zsh(1)
+# file:$HOME/.zshrc.local
+#==============================================================================#
+
+
+[[ -o interactive ]] || return # not interactive
+
+# defaults
+export BROWSER="firefox"
+export DIFFPROG="diff -dNu"
+export EDITOR="vim"
+export PAGER="less"
+export VISUAL="vim"
+
+# man:gpg-agent(1)
+export GPG_TTY=$TTY
+gpg-connect-agent UPDATESTARTUPTTY /bye &>/dev/null || : NOERR
+
+# force console password query
+if [[ $TERM =~ (linux|tmux|xterm) ]] {
+	# man:gpg(1) (custom)
+	export PINENTRY_USER_DATA="nogui"
+	# man:ssh(1)
+	export SSH_ASKPASS_REQUIRE="never"
+}
+
+# man:ls(1) man:dircolors(1)
+# `dircolors -b -- "$XDG_CONFIG_HOME/dircolors.conf"`
+export LS_COLORS="di=${_af[13]}:ln=target:pi=${_af[4]}:so=${_af[6]}:do=${_af[6]}:bd=${_af[4]}:cd=${_af[4]}:or=${_af[2]}:su=${_af[16]};${_ab[2]}:sg=${_af[16]};${_ab[4]}:tw=${_af[16]};${_ab[3]}:ow=${_af[13]};${_ab[3]}:st=${_af[16]};${_ab[5]}:ex=${_af[11]}:\
+*.bash=${_af[11]}:*.bat=${_af[11]}:*.btm=${_af[11]}:*.cmd=${_af[11]}:*.com=${_af[11]}:*.csh=${_af[11]}:*.exe=${_af[11]}:*.job=${_af[11]}:*.js=${_af[11]}:*.lua=${_af[11]}:*.perl=${_af[11]}:*.py=${_af[11]}:*.sh=${_af[11]}:*.zsh=${_af[11]}:\
+*.7z=${_af[10]}:*.Z=${_af[10]}:*.ace=${_af[10]}:*.alz=${_af[10]}:*.apk=${_af[10]}:*.arc=${_af[10]}:*.arj=${_af[10]}:*.bz=${_af[10]}:*.bz2=${_af[10]}:*.cab=${_af[10]}:*.cpio=${_af[10]}:*.crate=${_af[10]}:*.deb=${_af[10]}:*.drpm=${_af[10]}:*.dwm=${_af[10]}:*.dz=${_af[10]}:*.ear=${_af[10]}:*.egg=${_af[10]}:*.esd=${_af[10]}:*.gpg=${_af[10]}:*.gz=${_af[10]}:*.iso=${_af[10]}:*.jar=${_af[10]}:*.lha=${_af[10]}:*.lrz=${_af[10]}:*.lz=${_af[10]}:*.lz4=${_af[10]}:*.lzh=${_af[10]}:*.lzma=${_af[10]}:*.lzo=${_af[10]}:*.pyz=${_af[10]}:*.rar=${_af[10]}:*.rpm=${_af[10]}:*.rz=${_af[10]}:*.sar=${_af[10]}:*.sfs=${_af[10]}:*.swm=${_af[10]}:*.t7z=${_af[10]}:*.tZ=${_af[10]}:*.tar=${_af[10]}:*.taz=${_af[10]}:*.tbz=${_af[10]}:*.tbz2=${_af[10]}:*.tgz=${_af[10]}:*.tlz=${_af[10]}:*.txz=${_af[10]}:*.tz=${_af[10]}:*.tzo=${_af[10]}:*.tzst=${_af[10]}:*.udeb=${_af[10]}:*.war=${_af[10]}:*.whl=${_af[10]}:*.wim=${_af[10]}:*.xz=${_af[10]}:*.z=${_af[10]}:*.zip=${_af[10]}:*.zoo=${_af[10]}:*.zst=${_af[10]}:\
+*.docx=${_af[10]}:*.odt=${_af[10]}:*.pdf=${_af[10]}:*.xcf=${_af[10]}:\
+*.asf=${_af[12]}:*.avi=${_af[12]}:*.avif=${_af[12]}:*.bmp=${_af[12]}:*.cgm=${_af[12]}:*.dl=${_af[12]}:*.emf=${_af[12]}:*.flc=${_af[12]}:*.fli=${_af[12]}:*.flv=${_af[12]}:*.gif=${_af[12]}:*.gl=${_af[12]}:*.jpeg=${_af[12]}:*.jpg=${_af[12]}:*.jxl=${_af[12]}:*.m2v=${_af[12]}:*.m4v=${_af[12]}:*.mjpeg=${_af[12]}:*.mjpg=${_af[12]}:*.mkv=${_af[12]}:*.mng=${_af[12]}:*.mov=${_af[12]}:*.mp4=${_af[12]}:*.mp4v=${_af[12]}:*.mpeg=${_af[12]}:*.mpg=${_af[12]}:*.nuv=${_af[12]}:*.ogm=${_af[12]}:*.pbm=${_af[12]}:*.pcx=${_af[12]}:*.pgm=${_af[12]}:*.png=${_af[12]}:*.ppm=${_af[12]}:*.qt=${_af[12]}:*.rm=${_af[12]}:*.rmvb=${_af[12]}:*.svg=${_af[12]}:*.svgz=${_af[12]}:*.tga=${_af[12]}:*.tif=${_af[12]}:*.tiff=${_af[12]}:*.vob=${_af[12]}:*.webm=${_af[12]}:*.wmv=${_af[12]}:*.xbm=${_af[12]}:*.xcf=${_af[12]}:*.xpm=${_af[12]}:*.xwd=${_af[12]}:*.yuv=${_af[12]}:\
+*.aac=${_af[15]}:*.au=${_af[15]}:*.flac=${_af[15]}:*.m4a=${_af[15]}:*.mid=${_af[15]}:*.midi=${_af[15]}:*.mka=${_af[15]}:*.mp3=${_af[15]}:*.mpc=${_af[15]}:*.oga=${_af[15]}:*.ogg=${_af[15]}:*.opus=${_af[15]}:*.ra=${_af[15]}:*.spx=${_af[15]}:*.wav=${_af[15]}:*.xspf=${_af[15]}:\
+*.avi=${_af[14]}:*.mkv=${_af[14]}:*.mp4=${_af[14]}:*.mpg=${_af[14]}:*.ogv=${_af[14]}:*.ogx=${_af[14]}:\
+*~=${_af[9]}:*#=${_af[9]}:*.bak=${_af[9]}:*.crdownload=${_af[9]}:*.dpkg-dist=${_af[9]}:*.dpkg-new=${_af[9]}:*.dpkg-old=${_af[9]}:*.dpkg-tmp=${_af[9]}:*.old=${_af[9]}:*.orig=${_af[9]}:*.pacsave=${_af[9]}:*.part=${_af[9]}:*.rej=${_af[9]}:*.rpmnew=${_af[9]}:*.rpmorig=${_af[9]}:*.rpmsave=${_af[9]}:*.swp=${_af[9]}:*.tmp=${_af[9]}:*.ucf-dist=${_af[9]}:*.ucf-new=${_af[9]}:*.ucf-old=${_af[9]}:"
+# man:grep(1)
+export GREP_COLORS="ms=${_af[11]}:mc=${_af[11]}:fn=${_af[16]}:ln=${_af[12]}:bn=${_af[14]}:se=${_af[16]}:"
+
+# man-db
+# man:man(1)
+# export MANROFFOPT="-c"
+# export MANWIDTH=80
+
+# mandoc
+# hack for `zsh completion for `man so it doesn't choke on nonexistent `manpath
+# man:man(1) man:mandoc(1) man:man.conf(5)
+function manpath { man -w }
+
+# man:less(1)
+export LESS="-RinF -x3 -~ --wordwrap --incsearch --mouse --no-histdups"
+export LESSHISTSIZE=10000
+export LESS_TERMCAP_mb="$setaf[12]"
+export LESS_TERMCAP_md="$setaf[12]"
+export LESS_TERMCAP_me="$terminfo[sgr0]"
+export LESS_TERMCAP_so="$setaf[10]$setab[1]"
+export LESS_TERMCAP_se="$terminfo[sgr0]"
+export LESS_TERMCAP_us="$setaf[10]"
+export LESS_TERMCAP_ue="$terminfo[sgr0]"
+
+# man:zshparam(1)
+HISTSIZE=10000
+KEYTIMEOUT=5
+MAILCHECK=0
+SAVEHIST=10000
+
+# man:cd(1p)
+cdpath=(. .. $HOME)
+
+# populated by _battery_info() and used by _battery_prompt()
+# (capacity\0status,...)
+typeset -a _BATTERIES
+
+# man:stty(1)
+stty -ixon
+stty start undef
+stty stop  undef
+
+# freeze the tty
+ttyctl -f
+
+# man:set(1p) man:zshoptions(1)
+set -5CHmT -o vi
+
+# man:zshoptions(1)
+setopt clobberempty globstarshort histallowclobber histignorealldups
+unsetopt promptsubst
+
+# command not found handler via `pacman
+# man:zshmisc(1)
+# $1: COMMAND
+function command_not_found_handler { local -r cmd=$argv[1]
+	local entry prev_pkg ; local -a entries fields
+	[[ -n $cmd ]] || return 2
+	echo "zsh: $cmd: command not found" >&2
+	# (repo\0package\0version\0file,...)
+	entries=( ${(f)"$( pacman -F --machinereadable -- /usr/bin/$cmd )"} )
+	if (( $#entries )) {
+		echo "$cmd may be found in the following packages:"
+		for entry ( $entries ) {
+			# (repo,package,version,file)
+			fields=( ${(0)entry} )
+			if [[ $prev_package != $fields[2] ]] {
+				printf "$setaf[14]%s/$terminfo[sgr0]%s $setaf[11]%s$terminfo[sgr0]\n" \
+					$fields[1,3]
+			}
+			echo "    /$fields[4]"
+			prev_package=$fields[2]
+		}
+	}
+	return 127
+}
+
+# populate $_BATTERIES
+function _battery_info {
+	local bat ; local -i charge_now charge_full ; local -a batteries fields
+	_BATTERIES=()
+	# (path,...)
+	batteries=( /sys/class/power_supply/BAT*(N) )
+	if (( $#batteries )) || return
+	# (capacity,status)
+	fields=(0 '')
+	for bat ( $batteries ) {
+		if [[ -r $bat/capacity ]] {
+			fields[1]=$( < $bat/capacity )
+		} else {
+			charge_now=$( < $bat/charge_now )
+			charge_full=$( < $bat/charge_full )
+			fields[1]=$(( 100 * charge_now / charge_full ))
+		}
+		if [[ -r $bat/status ]] {
+			fields[2]=$( < $bat/status )
+		} else {
+			fields[2]="Unknown"
+		}
+		_BATTERIES+=( $fields[1]$'\0'$fields[2] )
+	}
+}
+
+
+#==============================================================================#
+#                                    PROMPT                                    #
+#==============================================================================#
+
+
+# prompt token definitions
+# pre -> token -> post
+if [[ $TERM =~ (alacritty|foot|konsole) ]] {
+	grml_prompt_pre_default=(
+		at            ''
+		battery       ''
+		datetime      "%F{14}"
+		host          "%F{9}"
+		in            ''
+		jobs          "%F{11}"
+		newline       ''
+		path          "%F{12}"
+		percent       "%F{15}"
+		power-profile ''
+		rc            "%F{9}"
+		rc-emote      "%F{15}"
+		tmux          ''
+		tty           "%F{13}"
+		user          "%F{%(!.9.11)}"
+		vcs           ''
+		venv          ''
+	)
+	grml_prompt_token_default=(
+		at            ' '
+		battery       ''
+		datetime      "󰃭 %D{%Y-%m-%d} 󰥔 %D{%H:%M} "
+		host          " %m "
+		in            ' '
+		jobs          "%1(j. %j .)"
+		newline       $'\n'
+		path          " %40<..<%~%<< "
+		percent       "%(!.%2(L..).%2(L..)) "
+		power-profile ''
+		rc            "%(?.. %? )"
+		rc-emote      "%(?..)"
+		tmux          ''
+		tty           " %y"
+		user          " %n"
+		vcs           ''
+		venv          ''
+	)
+	grml_prompt_post_default=(
+		at            ''
+		battery       ''
+		datetime      "%f"
+		host          "%f"
+		in            ''
+		jobs          "%f"
+		newline       ''
+		path          "%f"
+		percent       "%f"
+		power-profile ''
+		rc            "%f"
+		rc-emote      "%f"
+		tmux          ''
+		tty           "%f"
+		user          "%f"
+		vcs           ''
+		venv          ''
+	)
+} else {
+	grml_prompt_pre_default=(
+		at            "%F{6}"
+		battery       ''
+		datetime      "%F{6}[%f%F{14}"
+		host          "%F{9}"
+		in            "%F{6}"
+		jobs          "%1(j.%F{6}(%f%F{11}.)"
+		newline       ''
+		path          "%F{12}"
+		percent       ''
+		power-profile ''
+		rc            "%(?..%F{6}<%f%F{9})"
+		rc-emote      ''
+		tmux          ''
+		tty           "%F{6}{%f%F{13}"
+		user          "%F{%(!.9.11)}"
+		vcs           ''
+		venv          ''
+	)
+	grml_prompt_token_default=(
+		at            '@'
+		battery       ''
+		datetime      "%D{%Y-%m-%d %H:%M}"
+		host          "%m"
+		in            ':'
+		jobs          "%1(j.%j.)"
+		newline       $'\n'
+		path          "%40<...<%~%<< "
+		percent       "%2(L.%#>.%#) "
+		power-profile ''
+		rc            "%(?..%?)"
+		rc-emote      "%(?..:()"
+		tmux          ''
+		tty           "%y"
+		user          "%n"
+		vcs           ''
+		venv          ''
+	)
+	grml_prompt_post_default=(
+		at            "%f"
+		battery       ''
+		datetime      "%f%F{6}]%f "
+		host          "%f"
+		in            "%f"
+		jobs          "%1(j.%f%F{6})%f .)"
+		newline       ''
+		path          "%f"
+		percent       ''
+		power-profile ''
+		rc            "%(?..%f%F{6}>%f )"
+		rc-emote      ''
+		tmux          ''
+		tty           "%f%F{6}}%f"
+		user          "%f"
+		vcs           ''
+		venv          ''
+	)
+}
+
+# prompt token handlers
+# _battery_prompt(): info for battery via _battery_info() and $_BATTERIES
+# _power-profile_prompt(): info for power-profile
+# _tmux_prompt(): info for tmux via $TMUX_PANE
+# _vcs_prompt(): info for vcs via vcs_info() and $vcs_info_msg_0
+# _venv_prompt(): info for venv via $VIRTUAL_ENV
+if [[ $TERM =~ (alacritty|foot|konsole) ]] {
+	function _battery_prompt {
+		local bat icon reply ; local -i color ; local -a fields
+		_battery_info
+		if (( $#_BATTERIES )) {
+			for bat ( $_BATTERIES ) {
+				# (capacity,status)
+				fields=( ${(0)bat} )
+				if (( fields[1] > 75 )) {
+					icon=''
+				} elif (( fields[1] > 50 )) {
+					icon=''
+				} elif (( fields[1] > 25 )) {
+					icon=''
+				} elif (( fields[1] > 10 )) {
+					icon=''
+				} else {
+					icon=''
+				}
+				case $fields[2] {
+					Charging ) color=10 icon=" $icon" ;;
+					Discharging | Unknown )
+						if (( fields[1] > 75 )) {
+							color=10
+						} elif (( fields[1] > 25 )) {
+							color=11
+						} elif (( fields[1] > 10 )) {
+							color=9
+						} else {
+							color=9 icon="‼$icon"
+						}
+					;;
+					Full | "Not charging" ) color=10 icon=" $icon" ;;
+				}
+				reply="${reply:+$reply }%F{$color}$icon%f %F{$color}$fields[1]%%%f"
+			}
+			REPLY=${reply:+$reply }
+		}
+	}
+	function _power-profile_prompt {
+		local icon ; local -i color
+		if [[ -f /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference ]] {
+			case $( < /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference ) {
+				performance ) color=9 icon='󰓅' ;;
+				balance_performance | balance_power ) color=11 icon='󰾅' ;;
+				power ) color=10 icon='󰾆' ;;
+			}
+			REPLY="%F{$color}$icon%f "
+		} elif [[ -f /sys/devices/system/cpu/cpufreq/policy0/boost ]] {
+			if (( $( < /sys/devices/system/cpu/cpufreq/policy0/boost ) )) {
+				color=11 icon='󰾅'
+			} else {
+				color=10 icon='󰾆'
+			}
+			REPLY="%F{$color}$icon%f "
+		}
+	}
+	function _tmux_prompt {
+		REPLY=${TMUX_PANE:+%F{11}%f %F{11}${TMUX_PANE#*%}%f }
+	}
+	function _vcs_prompt {
+		vcs_info
+		REPLY=${vcs_info_msg_0_:+%F{13}%f $vcs_info_msg_0_ }
+	}
+	function _venv_prompt {
+		REPLY=${VIRTUAL_ENV:+%F{13}󰨾%f %F{13}${VIRTUAL_ENV:t}%f }
+	}
+} else {
+	function _battery_prompt {
+		local bat icon reply ; local -i color ; local -a fields
+		_battery_info
+		if (( $#_BATTERIES )) {
+			for bat ( $_BATTERIES ) {
+				# (capacity,status)
+				fields=( ${(0)bat} )
+				case $fields[2] {
+					Charging ) color=10 icon='+' ;;
+					Discharging | Unknown)
+						if (( fields[1] > 75 )) {
+							color=10
+						} elif (( fields[1] > 25 )) {
+							color=11
+						} elif (( fields[1] > 10 )) {
+							color=9
+						} else {
+							color=9 icon="!!"
+						}
+					;;
+					Full | "Not charging" ) color=10 icon='=' ;;
+				}
+				reply="${reply:+$reply }%F{$color}$icon$fields[1]%%%f"
+			}
+			REPLY=${reply:+%F{6}[%f$reply%F{6}]%f }
+		}
+	}
+	function _power-profile_prompt {
+		local icon ; local -i color
+		if [[ -f /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference ]] {
+			case $( < /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference ) {
+				performance ) color=9 icon='/' ;;
+				balance_performance | balance_power ) color=11 icon='|' ;;
+				power ) color=10 icon='\' ;;
+			}
+			REPLY="%F{6}(%f%F{$color}$icon%f%F{6})%f "
+		} elif [[ -f /sys/devices/system/cpu/cpufreq/policy0/boost ]] {
+			if (( $( < /sys/devices/system/cpu/cpufreq/policy0/boost ) )) {
+				color=11 icon='|'
+			} else {
+				color=10 icon='\'
+			}
+			REPLY="%F{6}(%f%F{$color}$icon%f%F{6})%f "
+		}
+	}
+	function _tmux_prompt {
+		REPLY=${TMUX_PANE:+%F{6}{%f%F{11}${TMUX_PANE#*%}%f%F{6}}%f }
+	}
+	function _vcs_prompt {
+		vcs_info
+		REPLY=${vcs_info_msg_0_:+%F{6}(%f$vcs_info_msg_0_%F{6})%f }
+	}
+	function _venv_prompt {
+		REPLY=${VIRTUAL_ENV:+%F{6}{%f%F{13}${VIRTUAL_ENV:t}%f%F{6}}%f }
+	}
+}
+
+grml_prompt_token_function=(
+	battery       _battery_prompt
+	power-profile _power-profile_prompt
+	tmux          _tmux_prompt
+	vcs           _vcs_prompt
+	venv          _venv_prompt
+)
+
+# setup the prompt
+zstyle ":prompt:grml:left:setup" items \
+	datetime power-profile battery tmux venv jobs rc newline \
+	user at host tty in path vcs newline \
+	percent
+zstyle ":prompt:grml:right:setup" items rc-emote
+
+# setup the backends for vcs_info()
+zstyle ":vcs_info:*" enable git cvs svn
+
+# setup vcs_info()
+zstyle ":vcs_info:*"              actionformats "%s%F{6}/%f%F{10}%b%f%F{6}|%f%F{9}%a%f"
+zstyle ":vcs_info:*"              formats       "%s%F{6}/%f%F{10}%b%f"
+zstyle ":vcs_info:(sv[nk]|bzr):*" branchformat  "%b%F{6}:%f%F{11}%r%f"
+
+# secondary and selection prompts
+if [[ $TERM =~ (alacritty|foot|konsole) ]] {
+	PS2="%F{3}%_%f "
+	PS3="%F{5}%f "
+} else {
+	PS2="%F{3}%_%f>> "
+	PS3="%F{5}?%f "
+}
+
+# execution trace prompt
+PS4="+%x:%i:%N:%e:%_> "
+
+
+#==============================================================================#
+#                                    HOOKS                                     #
+#==============================================================================#
+
+
+if [[ $TERM =~ (alacritty|foot|konsole) ]] {
+	# random chance for a colored `fortune
+	function _fortune-cookie {
+		local msg
+		local -ir random=$RANDOM
+		if (( random > 31744 )) {
+			if (( random > 32256 )) {
+				IFS='' read -r -d '' msg < <( fortune -l ) || : EOF
+			} else {
+				IFS='' read -r -d '' msg < <( fortune -s ) || : EOF
+			}
+			printf "$setaf[$(( random % 6 + 10 ))]%b$terminfo[sgr0]" $msg
+		}
+	}
+	add-zsh-hook precmd _fortune-cookie
+}
+
+if [[ $TERM =~ (alacritty|foot|konsole|tmux|xterm) ]] {
+	# setup the dynamic title
+	function _window-title-precmd {
+		local -r title="%n@%m{%y}:%40<...<%~%<<"
+		# user@host{tty}:cwd
+		printf '\e]2;%s\a' ${(%)title}
+	}
+	add-zsh-hook precmd _window-title-precmd
+
+	# $1: history string
+	# $2: short command
+	# $3: full command
+	function _window-title-preexec { local -r cmd=$argv[2]
+		local -r title="%n@%m{%y}"
+		# user@host{tty}$cmd
+		printf '\e]2;%s$%s\a' ${(%)title} $cmd
+	}
+	add-zsh-hook preexec _window-title-preexec
+
+	# setup OSC7-CWD
+	function _osc7-cwd-chpwd {
+		(( ZSH_SUBSHELL == 0 )) || return 127
+		emulate -L zsh
+		setopt extendedglob
+		local LC_ALL=C ; unset -v LANGUAGE
+		# file://host/cwd
+		printf '\e]7;file://%s%s\e\\' $HOST ${PWD//(#m)([^@-Za-z&-;_~])/%${(l:2::0:)$(([##16]#MATCH))}}
+	}
+	add-zsh-hook -Uz chpwd _osc7-cwd-chpwd
+}
+
+
+#==============================================================================#
+#                                  ZLE Tweaks                                  #
+#==============================================================================#
+
+
+# vi-like keybinds
+bindkey -v
+
+bindkey "\e1[~" beginning-of-line
+bindkey "\e2[~" overwrite-mode
+bindkey "\e3[~" delete-char
+bindkey "\e4[~" end-of-line
+
+bindkey "\e." insert-last-word
+
+bindkey "\eb" backward-word
+bindkey "\ec" capitalize-word
+bindkey "\ed" kill-word
+bindkey "\ef" forward-word
+bindkey "\el" down-case-word
+bindkey "\et" transpose-words
+bindkey "\eu" up-case-word
+bindkey "\ex" delete-char
+
+bindkey "^A" beginning-of-line
+bindkey "^B" backward-char
+bindkey "^E" end-of-line
+bindkey "^F" forward-char
+bindkey "^H" backward-delete-char
+bindkey "^K" kill-line
+bindkey "^T" transpose-chars
+bindkey "^U" backward-kill-line
+bindkey "^W" backward-kill-word
+bindkey "^Y" yank
+
+# zle-keymap-select(): change the cursor shape for different modes
+if [[ $TERM =~ linux ]] {
+	function zle-keymap-select {
+		case $KEYMAP {
+			vicmd ) echo -ne "\e[?8c" ;;
+			main ) echo -ne "\e[?0c" ;;
+		}
+	}
+} else {
+	function zle-keymap-select {
+		case $KEYMAP {
+			vicmd ) echo -ne "\e[1 q" ;;
+			main ) echo -ne "\e[5 q" ;;
+		}
+	}
+}
+zle -N zle-keymap-select
+
+# _reset-cursor(): restore the cursor shape before each prompt
+function _reset-cursor { echo -ne "$terminfo[cnorm]\e[5 q" }
+add-zsh-hook precmd _reset-cursor
+
+# alt-h -> run-help()
+bindkey "\eh" run-help
+
+# vi-like menu navigation
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+# ctrl-q -> quote line
+function _quote-line {
+	zle beginning-of-line
+	zle forward-word
+	RBUFFER=${(q)RBUFFER}
+	zle end-of-line
+}
+zle -N _quote-line && bindkey "^Q" _quote-line
+
+# ctrl-alt-q -> unquote line
+function _unquote-line {
+	zle beginning-of-line
+	zle forward-word
+	RBUFFER=${(Q)RBUFFER}
+	zle end-of-line
+}
+zle -N _unquote-line && bindkey "\e^Q" _unquote-line
+
+# ... -> ../..
+function _rationalise-dot {
+	if [[ $LBUFFER =~ '(^|/| |	|'$'\n''|\||;|&)\.\.$' ]] {
+		LBUFFER+='/'
+		zle self-insert
+		zle self-insert
+	} else {
+		zle self-insert
+	}
+}
+zle -N _rationalise-dot && bindkey . _rationalise-dot &&
+	# prevent conflict with incremental history search
+	bindkey -M isearch . self-insert
+
+# alt-q -> push-line or push-input and get-line
+bindkey "\eq" push-line-or-edit
+
+if [[ $TERM =~ (alacritty|foot|konsole) ]] {
+	# alt-home -> `cd $HOME`
+	function _cd-home {
+		pushd ~ &> /dev/null || : NOERR
+		zle reset-prompt
+	}
+	zle -N _cd-home && bindkey "\e[1;3H" _cd-home
+
+	# alt-left -> `cd $OLDPWD`
+	function _cd-up {
+		popd &> /dev/null || : NOERR
+		zle reset-prompt
+	}
+	zle -N _cd-up && bindkey "\e[1;3D" _cd-up
+
+	# alt-up -> `cd ..`
+	function _cd-parent {
+		pushd .. &> /dev/null || : NOERR
+		zle reset-prompt
+	}
+	zle -N _cd-parent && bindkey "\e[1;3A" _cd-parent
+
+	# ctrl-l -> clear and scroll back
+	function _clear-and-scrollback {
+		echoti civis > $TTY
+		echoti clear > $TTY
+		zle .reset-prompt
+		zle -R
+		echo -ne "\e[3J" > $TTY
+		echoti cnorm > $TTY
+	}
+	zle -N _clear-and-scrollback && bindkey "^L" _clear-and-scrollback
+
+	# ctrl-d -> `exit
+	function _exit-zsh {
+		exit
+	}
+	zle -N _exit-zsh && bindkey "^D" _exit-zsh
+}
+
+
+#==============================================================================#
+#                                   ALIASES                                    #
+#==============================================================================#
+
+
+# global aliases
+alias -g "..."='../..'
+alias -g "...."='../../..'
+alias -g BG='&> /dev/null & disown'
+alias -g BGe='& disown && exit'
+alias -g C='| wc -l'
+alias -g E='| $EDITOR -'
+alias -g G='| grep'
+alias -g H='| head'
+alias -g Hl=' --help |& $PAGER'
+alias -g J='| jq'
+alias -g K='| keep'
+alias -g N='&> /dev/null'
+alias -g P='| $PAGER'
+alias -g R='| tr A-z N-za-m'
+alias -g S='| sort'
+alias -g Sn='| sort -n'
+alias -g T='| tail'
+
+# color
+alias diff='command diff -Ndu --color=auto'
+alias grep='command grep --color=auto'
+alias ip='command ip -d -h -s --color=auto'
+alias pacman='command pacman --color=auto'
+
+# `ls
+alias ls='command ls -bv -F --color=auto'
+
+alias dir='ls -lSrAh'
+alias l='ls -l'
+alias la='ls -lA'
+alias lad='ls -d .*(/)'
+alias lh='ls -hAl'
+alias ll='ls -l '
+alias lsa='ls -A .*(.)'
+alias lsbig='ls -flh *(.OL[1,10])'
+alias lsd='ls -d *(/)'
+alias lse='ls -d *(/^F)'
+alias lsl='ls -l *(@)'
+alias lsnew='ls -rtlh *(D.om[1,10])'
+alias lsnewdir='ls -rthdl *(/om[1,10]) .*(D/om[1,10])'
+alias lsold='ls -rtlh *(D.Om[1,10])'
+alias lsolddir='ls -rthdl *(/Om[1,10]) .*(D/Om[1,10])'
+alias lss='ls -l *(s,S,t)'
+alias lssmall='ls -Srl *(.oL[1,10])'
+alias lsw='ls -ld *(R,W,X.^ND/)'
+alias lsx='ls -l *(*)'
+
+# `nvim
+alias nvi='nvim'
+alias nvibin='nvim -b'
+alias nvidiff='nvim -d'
+alias nvir='nvim -r'
+alias nvis='nvim -S'
+
+# `vim
+alias vi='vim'
+alias vibin='vim -b'
+alias vidiff='vim -d'
+alias vir='vim -r'
+alias vis='vim -S'
+
+# help -> run-help()
+alias help='run-help'
+
+# interactive
+alias cp='command cp -i --preserve=all --reflink=auto'
+alias ln='command ln -i'
+alias mv='command mv -i'
+alias rm='command rm -I'
+
+# logs
+alias llog='journalctl -b'
+alias paclog='paclog --color'
+alias tlog='journalctl -fb'
+
+# udiskie
+alias mnt='udiskie-mount -r'
+alias umnt='udiskie-umount -l'
+
+# `rsync
+alias cpr='rsync -ahh -@1 --partial --info=stats1,progress2'
+alias mvr='rsync -ahh -@1 --partial --info=stats1,progress2 --remove-source-files'
+
+# `du
+alias du='command du -h'
+alias da='du -cs'
+alias ds='du -ms -- * | sort -n | tail'
+
+# `df
+alias df='command df -h'
+alias dfs='df -xefivarfs -xdevtmpfs -xtmpfs'
+alias di='df -i'
+alias dis='df -i -xefivarfs -xdevtmpfs -xtmpfs'
+
+# mandoc
+# `man
+alias manpdf='MANPAGER=mupdf man -T pdf'
+alias manfox='MANPAGER=firefox man -T html'
+
+# config management
+alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+alias etcfiles='sudo git --git-dir=/etc/.etcfiles --work-tree=/etc'
+
+# `sudo/sudoedit and `nvim -d` for `pacdiff
+alias pacdiff='DIFFPROG="vim -d" command pacdiff -s'
+
+# misc
+alias mntls='findmnt -o SOURCE,TARGET --real'
+alias mntopts='findmnt -o SOURCE,OPTIONS --real'
+alias dec='printf "%d\n"'
+alias hex='printf "%x\n"'
+alias oct='printf "%o\n"'
+alias uncomment='grep -Ev "^\s*#.*$|^\s*$"'
+
+# URL processing with `python
+alias urldec='python -c "import sys, urllib.parse as ul ; print( ul.unquote( sys.argv[1] ) )"'
+alias urlenc='python -c "import sys, urllib.parse as ul ; print( ul.quote( sys.argv[1] ) )"'
+
+# `wormhole
+alias wh-recv='wormhole --relay-url=ws://cerberus.wg:4000/v1 --transit-helper tcp:cerberus.wg:4001 receive'
+alias wh-send='wormhole --relay-url=ws://cerberus.wg:4000/v1 --transit-helper tcp:cerberus.wg:4001 send'
+alias wh-ssh='wormhole --relay-url=ws://cerberus.wg:4000/v1 --transit-helper tcp:cerberus.wg:4001 ssh'
+
+
+#==============================================================================#
+#                                  FUNCTIONS                                   #
+#==============================================================================#
+
+
+# `cp then follow
+# $@: ARGS
+function cpf {
+	(( ARGC )) || return 2
+	cp $argv && builtin cd -- $_
+}
+
+# `mv then follow
+# $@: ARGS
+function mvf {
+	(( ARGC )) || return 2
+	mv $argv && builtin cd -- $_
+}
+
+# test internet connectivity
+function pong {
+	if drill -4DQ ping.archlinux.org A &> /dev/null ; then
+		if ping -4q -c1 -w5 ping.archlinux.org &> /dev/null ; then
+			curl -4qfs -o /dev/null --fail-early https://ping.archlinux.org ||
+				echo "IPv4 route failure" >&2
+		else
+			echo "IPv4 ping failure" >&2
+		fi
+	else
+		echo "IPv4 DNS failure" >&2
+	fi
+	if drill -6DQ ping.archlinux.org AAAA &> /dev/null ; then
+		if ping -6q -c1 -w5 ping.archlinux.org &> /dev/null ; then
+			curl -6qfs -o /dev/null --fail-early https://ping.archlinux.org ||
+				echo "IPv6 route failure" >&2
+		else
+			echo "IPv6 ping failure" >&2
+		fi
+	else
+		echo "IPv6 DNS failure" >&2
+	fi
+}
+
+# get IP addresses
+function ipls {
+	local ipv4 ipv6
+	ip -4 -br a | awk '($1)!="lo" { ipaddr=$3; sub(/\/.*/, "", ipaddr); printf("'"$setaf[7]%s:$terminfo[sgr0] $setaf[6]%s$terminfo[sgr0]"'\n", $1, ipaddr ) }'
+	ip -6 -br a | awk '($1)!="lo" { ipaddr=$3; sub(/\/.*/, "", ipaddr); printf("'"$setaf[7]%s:$terminfo[sgr0] $setaf[5]%s$terminfo[sgr0]"'\n", $1, ipaddr ) }'
+	ipv4=$( curl -4qsL am.i.mullvad.net 2> /dev/null )
+	if [[ -n $ipv4 ]] {
+		echo "$setaf[7]external:$terminfo[sgr0] $setaf[6]$ipv4$terminfo[sgr0]"
+	}
+	ipv6=$( curl -6qsL ipv6.am.i.mullvad.net 2> /dev/null )
+	if [[ -n $ipv6 ]] {
+		echo "$setaf[7]external:$terminfo[sgr0] $setaf[5]$ipv6$terminfo[sgr0]"
+	}
+}
+
+# get MAC addresses
+function macls {
+	ip -br l | awk '($1)!~"(lo|wg[0-9])" { printf( "'"$setaf[7]%s:$terminfo[sgr0] $setaf[4]%s$terminfo[sgr0]"'\n", $1, $3 ) }'
+}
+
+# try to remove the current dir
+function rmwd {
+	pushd .. &> /dev/null
+	if rmdir -- $OLDPWD ; then
+		popd -n &> /dev/null
+	else
+		popd &> /dev/null
+	fi
+}
+
+# `search underlying filesystem of current dir
+# $@: [-r] ARGS
+function swdfs {
+	local fspath=$( df --output=target . | tail -n1 )
+	SEARCH_DB=$fspath/.locate.db SEARCH_PATH=$fspath search $argv
+}
+
+# `diff then `patch
+# $1: OLD FILE
+# $2: NEW FILE
+function merge { local -r old=$argv[1] new=$argv[2]
+	[[ -n $old && -f $old && -n $new && -f $new ]] || return 2
+	diff -dNu -- $old $new | patch -bsu -- $old
+}
+
+# pack dir(s) or file(s) into compressed [and encrypted] file(s)
+# $@: [-e] PATH...
+function pack { local f ; local -i ret
+	local OPT OPTARG OPTIND ; local -i encrypt
+	while getopts ":e" OPT ; do
+		case $OPT {
+			'e' ) encrypt=1 ;;
+			'?' )
+				echo "invalid option -- '$OPTARG'" >&2
+				return 2
+			;;
+			':' )
+				echo "missing argument -- '$OPTARG'" >&2
+				return 2
+			;;
+		}
+	done ; shift $(( OPTIND - 1 ))
+	for f {
+		if (( encrypt )) {
+			if [[ -d $f ]] {
+				bsdtar -vc -C $f -f - --no-acls --no-xattrs . |
+					zstd -qc -T0 | gpg -qe >| $f.tzst.gpg
+			} elif [[ -f $f ]] {
+				zstd -qc -T0 $f | gpg -qe >| $f.zst.gpg
+			} else {
+				ret=2
+				continue
+			}
+		} else {
+			if [[ -d $f ]] {
+				bsdtar -vc -C $f -f - --no-acls --no-xattrs . |
+					zstd -qc -T0 >| $f.tzst
+			} elif [[ -f $f ]] {
+				zstd -qc -T0 $f >| $f.zst
+			} else {
+				ret=2
+				continue
+			}
+		}
+	} ; return $ret
+}
+
+# unpack archive(s) made by pack()
+# $@: FILE...
+function unpack { local f ; local -i ret
+	for f {
+		if [[ ! -f $f ]] {
+			ret=2
+			continue
+		}
+		case $f {
+			*.tzst.gpg )
+				mkdir -p -- ${f%.tzst.gpg} &&
+					gpg -qd -- $f | zstd -qdc |
+					bsdtar -v -C ${f%.tzst.gpg} -x - --no-acls --no-xattrs
+			;;
+			*.tzst )
+				mkdir -p -- ${f%.tzst} &&
+					zstd -qdc $f |
+					bsdtar -v -C ${f%.tzst} -x - --no-acls --no-xattrs
+			;;
+			*.zst.gpg )
+				gpg -qd -- $f | zstd -qdc >| ${f%.zst.gpg}
+			;;
+			*.zst )
+				zstd -qdc $f >| ${f%.zst}
+			;;
+			* ) ret=3 ;;
+		}
+	} ; return $ret
+}
+
+# unpack and list archive(s) made by pack()
+# $@: FILE...
+function lspack { local f ; local -i ret
+	for f {
+		if [[ ! -f $f ]] {
+			ret=2
+			continue
+		}
+		case $f {
+			*.tzst.gpg )
+				if ! gpg -qd -- $f | zstd -qdc | bsdtar -t - ; then
+					ret=1
+				fi
+			;;
+			*.tzst )
+				if ! zstd -qdc $f | bsdtar -t - ; then
+					ret=1
+				fi
+			;;
+			*.zst.gpg )
+				if gpg -qd -- $f | zstd -t &> /dev/null ; then
+					echo ${f%.zst.gpg}
+				else
+					ret=1
+				fi
+			;;
+			*.zst )
+				if zstd -t $f &> /dev/null ; then
+					echo ${f%.zst}
+				else
+					ret=1
+				fi
+			;;
+			* ) ret=3 ;;
+		}
+	} ; return $ret
+}
+
+# `tmux helper
+# $@: [-S SESSION (${1##*/)] [COMMAND... ($SHELL)]
+function mux { local cmd ; local -a args
+	local session OPT OPTARG OPTIND
+	if [[ -n $TMUX ]] {
+		echo "refusing to nest tmux session, unset \$TMUX to force" >&2
+		return 1
+	}
+	while getopts ":S:" OPT ; do
+		case $OPT {
+			'S' ) session=$OPTARG ;;
+			'?' )
+				echo "invalid option -- '$OPTARG'" >&2
+				return 2
+			;;
+			':' )
+				echo "missing argument -- '$OPTARG'" >&2
+				return 2
+			;;
+		}
+	done ; shift $(( OPTIND - 1 )) ; cmd=$argv[1] args=( $argv[2,-1] )
+	: ${cmd:=$SHELL}
+	: ${session:=${cmd:t}}
+	if ! systemctl -q --user is-active tmux-daemon.service ; then
+		systemctl -q --user start tmux-daemon.service ; sleep 1
+	fi
+	exec tmux -S $XDG_RUNTIME_DIR/tmux \
+		new-session -A -s $session -- \
+			$cmd $args
+}
+
+# `vipe template to stdout
+# [$1: FORMAT (txt)]
+function template { local format=${argv[1]:-txt}
+	vipe < $XDG_TEMPLATES_DIR/$format
+}
+
+# `date with a different timezone
+# [$1: TIMEZONE (UTC)]
+function tzdate { local -r tz=${argv[1]:-UTC}
+	TZ=$tz date
+}
+
+# list timezones
+function tzls {
+	echo "$setaf[13]Timezones$terminfo[sgr0]"
+	tree -Cl --noreport /usr/share/zoneinfo | tail -n+2
+}
+
+# print color test
+function prcolors {
+	local -i i
+	for (( i=1 ; i <= $#setab ; i++ )) {
+		printf "|$setab[$i]%3d$terminfo[sgr0]" $(( i - 1 ))
+		if (( i == 8 || i == 16 || i > 16 && ( i - 16 ) % 6 == 0 )) {
+			echo '|'
+		}
+	}
+}
+
+# print unicode block
+# $@: FIRST LAST [MOD]
+function prublk { local -ir first=$argv[1] last=$argv[2] ; local -r mod=$argv[3]
+	[[ -n $first && -n $last ]] || return 2
+	printf '%b ' $( printf "\\\U%.8x$mod\n" $( seq -s ' ' $first $last ) ) | fold ; echo
+}
+
+# search on yt
+# $*: SEARCH TERMS
+function yts { local -r terms=$argv
+	local template
+	[[ -n $terms ]] || return 2
+	printf -v template \
+		"$setaf[12]%s$terminfo[sgr0]\n$setaf[10]%s$terminfo[sgr0] $setaf[15]%s$terminfo[sgr0] $setaf[14]%s$terminfo[sgr0]\n$setaf[13]%s$terminfo[sgr0]\n%s" \
+			"%(title)s" \
+			"@%(channel)s" "(%(upload_date)s)" \
+			"[%(duration_string)s]" \
+			"https://youtu.be/%(id)s" \
+			"%(description)s"
+	yt-dlp -i -O $template --no-warnings "ytsearch:$terms"
+}
+
+# port knocker
+# $@: HOST PORT...
+function knock { local -r host=$argv[1] ; local -ar ports=( $argv[2,-1] )
+	local -i port
+	[[ -n $host ]] && (( $#ports )) || return 2
+	for port ( $ports ) {
+		nmap -Pn -n --host-timeout 10 --max-retries 0 -p $port $host
+	} &> /dev/null
+}
+
+
+#==============================================================================#
+#                                   PLUGINS                                    #
+#==============================================================================#
+
+
+# $1: PLUGIN
+function _load-plugin { local -r plugin=$argv[1]
+	local dir
+	[[ -n $plugin ]] || return 2
+	for dir ( ${(s|:|)XDG_DATA_DIRS:-${XDG_DATA_HOME:-$HOME/.local/share}:/usr/local/share:/usr/share} ) {
+		if [[ -r $dir/zsh/plugins/$plugin/$plugin.zsh ]] {
+			source $dir/zsh/plugins/$plugin/$plugin.zsh
+			return
+		}
+	}
+	return 127
+}
+
+# fish-like syntax highlighting
+if _load-plugin zsh-syntax-highlighting ; then
+	ZSH_HIGHLIGHT_STYLES[comment]="fg=8"
+	ZSH_HIGHLIGHT_STYLES[command-substitution-delimiter]="fg=14"
+	ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]="fg=13"
+	ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=13"
+	ZSH_HIGHLIGHT_STYLES[process-substitution-delimiter]="fg=14"
+	ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=13"
+	ZSH_HIGHLIGHT_STYLES[autodirectory]="fg=12"
+	ZSH_HIGHLIGHT_STYLES[path]="fg=12"
+	ZSH_HIGHLIGHT_STYLES[bracket-error]="fg=9"
+	ZSH_HIGHLIGHT_STYLES[bracket-level-1]="fg=12"
+	ZSH_HIGHLIGHT_STYLES[bracket-level-2]="fg=10"
+	ZSH_HIGHLIGHT_STYLES[bracket-level-3]="fg=13"
+	ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=11"
+	ZSH_HIGHLIGHT_STYLES[bracket-level-5]="fg=14"
+fi
+
+# fish-like fast/unobtrusive autosuggestions for zsh
+if _load-plugin zsh-autosuggestions ; then
+	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8,bg=0"
+fi
+
+# fish-like history search
+if _load-plugin zsh-history-substring-search ; then
+	HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="fg=9,bg=0"
+	HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND="none"
+	# keybinds
+	bindkey $terminfo[kcuu1] history-substring-search-up
+	bindkey $terminfo[kcud1] history-substring-search-down
+	bindkey -M vicmd 'k' history-substring-search-up
+	bindkey -M vicmd 'j' history-substring-search-down
+fi
+
+unset -f _load-plugin
+
+
+#==============================================================================#
+#                                   EXECUTE                                    #
+#==============================================================================#
+
+
+if [[ $TERM =~ (alacritty|foot|konsole) ]] {
+	if (( RANDOM > 28672 )) {
+		ponysay -Xo 2> /dev/null
+	} else {
+		fastfetch
+	}
+}
+
+IFS='' read -r -d '' _TODOS < <( todos ) || : EOF
+if [[ -n $_TODOS ]] {
+	if [[ $TERM =~ (alacritty|foot|konsole) ]] {
+		printf "$setaf[12]$terminfo[sgr0]\n%b" $_TODOS
+	} else {
+		printf "$setaf[12]Todos:$terminfo[sgr0]\n%b" $_TODOS
+	}
+} ; unset -v _TODOS
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

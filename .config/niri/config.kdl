@@ -1,0 +1,302 @@
+// vim:ft=kdl:noet:ts=3:sw=3:
+// file:$XDG_CONFIG_HOME/niri/config.kdl
+//----------------------------------------------------------------------------//
+
+
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/%Y-%m-%d_%H%M%S.png"
+
+hotkey-overlay {
+	skip-at-startup
+}
+
+animations { off ; }
+
+
+//----------------------------------------------------------------------------//
+//                                 LAYOUT                                     //
+//----------------------------------------------------------------------------//
+
+
+layout {
+	center-focused-column "never"
+	empty-workspace-above-first
+
+	gaps 4
+	struts {
+		left -2
+		right -2
+		top -2
+		bottom -2
+	}
+
+	preset-column-widths {
+		proportion 0.33333
+		proportion 0.5
+		proportion 0.66667
+		proportion 1.0
+	}
+
+	default-column-width { proportion 0.5 ; }
+
+	preset-window-heights {
+		proportion 0.33333
+		proportion 0.5
+		proportion 0.66667
+		proportion 1.0
+	}
+
+	focus-ring {
+		width 2
+		active-color "#ebdbb2"
+		inactive-color "#282828"
+		urgent-color "#fabd2f"
+	}
+
+	border {
+		width 0
+		active-color "transparent"
+		inactive-color "transparent"
+		urgent-color "transparent"
+	}
+
+	/- shadow { }
+
+	tab-indicator {
+		hide-when-single-tab
+		place-within-column
+		width 4
+		gap 4
+		gaps-between-tabs 4
+		length total-proportion=1.0
+		position "top"
+		active-color "#ebdbb2"
+		inactive-color "#282828"
+		urgent-color "#fabd2f"
+	}
+
+	insert-hint { color "#8ec07cf2" ; }
+
+	background-color "transparent"
+}
+
+overview {
+	backdrop-color "transparent"
+	zoom 0.25
+	workspace-shadow { off ; }
+}
+
+
+//----------------------------------------------------------------------------//
+//                                  OUTPUTS                                   //
+//----------------------------------------------------------------------------//
+
+
+cursor {
+	hide-after-inactive-ms 3000
+	xcursor-theme "Bibata-Modern-Classic"
+	xcursor-size 24
+}
+
+
+//----------------------------------------------------------------------------//
+//                                   INPUTS                                   //
+//----------------------------------------------------------------------------//
+
+
+input {
+	disable-power-key-handling
+
+	workspace-auto-back-and-forth
+
+	keyboard {
+		xkb {
+			layout "us,es"
+			options "eurosign:5,grp:alt_space_toggle,lv3:ralt_switch_multikey,terminate:ctrl_alt_bksp"
+		}
+		repeat-delay 200
+		repeat-rate 30
+		numlock
+	}
+
+	warp-mouse-to-focus mode="center-xy"
+	focus-follows-mouse max-scroll-amount="0%"
+
+	touchpad {
+		tap
+		drag-lock
+		accel-speed 0.5
+	}
+}
+
+
+//----------------------------------------------------------------------------//
+//                                  KEYBINDS                                  //
+//----------------------------------------------------------------------------//
+
+
+binds {
+	Ctrl+Alt+BackSpace { quit skip-confirmation=true ; }
+
+	Super+Delete { close-window ; }
+
+	Super+Escape { spawn "xdg-lock" ; }
+
+	Super+Shift+semicolon { spawn "xdg-exec" ; }
+
+	Super+h { focus-column-or-monitor-left ; }
+	Super+j { focus-window-or-monitor-down ; }
+	Super+k { focus-window-or-monitor-up ; }
+	Super+l { focus-column-or-monitor-right ; }
+
+	Super+Left { focus-column-or-monitor-left ; }
+	Super+Down { focus-window-or-monitor-down ; }
+	Super+Up { focus-window-or-monitor-up ; }
+	Super+Right { focus-column-or-monitor-right ; }
+
+	Super+Shift+h { move-column-left-or-to-monitor-left ; }
+	Super+Shift+j { move-window-down-or-to-workspace-down ; }
+	Super+Shift+k { move-window-up-or-to-workspace-up ; }
+	Super+Shift+l { move-column-right-or-to-monitor-right ; }
+
+	Super+Shift+Left { move-column-left-or-to-monitor-left ; }
+	Super+Shift+Down { move-window-down-or-to-workspace-down ; }
+	Super+Shift+Up { move-window-up-or-to-workspace-up ; }
+	Super+Shift+Right { move-column-right-or-to-monitor-right ; }
+
+	Super+1 { focus-workspace 1 ; }
+	Super+2 { focus-workspace 2 ; }
+	Super+3 { focus-workspace 3 ; }
+	Super+4 { focus-workspace 4 ; }
+	Super+5 { focus-workspace 5 ; }
+	Super+6 { focus-workspace 6 ; }
+	Super+7 { focus-workspace 7 ; }
+	Super+8 { focus-workspace 8 ; }
+	Super+9 { focus-workspace 9 ; }
+
+	Super+comma { focus-monitor-previous ; }
+	Super+period { focus-monitor-next ; }
+
+	Super+u { focus-workspace-down ; }
+	Super+i { focus-workspace-up ; }
+
+	Super+Shift+1 { move-window-to-workspace 1 ; }
+	Super+Shift+2 { move-window-to-workspace 2 ; }
+	Super+Shift+3 { move-window-to-workspace 3 ; }
+	Super+Shift+4 { move-window-to-workspace 4 ; }
+	Super+Shift+5 { move-window-to-workspace 5 ; }
+	Super+Shift+6 { move-window-to-workspace 6 ; }
+	Super+Shift+7 { move-window-to-workspace 7 ; }
+	Super+Shift+8 { move-window-to-workspace 8 ; }
+	Super+Shift+9 { move-window-to-workspace 9 ; }
+
+	Super+Shift+comma { move-window-to-monitor-previous ; }
+	Super+Shift+period { move-window-to-monitor-next ; }
+
+	Super+Shift+u { move-window-to-workspace-down ; }
+	Super+Shift+i { move-window-to-workspace-up ; }
+
+	Super+b { switch-preset-column-width ; }
+	Super+v { switch-preset-window-height ; }
+
+	Super+c { center-column ; }
+	Super+w { toggle-column-tabbed-display ; }
+
+	Super+f { fullscreen-window ; }
+	Super+m { maximize-column ; }
+
+	Super+Shift+space { toggle-window-floating ; }
+
+	Super+minus { set-window-width "-5%" ; }
+	Super+equal { set-window-width "+5%" ; }
+
+	Super+a repeat=false { toggle-overview ; }
+
+	Super+grave { spawn "footclient" "-N" ; }
+
+	Menu { spawn "xdgctl" "-A" "menu" ; }
+	Super_R { spawn "xdgctl" "-A" "menu" ; }
+
+	Print { screenshot ; }
+	Ctrl+Print { screenshot-window ; }
+	Shift+Print { screenshot-screen ; }
+
+	Alt+Insert { spawn "emoji" "type" ; }
+	Ctrl+Insert { spawn "unicode" "type" ; }
+
+	XF86Calculator { spawn "xdg-run" "gnome-calculator" ; }
+
+	Super+slash { spawn "pcmanfm" ; }
+	XF86HomePage { spawn "pcmanfm" ; }
+
+	Super+backslash { spawn "xdg-run" "firefox" ; }
+	XF86Explorer { spawn "xdg-run" "firefox" ; }
+
+	XF86Mail { spawn "xdg-run" "thunderbird" ; }
+
+	XF86Search { spawn "xdg-run" "catfish" ; }
+
+	Super+Alt+i allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit ; }
+
+	XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+" ; }
+	XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-" ; }
+	XF86AudioMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ; }
+	XF86AudioMicMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle" ; }
+
+	XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "-q" "s" "5%+" ; }
+	XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "-q" "s" "5%-" ; }
+
+	XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play" ; }
+	XF86AudioPause allow-when-locked=true { spawn "playerctl" "pause" ; }
+	XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous" ; }
+	XF86AudioNext allow-when-locked=true { spawn "playerctl" "next" ; }
+
+	Super+p allow-when-locked=true { spawn "niridpms" "all" "off" ; }
+
+	XF86Sleep allow-when-locked=true { spawn "sd-sleep" ; }
+	XF86PowerOff allow-when-locked=true { spawn "sd-sleep" ; }
+}
+
+
+//----------------------------------------------------------------------------//
+//                                  RULES                                     //
+//----------------------------------------------------------------------------//
+
+
+layer-rule {
+	match namespace="^wallpaper$"
+	place-within-backdrop true
+}
+
+window-rule {
+	match is-floating=true
+	default-column-width { fixed 800 ; }
+	default-window-height { fixed 600 ; }
+}
+
+window-rule {
+	match app-id="^screensaver$"
+	open-floating true
+	open-fullscreen true
+}
+
+window-rule { match app-id="^blueman-manager$" ; open-floating true ; }
+window-rule { match app-id="^imv$" ; open-floating true ; }
+window-rule { match app-id="^org.gnome.Calculator$" ; open-floating true ; }
+window-rule { match app-id="^org.pulseaudio.pavucontrol$" ; open-floating true ; }
+window-rule { match app-id="^org.twosheds.iwgtk$" ; open-floating true ; }
+
+window-rule { match app-id="^wlvncc$" ; open-fullscreen true ; }
+
+
+//----------------------------------------------------------------------------//
+//                                  STARTUP                                   //
+//----------------------------------------------------------------------------//
+
+
+spawn-at-startup "~/.config/niri/startup"
+
+
+//----------------------------------------------------------------------------//
+//                                END OF FILE                                 //
+//----------------------------------------------------------------------------//
