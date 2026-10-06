@@ -1,0 +1,96 @@
+# vim:ft=readline:
+# man:readline(3)
+# file:$HOME/.inputrc
+#==============================================================================#
+
+
+# import system wide
+$include /etc/inputrc
+
+set bell-style none
+set bind-tty-special-chars on
+set blink-matching-paren on
+set echo-control-characters off
+set enable-bracketed-paste on
+set mark-symlinked-directories on
+set show-mode-in-prompt on
+
+set completion-ignore-case on
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+set colored-completion-prefix on
+set colored-stats on
+set mark-symlinked-directories on
+set menu-complete-display-prefix on
+set visible-stats on
+
+set editing-mode vi
+
+$if term=linux
+	set vi-cmd-mode-string "\1\e[?25h\e[?8c\2"
+	set vi-ins-mode-string "\1\e[?25h\e[?0c\2"
+$else
+	set vi-cmd-mode-string "\1\e[?25h\e[1 q\2"
+	set vi-ins-mode-string "\1\e[?25h\e[5 q\2"
+$endif
+
+
+#==============================================================================#
+#                                   KEYBINDS                                   #
+#==============================================================================#
+
+
+$if mode=vi
+	set keymap vi-command
+	"\e1[~": beginning-of-line
+	"\e2[~": overwrite-mode
+	"\e3[~": delete-char
+	"\e4[~": end-of-line
+
+	"\e[A": history-search-backward
+	"\e[B": history-search-forward
+	"j": history-search-backward
+	"k": history-search-forward
+
+	"\e.": yank-last-arg
+
+	"\C-l": clear-display
+set keymap vi-insert
+	"\e1[~": beginning-of-line
+	"\e2[~": overwrite-mode
+	"\e3[~": delete-char
+	"\e4[~": end-of-line
+
+	"\e[A": history-search-backward
+	"\e[B": history-search-forward
+
+	"\e.": yank-last-arg
+
+	"\eb": backward-word
+	"\ec": capitalize-word
+	"\ed": kill-word
+	"\ef": forward-word
+	"\el": downcase-word
+	"\et": transpose-words
+	"\eu": upcase-word
+	"\ex": delete-char
+
+	"\C-a": beginning-of-line
+	"\C-b": backward-char
+	"\C-e": end-of-line
+	"\C-f": forward-char
+	"\C-h": backward-delete-char
+	"\C-k": kill-line
+	"\C-t": transpose-chars
+	"\C-u": backward-kill-line
+	"\C-w": backward-kill-word
+	"\C-y": yank
+
+	"\C-l": clear-display
+$endif
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
