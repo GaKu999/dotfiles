@@ -1,0 +1,82 @@
+#!/data/data/com.termux/files/usr/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/terminfo-cache
+#==============================================================================#
+
+
+set -a
+	: ${XDG_CACHE_HOME:=$HOME/.cache}
+set +a
+
+# Who am I?
+_SELF="${0##*/}"
+
+_herecat() {
+	local msg line lfcr
+	lfcr="$( printf '%b' "\012\015" )"
+	while IFS="$lfcr" read -r line ; do
+		msg="$msg$line$lfcr"
+	done
+	printf '%s' "$msg"
+}
+
+# [$1: EXIT CODE (0)]
+_usage() { local ec="${1:-0}"
+	_herecat << ENDUSAGEMSG
+Usage: $_SELF [-u] [-T TERM]
+  -u        update CACHEFILE
+
+  -T  TERM  use this instead of \$TERM
+
+  -h        show this information
+ENDUSAGEMSG
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [-u] [-T TERM]
+main() {
+	local term update out OPT OPTARG OPTIND
+	while getopts ':T:uh' OPT ; do
+		case "$OPT" in
+			'T' ) term="$OPTARG" ;;
+			'u' ) update="1" ;;
+			'h' ) _usage ;;
+			'?' )
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':' )
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done ; shift "$(( OPTIND - 1 ))"
+	if [ -z "$TERM" ] && [ -z "$term" ] ; then
+		echo "$_SELF: No value for \$TERM and no -T specified" >&2
+		return 2
+	fi
+	: ${term:=$TERM}
+	out="$XDG_CACHE_HOME/terminfo/$TERM.cache"
+	if [ -s "$out" ] && [ -z "$update" ] ; then
+		cat -- "$out"
+	else
+		mkdir -p -- "${out%/*}"
+		touch -- "$out"
+		local str cap
+		for str in U8 colors cols it lines ncv pairs BD BE Cr Cs E3 Ms PE PS RV Se Ss TS XM XR acsc bel blink bold cbt civis clear cnorm cr csr cub cub1 cud cud1 cuf cuf1 cup cuu cuu1 cvvis dch dch1 dim dl dl1 dsl ech ed el el1 enacs fd fe flash fsl home hpa ht hts ich ich1 il il1 ind indn initc invis is2 kDC kDC3 kDC4 kDC5 kDC6 kDC7 kDN kDN3 kDN4 kDN5 kDN6 kDN7 kEND kEND3 kEND4 kEND5 kEND6 kEND7 kHOM kHOM3 kHOM4 kHOM5 kHOM6 kHOM7 kIC kIC3 kIC4 kIC5 kIC6 kIC7 kLFT kLFT3 kLFT4 kLFT5 kLFT6 kLFT7 kNXT kNXT3 kNXT4 kNXT5 kNXT6 kNXT7 kPRV kPRV3 kPRV4 kPRV5 kPRV6 kPRV7 kRIT kRIT3 kRIT4 kRIT5 kRIT6 kRIT7 kUP kUP3 kUP4 kUP5 kUP6 kUP7 ka1 ka2 ka3 kb1 kb2 kb3 kbeg kbs kc1 kc2 kc3 kcbt kcbt2 kcub1 kcud1 kcuf1 kcuu1 kdch1 kend kent kf1 kf10 kf11 kf12 kf13 kf14 kf15 kf16 kf17 kf18 kf19 kf2 kf20 kf21 kf22 kf23 kf24 kf25 kf26 kf27 kf28 kf29 kf3 kf30 kf31 kf32 kf33 kf34 kf35 kf36 kf37 kf38 kf39 kf4 kf40 kf41 kf42 kf43 kf44 kf45 kf46 kf47 kf48 kf49 kf5 kf50 kf51 kf52 kf53 kf54 kf55 kf56 kf57 kf58 kf59 kf6 kf60 kf61 kf62 kf63 kf7 kf8 kf9 khome kich1 kind kmous knp kp5 kpADD kpCMA kpDIV kpDOT kpMUL kpSUB kpZRO kpp kri kspd kxIN kxOUT mc0 mc4 mc5 meml memu mgc nel oc op reset rc rep rev ri rin ritm rmacs rmam rmcup rmir rmkx rmm rmpch rmso rmul rmxx rs1 rs2 rv sc setab setaf setb setf sgr sgr0 sitm smacs smam smcup smglp smglr smgrp smir smkx smm smpch smso smul smxx tbc tsl u6 u7 u8 u9 vpa xm xr ; do
+			cap="$( tput "$str" 2> /dev/null | tr -d '\0' )"
+			if [ -n "$cap" ] ; then
+				printf '%s#%s\n' "$str" "$cap"
+			fi
+		done | tee -- "$out"
+	fi
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

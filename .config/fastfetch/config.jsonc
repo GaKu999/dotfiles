@@ -1,0 +1,118 @@
+{
+	"$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+	"logo": {
+		"type": "none",
+		"padding": {
+			"top": 1,
+			"right": 1
+		}
+	},
+	"display": {
+		"separator": "│ ",
+		"disableLinewrap": true,
+		"hideCursor": true,
+		//"bar": {
+		//	"border": {
+		//		"left": "\uee00",
+		//		"leftElapsed": "\uee03",
+		//		"right": "\uee02",
+		//		"rightElapsed": "\uee05"
+		//	},
+		//	"char": {
+		//		"total": "\uee01",
+		//		"elapsed": "\uee04"
+		//	},
+		//	"color": {
+		//		"total": null
+		//	}
+		//},
+		//"percent": {
+		//	"type": [ "bar", "bar-monochrome" ]
+		//},
+		"color": {
+			"separator": "95"
+		},
+		"constants": [
+			"──────┬───────────────────────────",
+			"──────┼───────────────────────────",
+			"──────┴───────────────────────────",
+			"│\u001b[34C│\u001b[34D"
+		]
+	},
+	"modules": [
+		{
+			"format": "{#95}┌{$1}┐",
+			"type": "custom"
+		},
+		{
+			"key": "{#95}{$4}{#94}OS   ",
+			"type": "os",
+			"format": "{id} {version} {arch}"
+		},
+		{
+			"key": "{#95}{$4}{#95}INIT ",
+			"type": "initsystem",
+			"format": "{name} {version}"
+		},
+		{
+			"key": "{#95}{$4}{#93}WM   ",
+			"type": "wm",
+			"format": "{process-name} {version}"
+		},
+		{
+			"key": "{#95}{$4}{#91}TERM ",
+			"type": "terminal",
+			"format": "{process-name} {version}"
+		},
+		{
+			"key": "{#95}{$4}{#92}SH   ",
+			"type": "shell",
+			"format": "{process-name} {version}"
+		},
+		{
+			"key": "{#95}{$4}{#93}CPU  ",
+			"type": "cpu",
+			"format": "{name} x{cores-logical}@{freq-max}"
+		},
+		{
+			"key": "{#95}{$4}{#91}GPU  ",
+			"type": "gpu",
+			"temp": true,
+			"hideType": "integrated",
+			"format": "{name} ({temperature})"
+		},
+		{
+			"key": "{#95}{$4}{#92}DISK ",
+			"type": "disk",
+			"folders": "/home",
+			"format": "{size-used} / {size-total} ({size-percentage})"
+		},
+		{
+			"key": "{#95}{$4}{#95}MEM  ",
+			"type": "memory",
+			"format": "{used} / {total} ({percentage})"
+		},
+		{
+			"key": "{#95}{$4}{#96}NET  ",
+			"type": "localip",
+			"format": "{ipv4} ({ifname})"
+		},
+		{
+			"key": "{#95}{$4}{#93}BAT  ",
+			"type": "battery",
+			"format": "{status} ({capacity})"
+		},
+		//{
+		//	"format": "{#95}├{$2}┤",
+		//	"type": "custom"
+		//},
+		{
+			"format": "{#95}└{$3}┘",
+			"type": "custom"
+		},
+		{
+			"type": "colors",
+			"symbol": "circle"
+		}
+	]
+}
