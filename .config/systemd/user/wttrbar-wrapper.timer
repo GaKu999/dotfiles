@@ -1,0 +1,22 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/wttrbar-wrapper.timer
+#==============================================================================#
+
+
+[Timer]
+OnStartupSec=30m
+OnUnitActiveSec=3h
+
+AccuracySec=1us
+Persistent=true
+RandomizedDelaySec=5m
+
+[Install]
+WantedBy=timers.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

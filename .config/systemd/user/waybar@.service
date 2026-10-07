@@ -1,0 +1,32 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/waybar@.service
+#==============================================================================#
+
+
+[Unit]
+Documentation=https://github.com/Alexays/Waybar/wiki/
+
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+ExecStart=/usr/bin/waybar -c %E/waybar/config-%I.jsonc -s %E/waybar/style.css
+ExecReload=kill -SIGUSR2 $MAINPID
+
+Restart=on-failure
+
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=graphical-session.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

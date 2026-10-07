@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:ft=xml:noet:ts=3:sw=3:
+>  | file:$XDG_CONFIG_HOME/openbox/menu.xml
+<============================================================================-->
+
+
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+<!--
+	<menu id="id" label="Label">
+		<item label="Label">
+			<action name="Execute">
+				<command>command</command>
+				<startupnotify><enabled>yes</enabled></startupnotify>
+			</action>
+		</item>
+	</menu>
+<============================================================================-->
+	<menu id="libreoffice-menu" label="Libreoffice">
+		<item label="Document (lowriter)">
+			<action name="Execute">
+				<command>xdg-run lowriter</command>
+			</action>
+		</item>
+		<item label="Spreadsheet (localc)">
+			<action name="Execute">
+				<command>xdg-run localc</command>
+			</action>
+		</item>
+		<item label="Presentation (lomath)">
+			<action name="Execute">
+				<command>xdg-run localc</command>
+			</action>
+		</item>
+		<item label="Drawing (lodraw)">
+			<action name="Execute">
+				<command>xdg-run lodraw</command>
+			</action>
+		</item>
+		<item label="Formula (lomath)">
+			<action name="Execute">
+				<command>xdg-run lomath</command>
+			</action>
+		</item>
+		<item label="Database (lobase)">
+			<action name="Execute">
+				<command>xdg-run lobase</command>
+			</action>
+		</item>
+	</menu>
+
+	<menu id="utility-menu" label="Utilities">
+		<item label="Text Editor (vim)">
+			<action name="Execute">
+				<command>alacritty-msg -e vim</command>
+			</action>
+		</item>
+		<item label="Text Editor (nvim)">
+			<action name="Execute">
+				<command>alacritty-msg -e nvim</command>
+			</action>
+		</item>
+		<item label="Text Editor (nano)">
+			<action name="Execute">
+				<command>alacritty-msg -e nano</command>
+			</action>
+		</item>
+		<item label="Text Editor (vi)">
+			<action name="Execute">
+				<command>alacritty-msg -e vi</command>
+			</action>
+		</item>
+		<item label="Image Editor (gimp)">
+			<action name="Execute">
+				<command>xdg-run gimp</command>
+			</action>
+		</item>
+
+		<menu id="libreoffice-menu"/>
+
+		<item label="File Manager (pcmanfm)">
+			<action name="Execute">
+				<command>pcmanfm</command>
+			</action>
+		</item>
+		<item label="File Manager (vt/vifm)">
+			<action name="Execute">
+				<command>alacritty-msg -e vifm</command>
+			</action>
+		</item>
+		<item label="File Manager (vt/mc)">
+			<action name="Execute">
+				<command>alacritty-msg -e mc</command>
+			</action>
+		</item>
+		<item label="Archive Manager (xarchiver)">
+			<action name="Execute">
+				<command>xdg-run xarchiver</command>
+			</action>
+		</item>
+		<item label="Disk Usage Analyzer (baobab)">
+			<action name="Execute">
+				<command>xdg-run baobab</command>
+			</action>
+		</item>
+		<item label="File Search (catfish)">
+			<action name="Execute">
+				<command>xdg-run catfish</command>
+			</action>
+		</item>
+		<item label="Password Manager (keepassxc)">
+			<action name="Execute">
+				<command>xdg-run keepassxc</command>
+			</action>
+		</item>
+		<item label="Calculator (gnome-calculator)">
+			<action name="Execute">
+				<command>xdg-run gnome-calculator</command>
+			</action>
+		</item>
+		<item label="Credential Manager (seahorse)">
+			<action name="Execute">
+				<command>xdg-run seahorse</command>
+			</action>
+		</item>
+		<item label="Character Finder (gucharmap)">
+			<action name="Execute">
+				<command>xdg-run gucharmap</command>
+			</action>
+		</item>
+		<item label="Wiki Reader (kiwix-desktop)">
+			<action name="Execute">
+				<command>xdg-run kiwix-desktop</command>
+			</action>
+		</item>
+		<item label="Bootable USB Manager (ventoy)">
+			<action name="Execute">
+				<command>xdg-run ventoygui</command>
+			</action>
+		</item>
+		<item label="IDE (idea)">
+			<action name="Execute">
+				<command>xdg-run idea</command>
+			</action>
+		</item>
+	</menu>
+
+	<menu id="internet-menu" label="Internet">
+		<item label="Web Browser (firefox)">
+			<action name="Execute">
+				<command>xdg-run firefox</command>
+			</action>
+		</item>
+		<item label="Email Client (thunderbird)">
+			<action name="Execute">
+				<command>xdg-run thunderbird</command>
+			</action>
+		</item>
+		<item label="Email Client (vt/aerc)">
+			<action name="Execute">
+				<command>alacritty-msg -e aerc</command>
+			</action>
+		</item>
+		<item label="News Reader (vt/newsboat)">
+			<action name="Execute">
+				<command>alacritty-msg -e newsboat</command>
+			</action>
+		</item>
+		<item label="IRC Client (vt/weechat)">
+			<action name="Execute">
+				<command>alacritty-msg -e weechat</command>
+			</action>
+		</item>
+		<item label="Torrent Client (transmission-gtk)">
+			<action name="Execute">
+				<command>xdg-run transmission-gtk</command>
+			</action>
+		</item>
+		<item label="Torrent Client (vt/stig)">
+			<action name="Execute">
+				<command>alacritty-msg -e stig</command>
+			</action>
+		</item>
+		<item label="Remote Desktop (remmina)">
+			<action name="Execute">
+				<command>xdg-run remmina</command>
+			</action>
+		</item>
+		<item label="Remote Desktop (moonlight)">
+			<action name="Execute">
+				<command>xdg-run moonlight</command>
+			</action>
+		</item>
+	</menu>
+
+	<menu id="games-menu" label="Games">
+		<item label="Steam">
+			<action name="Execute">
+				<command>xdg-run steam</command>
+			</action>
+		</item>
+		<item label="RetroArch">
+			<action name="Execute">
+				<command>xdg-run retroarch</command>
+			</action>
+		</item>
+		<item label="PCSX2">
+			<action name="Execute">
+				<command>xdg-run pcsx2</command>
+			</action>
+		</item>
+		<item label="PPSSPP">
+			<action name="Execute">
+				<command>xdg-run ppsspp</command>
+			</action>
+		</item>
+		<item label="Ryujinx">
+			<action name="Execute">
+				<command>xdg-run ryujinx</command>
+			</action>
+		</item>
+		<item label="PrismLauncher">
+			<action name="Execute">
+				<command>xdg-run prismlauncher</command>
+			</action>
+		</item>
+		<item label="Bottles">
+			<action name="Execute">
+				<command>xdg-run com.usebottles.bottles</command>
+			</action>
+		</item>
+	</menu>
+
+	<menu id="settings-menu" label="Settings">
+		<item label="Flatpak Permissions (flatseal)">
+			<action name="Execute">
+				<command>xdg-run flatseal</command>
+			</action>
+		</item>
+		<item label="Desktop Settings (pcmanfm)">
+			<action name="Execute">
+				<command>pcmanfm --desktop-pref</command>
+			</action>
+		</item>
+		<item label="Network Manager (iwgtk)">
+			<action name="Execute">
+				<command>xdg-run iwgtk</command>
+			</action>
+		</item>
+		<item label="Network Manager (vt/impala)">
+			<action name="Execute">
+				<command>alacritty-msg -e impala</command>
+			</action>
+		</item>
+		<item label="Bluetooth Manager (blueman-manager)">
+			<action name="Execute">
+				<command>xdg-run blueman-manager</command>
+			</action>
+		</item>
+		<item label="Bluetooth Manager (vt/bluetui)">
+			<action name="Execute">
+				<command>alacritty-msg -e bluetui</command>
+			</action>
+		</item>
+		<item label="Preferred Applications (libfm-pref-apps)">
+			<action name="Execute">
+				<command>xdg-run libfm-pref-apps</command>
+			</action>
+		</item>
+		<item label="Qt5 Settings (qt5ct)">
+			<action name="Execute">
+				<command>xdg-run qt5ct</command>
+			</action>
+		</item>
+		<item label="Qt6 Settings (qt6ct)">
+			<action name="Execute">
+				<command>xdg-run qt6ct</command>
+			</action>
+		</item>
+		<item label="Power Manager Settings (xfce4-power-manager)">
+			<action name="Execute">
+				<command>xfce4-power-manager-settings</command>
+			</action>
+		</item>
+		<item label="Configuration Editor (dconf-editor)">
+			<action name="Execute">
+				<command>xdg-run dconf-editor</command>
+			</action>
+		</item>
+	</menu>
+
+	<menu id="multimedia-menu" label="Multimedia">
+		<item label="Media Player (mpv)">
+			<action name="Execute">
+				<command>xdg-run mpv --player-operation-mode=pseudo-gui</command>
+			</action>
+		</item>
+		<item label="Media Player (vlc)">
+			<action name="Execute">
+				<command>xdg-run vlc</command>
+			</action>
+		</item>
+		<item label="Media Player (vt/nvlc)">
+			<action name="Execute">
+				<command>alacritty-msg -e nvlc</command>
+			</action>
+		</item>
+		<item label="Jellyfin Client (delfin)">
+			<action name="Execute">
+				<command>xdg-run delfin</command>
+			</action>
+		</item>
+		<item label="Spotify Client (vt/ncspot)">
+			<action name="Execute">
+				<command>alacritty-msg -e ncspot</command>
+			</action>
+		</item>
+		<item label="Audio Editor (tenacity)">
+			<action name="Execute">
+				<command>xdg-run tenacity</command>
+			</action>
+		</item>
+		<item label="Video Transcoder (ghb)">
+			<action name="Execute">
+				<command>xdg-run ghb</command>
+			</action>
+		</item>
+		<item label="Matroska Editor (mkvtoolnix-gui)">
+			<action name="Execute">
+				<command>xdg-run mkvtoolnix-gui</command>
+			</action>
+		</item>
+		<item label="Media Cataloger (MediaElch)">
+			<action name="Execute">
+				<command>xdg-run MediaElch</command>
+			</action>
+		</item>
+	</menu>
+
+	<menu id="audio-video-menu" label="Audio &amp; Video">
+		<item label="Screen Recorder (peek)">
+			<action name="Execute">
+				<command>xdg-run peek</command>
+			</action>
+		</item>
+		<item label="Screen Recorder (vokoscreenNG)">
+			<action name="Execute">
+				<command>xdg-run vokoscreenNG</command>
+			</action>
+		</item>
+		<item label="Screen Recorder (obs)">
+			<action name="Execute">
+				<command>xdg-run obs</command>
+			</action>
+		</item>
+		<item label="Volume Control (pavucontrol)">
+			<action name="Execute">
+				<command>xdg-run pavucontrol</command>
+			</action>
+		</item>
+		<item label="Volume Control (vt/pulsemixer)">
+			<action name="Execute">
+				<command>alacritty-msg -e pulsemixer</command>
+			</action>
+		</item>
+		<item label="Volume Control (vt/wiremix)">
+			<action name="Execute">
+				<command>alacritty-msg -e wiremix</command>
+			</action>
+		</item>
+		<item label="Pipewire Patchbay (helvum)">
+			<action name="Execute">
+				<command>xdg-run helvum</command>
+			</action>
+		</item>
+		<item label="Pipewire Patchbay (qpwgraph)">
+			<action name="Execute">
+				<command>xdg-run qpwgraph</command>
+			</action>
+		</item>
+		<item label="Screen Manager (lxrandr)">
+			<action name="Execute">
+				<command>xdg-run lxrandr</command>
+			</action>
+		</item>
+	</menu>
+
+	<menu id="system-utility-menu" label="System Utilities">
+		<item label="System Monitor (gnome-system-monitor)">
+			<action name="Execute">
+				<command>xdg-run gnome-system-monitor</command>
+			</action>
+		</item>
+		<item label="System Monitor (vt/top)">
+			<action name="Execute">
+				<command>alacritty-msg -e top</command>
+			</action>
+		</item>
+		<item label="System Logs (gnome-logs)">
+			<action name="Execute">
+				<command>xdg-run gnome-logs</command>
+			</action>
+		</item>
+		<item label="System Logs (vt/systemctl-tui)">
+			<action name="Execute">
+				<command>alacritty-msg -e systemctl-tui</command>
+			</action>
+		</item>
+		<item label="System Logs (vt/journalctl)">
+			<action name="Execute">
+				<command>alacritty-msg -e journalctl</command>
+			</action>
+		</item>
+		<item label="System Logs (vt/sudo/dmesg)">
+			<action name="Execute">
+				<command>alacritty-msg -e sudo dmesg -Hx</command>
+			</action>
+		</item>
+		<item label="System Information (sudo/gtk-lshw)">
+			<action name="Execute">
+				<command>xdg-run sudo -AE gtk-lshw</command>
+			</action>
+		</item>
+		<item label="Network Tools (gnome-nettool)">
+			<action name="Execute">
+				<command>xdg-run gnome-nettool</command>
+			</action>
+		</item>
+		<item label="Power Statistics (gnome-power-statistics)">
+			<action name="Execute">
+				<command>xdg-run gnome-power-statistics</command>
+			</action>
+		</item>
+		<item label="Power Monitor (vt/sudo/powertop)">
+			<action name="Execute">
+				<command>alacritty-msg -e sudo powertop</command>
+			</action>
+		</item>
+		<item label="Software Manager (gnome-software)">
+			<action name="Execute">
+				<command>xdg-run gnome-software</command>
+			</action>
+		</item>
+		<item label="Firmware Manager (gnome-firmware)">
+			<action name="Execute">
+				<command>xdg-run gnome-firmware</command>
+			</action>
+		</item>
+		<item label="Storage Manager (gnome-disks)">
+			<action name="Execute">
+				<command>xdg-run gnome-disks</command>
+			</action>
+		</item>
+		<item label="Font Viewer (gnome-font-viewer)">
+			<action name="Execute">
+				<command>xdg-run gnome-font-viewer</command>
+			</action>
+		</item>
+		<item label="Font Manager (font-manager)">
+			<action name="Execute">
+				<command>xdg-run font-manager</command>
+			</action>
+		</item>
+		<item label="Help Reader (yelp)">
+			<action name="Execute">
+				<command>xdg-run yelp</command>
+			</action>
+		</item>
+		<item label="Terminal (alacritty)">
+			<action name="Execute">
+				<command>xdg-run alacritty</command>
+			</action>
+		</item>
+	</menu>
+
+	<menu id="session-menu" label="Session">
+		<item label="Lock"><action name="Execute"><command>xdg-lock</command></action></item>
+		<item label="Logout"><action name="Exit"><prompt>no</prompt></action></item>
+		<item label="Sleep"><action name="Execute"><command>sd-sleep</command></action></item>
+		<item label="Reboot"><action name="Execute"><command>systemctl reboot</command></action></item>
+		<item label="Poweroff"><action name="Execute"><command>systemctl poweroff</command></action></item>
+	</menu>
+
+	<menu id="root-menu" label="Openbox 3">
+		<menu id="utility-menu"/>
+		<menu id="internet-menu"/>
+		<menu id="games-menu"/>
+		<menu id="settings-menu"/>
+		<menu id="multimedia-menu"/>
+		<menu id="audio-video-menu"/>
+		<menu id="system-utility-menu"/>
+
+		<separator/>
+
+		<menu id="client-list-menu"/>
+
+		<item label="Launch..."><action name="Execute"><command>xdgctl -A menu</command></action></item>
+		<item label="Run..."><action name="Execute"><command>xdg-exec</command></action></item>
+
+		<separator/>
+
+		<item label="Reload"><action name="Reconfigure"/></item>
+		<menu id="session-menu"/>
+	</menu>
+</openbox_menu>
+
+
+<!--===========================================================================>
+>                                 END OF FILE                                  <
+<============================================================================-->

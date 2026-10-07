@@ -1,0 +1,28 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/fetch
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+# [$1: URL (CLIPBOARD)]
+main() { local url="$1"
+	if [ -z "$url" ] ; then
+		if [ "$XDG_SESSION_TYPE" = wayland ] && [ -n "$WAYLAND_DISPLAY" ] ; then
+			url="$( wl-paste -t text/plain -n )"
+		elif [ "$XDG_SESSION_TYPE" = x11 ] && [ -n "$DISPLAY" ] ; then
+			url="$( xclip -o -r -selection clipboard )"
+		else
+			echo "$_SELF: not a graphical session" >&2
+			return 1
+		fi
+	fi
+	[ -n "$url" ] && curl -qsfL -- "$url"
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

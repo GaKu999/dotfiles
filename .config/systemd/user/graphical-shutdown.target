@@ -1,0 +1,21 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.target(5)
+# man:systemd.special(7)
+# file:$XDG_CONFIG_HOME/systemd/user/graphical-shutdown.target
+#==============================================================================#
+
+
+[Unit]
+Documentation=man:systemd.special(7)
+
+DefaultDependencies=no
+StopWhenUnneeded=true
+
+Conflicts=graphical-session.target graphical-session-pre.target
+After=graphical-session.target graphical-session-pre.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

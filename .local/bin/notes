@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/notes
+#==============================================================================#
+
+
+set -a
+	: ${XDG_DATA_HOME:=$HOME/.local/share}
+	: ${NOTES_DIR:=$XDG_DATA_HOME/notes}
+	: ${EDITOR:=vim}
+set +a
+
+# Who am I?
+_SELF="${0##*/}"
+
+# [$1: EXIT CODE (0)]
+function _usage { local -ir ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg << ENDUSAGEMSG || : EOF
+Usage: $_SELF [{delete,edit,list,move,pipe,view} (list)] [NOTE...]
+ENDUSAGEMSG
+	printf '%s' "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [{delete,edit,list,move,pipe,view} (list)] [NOTE...]
+function main { local -r action="${1:-list}"
+	local src dst ; local -a notes
+	mkdir -p -- "$NOTES_DIR"
+	case "$action" in
+		list )
+			if [[ -s "$NOTES_DIR" ]] ; then
+				echo "$( tput setaf 12 )Notes$( tput sgr0 )"
+				tree -Cl --noreport -- "$NOTES_DIR" | tail -n+2
+			fi
+		;;
+		edit )
+			[[ -n "$2" ]] || _usage 2
+			mapfile -t notes < <( printf "$NOTES_DIR/%s\n" "${@:2}" )
+			mkdir -p -- "${notes[@]%/*}"
+			$EDITOR -- "${notes[@]}"
+		;;
+		pipe )
+			[[ -n "$2" ]] || _usage 2
+			tee -- "$NOTES_DIR/$2"
+		;;
+		move )
+			[[ -n "$2" && -n "$3" ]] || _usage 2
+			src="$NOTES_DIR/$2" dst="$NOTES_DIR/$3"
+			mkdir -p -- "${dst%/*}"
+			mv -f -- "$src" "$dst"
+			rmdir -p --ignore-fail-on-non-empty -- "${src%/*}"
+		;;
+		delete )
+			[[ -n "$2" ]] || _usage 2
+			mapfile -t notes < <( printf "$NOTES_DIR/%s\n" "${@:2}" )
+			rm -- "${notes[@]}"
+			rmdir -p --ignore-fail-on-non-empty -- "${notes[@]%/*}"
+		;;
+		view )
+			mapfile -t notes < <( printf "$NOTES_DIR/%s\n" "${@:2}" )
+			less -- "${notes[@]}"
+		;;
+		* )
+			echo "$_SELF: unknown action -- '$action'" >&2
+			_usage 2
+		;;
+	esac
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

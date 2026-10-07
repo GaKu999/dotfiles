@@ -1,0 +1,46 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_CONFIG_HOME/niri/startup
+#==============================================================================#
+
+
+(
+	systemctl -q --user import-environment NIRI_SOCKET DISPLAY WAYLAND_DISPLAY
+	dbus-update-activation-environment --systemd NIRI_SOCKET DISPLAY WAYLAND_DISPLAY
+	systemctl -q --user start niri-session.target
+) &
+
+# man:swaybg(1)
+swaybg -o '*' -i "$HOME/.wallpaper" -m fill -c "#1d2021" &
+
+# man:wlr-randr(1)
+# for o in $( wlr-randr --json | jq -r '.[].name' ) ; do
+#	case "$o" in
+#		eDP-2 ) wlr-randr --output eDP-2 --mode 1920x1200@165Hz --pos 0,0 --transform normal --scale 1.25 --adaptive-sync disabled --preferred ;;
+#		* ) wlr-randr --output "$o" --off ;;
+#	esac
+# done ; unset -v o
+
+# man:swayidle(1) man:swaylock(1)
+swayidle -w \
+	before-sleep "nirimsg action spawn -- swaylock -f" \
+	lock "nirimsg action spawn -- swaylock -f" \
+	unlock "nirimsg action spawn -- killall -q -sUSR1 swaylock" \
+	timeout 57 "swaymsg -q exec -- tunedctl idle" \
+		resume "swaymsg -q exec -- tunedctl normal" \
+	timeout 58 "nirimsg action spawn -- brightnessctl -s" \
+	timeout 59 "nirimsg action spawn -- brightnessctl s 0%" \
+		resume "nirimsg action spawn -- brightnessctl -r" \
+	timeout 60 "nirimsg action spawn -- screensaver run" \
+		resume "nirimsg action spawn -- screensaver kill" \
+	timeout 298 "nirimsg action spawn -- niridpms all off" \
+	timeout 299 "nirimsg action spawn -- swaylock -f" \
+	idlehint 300 \
+	timeout 900 "nirimsg action spawn -- sd-sleep" &
+
+# nirimsg action focus-monitor eDP-2
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

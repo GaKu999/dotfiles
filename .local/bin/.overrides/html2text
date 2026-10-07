@@ -1,0 +1,15 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/.overrides/html2text
+#==============================================================================#
+
+
+exec /usr/bin/html2text -de -b0 --ignore-tables --images-to-alt \
+	--links-after-para --no-automatic-links --no-skip-internal-links \
+	--no-wrap-links --pad-tables --protect-links --reference-links \
+	--unicode-snob --wrap-list-items --decode-errors=ignore "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

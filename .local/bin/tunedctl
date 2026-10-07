@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/tunedctl
+#==============================================================================#
+
+
+function main() { local -r mode="$1" ; local normal idle
+	local -i isdocked="$( < /sys/class/power_supply/ACAD/online )"
+	if (( isdocked )) ; then
+		normal="throughput-performance" idle="balanced-battery"
+	else
+		normal="balanced-battery" idle="powersave"
+	fi
+	case "$mode" in
+		normal ) tuned-adm profile "$normal" ;;
+		idle ) tuned-adm profile "$idle" ;;
+	esac
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,47 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_CONFIG_HOME/sway/startup
+#==============================================================================#
+
+
+(
+	systemctl -q --user import-environment SWAYSOCK DISPLAY WAYLAND_DISPLAY
+	dbus-update-activation-environment --systemd SWAYSOCK DISPLAY WAYLAND_DISPLAY
+	systemctl -q --user start sway-session.target
+) &
+
+# man:swaybg(1)
+# swaybg -o '*' "$HOME/.wallpaper" -m fill -c "#1d2021" &
+
+# man:wlr-randr(1)
+# for o in $( wlr-randr --json | jq -r '.[].name' ) ; do
+#	case "$o" in
+#		eDP-2 ) wlr-randr --output eDP-2 --mode 1920x1200@165Hz --pos 0,0 --transform normal --scale 1.25 --adaptive-sync disabled --preferred ;;
+#		* ) wlr-randr --output "$o" --off ;;
+#	esac
+# done ; unset -v o
+
+# man:swayidle(1) man:swaylock(1)
+swayidle -w \
+	before-sleep "swaymsg -q exec -- swaylock -f" \
+	lock "swaymsg -q exec -- swaylock -f" \
+	unlock "swaymsg -q exec -- killall -q -sUSR1 swaylock" \
+	timeout 57 "swaymsg -q exec -- tunedctl idle" \
+		resume "swaymsg -q exec -- tunedctl normal" \
+	timeout 58 "swaymsg -q exec -- brightnessctl -s" \
+	timeout 59 "swaymsg -q exec -- brightnessctl s 0%" \
+		resume "swaymsg -q exec -- brightnessctl -r" \
+	timeout 60 "swaymsg -q exec -- screensaver run" \
+		resume "swaymsg -q exec -- screensaver kill" \
+	timeout 298 "swaymsg -q exec -- swaydpms all off" \
+		resume "swaymsg -q exec -- swaydpms all on" \
+	timeout 299 "swaymsg -q exec -- swaylock -f" \
+	idlehint 300 \
+	timeout 900 "swaymsg -q exec -- sd-sleep" &
+
+swaymsg -q focus output eDP-2
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

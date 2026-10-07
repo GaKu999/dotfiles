@@ -1,0 +1,81 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/xshot
+#==============================================================================#
+
+
+set -a
+	: ${XDG_PICTURES_DIR:=$HOME/Pictures}
+set +a
+
+# Who am I?
+_SELF="${0##*/}"
+
+_herecat() {
+	local msg line lfcr
+	lfcr="$( printf '%b' "\012\015" )"
+	while IFS="$lfcr" read -r line ; do
+		msg="$msg$line$lfcr"
+	done
+	printf '%s' "$msg"
+}
+
+# [$1: EXIT CODE (0)]
+_usage() { local ec="${1:-0}"
+	_herecat << ENDUSAGEMSG
+Usage: $_SELF [-aosw (o)] [-D SECONDS]
+
+  -a          capture all displays
+  -o          capture current output
+  -s          capture selection
+  -w          capture current window
+
+  -D SECONDS  delay before capture
+
+  -h          show this information
+ENDUSAGEMSG
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [-aosw (o)] [-D SECONDS]
+main() {
+	local delay mode out OPT OPTARG OPTIND
+	while getopts ':D:aoswh' OPT ; do
+		case "$OPT" in
+			'D' ) delay="$OPTARG" ;;
+			'a' ) mode="all" ;;
+			'o' ) mode="output" ;;
+			's' ) mode="select" ;;
+			'w' ) mode="window" ;;
+			'h' ) _usage ;;
+			'?' )
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':' )
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done ; shift "$(( OPTIND - 1 ))"
+	: ${delay:=0}
+	: ${mode:=output}
+	sleep -- "$delay"
+	out="$XDG_PICTURES_DIR/Screenshots/$( date '+%Y-%m-%d_%H%M%S' ).png"
+	mkdir -p -- "${out%/*}"
+	case "$mode" in
+		all ) scrot -m -- "$out" ;;
+		output ) scrot -- "$out" ;;
+		select ) scrot -s -- "$out" ;;
+		window ) scrot -u -- "$out" ;;
+	esac
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/xdg-run
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+function _lspath {
+	local path ; local -a bins
+	shopt -s nullglob
+	IFS=':' ; for path in $PATH ; do
+		bins+=( $path/* )
+	done ; unset -v IFS
+	if (( "${#bins[@]}" )) ; then
+		printf '%s\n' "${bins[@]##*/}" | sort -u
+	fi
+}
+
+
+#==============================================================================#
+
+
+# $@: [COMMAND..]
+function main {
+	local -a sdargs
+	if [[ -t 0 ]] ; then
+		sdargs=( "--pty" )
+	else
+		sdargs=( "--pipe" )
+	fi
+	if (( "$#" )) ; then
+		systemd-run --user "${sdargs[@]}" -u "$_SELF-$( uuidgen -t )" --slice=app-xdg -pManagedOOMSwap=kill -pManagedOOMMemoryPressure=kill -- "$@"
+	else
+		if [[ "$XDG_SESSION_TYPE" == wayland && -n "$WAYLAND_DISPLAY" ]] ; then
+			_lspath | wmenu
+		elif [[ "$XDG_SESSION_TYPE" == x11 && -n "$DISPLAY" ]] ; then
+			_lspath | dmenu
+		else
+			echo "$_SELF: not a graphical session" >&2
+			return 1
+		fi | xargs -r -- systemd-run -dGq --wait --user "${sdargs[@]}" -u "$_SELF-$( uuidgen -t )" --slice=app-xdg -pManagedOOMSwap=kill -pManagedOOMMemoryPressure=kill --
+	fi
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

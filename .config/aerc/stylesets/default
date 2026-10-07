@@ -1,0 +1,45 @@
+# vim:ft=confini:
+# man:aerc-stylesets(7)
+# file:$XDG_CONFIG_HOME/aerc/stylesets/default
+#==============================================================================#
+
+
+*.default=true
+*.normal=true
+
+*.selected.fg=9
+*.selected.bg=0
+
+error.fg=9
+error.bg=0
+warning.fg=11
+warning.bg=0
+success.fg=10
+success.bg=0
+
+title.fg=12
+title.bg=0
+
+header.fg=11
+
+statusline_default.fg=13
+statusline_error.fg=9
+statusline_success.fg=10
+
+msglist_unread.bg=0
+
+dirlist_default.fg=12
+
+part_filename.fg=12
+part_mimetype.fg=14
+
+tab.fg=8
+
+[viewer]
+url.fg=12
+header.fg=11
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

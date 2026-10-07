@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:ft=xml:noet:ts=3:sw=3:
+>  | file:$XDG_CONFIG_HOME/waybar/menu.xml
+<============================================================================-->
+
+
+<interface>
+	<object class="GtkMenu" id="menu">
+<!--
+		<child>
+			<object class="GtkMenuItem" id="id">
+				<property name="label">Label</property>
+			</object>
+		</child>
+		...
+		<child>
+			<object class="GtkSeparatorMenuItem" id="id"/>
+		</child>
+		...
+		<child>
+			<object class="GtkMenuItem" id="id">
+				<property name="label">Label</property>
+				<child type="submenu">
+					<object class="GtkMenu" id="id">
+						<child>
+							<object class="GtkMenuItem" id="id">
+								<property name="label">Label</property>
+							</object>
+						</child>
+						...
+					</object>
+				</child>
+				...
+			</object>
+		</child>
+<============================================================================-->
+		<child>
+			<object class="GtkMenuItem">
+				<property name="label">Utilities</property>
+				<child type="submenu">
+					<object class="GtkMenu" id="utility-menu">
+						<child>
+							<object class="GtkMenuItem" id="term/vim">
+								<property name="label">Text Editor (vt/vim)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/nvim">
+								<property name="label">Text Editor (vt/nvim)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/nano">
+								<property name="label">Text Editor (vt/nano)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/vi">
+								<property name="label">Text Editor (vt/vi)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gimp">
+								<property name="label">Image Editor (gimp)</property>
+							</object>
+						</child>
+
+						<child>
+							<object class="GtkMenuItem">
+								<property name="label">Libreoffice</property>
+								<child type="submenu">
+									<object class="GtkMenu" id="utility-menu/libreoffice-menu">
+										<child>
+											<object class="GtkMenuItem" id="lowriter">
+												<property name="label">Document (lowriter)</property>
+											</object>
+										</child>
+										<child>
+											<object class="GtkMenuItem" id="localc">
+												<property name="label">Spreadsheet (localc)</property>
+											</object>
+										</child>
+										<child>
+											<object class="GtkMenuItem" id="loimpress">
+												<property name="label">Presentation (loimpress)</property>
+											</object>
+										</child>
+										<child>
+											<object class="GtkMenuItem" id="lodraw">
+												<property name="label">Drawing (lodraw)</property>
+											</object>
+										</child>
+										<child>
+											<object class="GtkMenuItem" id="lomath">
+												<property name="label">Formula (lomath)</property>
+											</object>
+										</child>
+										<child>
+											<object class="GtkMenuItem" id="lobase">
+												<property name="label">Database (lobase)</property>
+											</object>
+										</child>
+									</object>
+								</child>
+							</object>
+						</child>
+
+						<child>
+							<object class="GtkMenuItem" id="pcmanfm">
+								<property name="label">File Manager (pcmanfm)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/vifm">
+								<property name="label">File Manager (vt/vifm)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/mc">
+								<property name="label">File Manager (vt/mc)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="xarchiver">
+								<property name="label">Archive Manager (xarchiver)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="baobab">
+								<property name="label">Disk Usage Analyzer (baobab)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="catfish">
+								<property name="label">File Search (catfish)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="keepassxc">
+								<property name="label">Password Manager (keepassxc)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gnome-calculator">
+								<property name="label">Calculator (gnome-calculator)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="seahorse">
+								<property name="label">Credential Manager (seahorse)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gucharmap">
+								<property name="label">Character Finder (gucharmap)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="kiwix-desktop">
+								<property name="label">Wiki Reader (kiwix-desktop)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="ventoy">
+								<property name="label">Bootable USB Manager (ventoy)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="idea">
+								<property name="label">IDE (idea)</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkMenuItem">
+				<property name="label">Internet</property>
+				<child type="submenu">
+					<object class="GtkMenu" id="internet-menu">
+						<child>
+							<object class="GtkMenuItem" id="firefox">
+								<property name="label">Web Browser (firefox)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="thunderbird">
+								<property name="label">Email Client (thunderbird)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/aerc">
+								<property name="label">Email Client (vt/aerc)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/newsboat">
+								<property name="label">News Reader (vt/newsboat)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/weechat">
+								<property name="label">IRC Client (vt/weechat)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="transmission-gtk">
+								<property name="label">Torrent Client (transmission-gtk)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/stig">
+								<property name="label">Torrent Client (vt/stig)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="remmina">
+								<property name="label">Remote Desktop (remmina)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="moonlight">
+								<property name="label">Remote Desktop (moonlight)</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkMenuItem">
+				<property name="label">Games</property>
+				<child type="submenu">
+					<object class="GtkMenu" id="games-menu">
+						<child>
+							<object class="GtkMenuItem" id="steam">
+								<property name="label">Steam</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="retroarch">
+								<property name="label">RetroArch</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="pcsx2">
+								<property name="label">PCSX2</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="ppsspp">
+								<property name="label">PPSSPP</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="ryujinx">
+								<property name="label">Ryujinx</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="prismlauncher">
+								<property name="label">PrismLauncher</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="bottles">
+								<property name="label">Bottles</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkMenuItem">
+				<property name="label">Settings</property>
+				<child type="submenu">
+					<object class="GtkMenu" id="settings-menu">
+						<child>
+							<object class="GtkMenuItem" id="flatseal">
+								<property name="label">Flatpak Permissions (flatseal)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="iwgtk">
+								<property name="label">Network Manager (iwgtk)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/impala">
+								<property name="label">Network Manager (vt/impala)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="blueman-manager">
+								<property name="label">Bluetooth Manager (blueman-manager)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/bluetui">
+								<property name="label">Bluetooth Manager (vt/bluetui)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="libfm-pref-apps">
+								<property name="label">Preferred Applications (libfm-pref-apps)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="qt5ct">
+								<property name="label">Qt5 Settings (qt5ct)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="qt6ct">
+								<property name="label">Qt6 Settings (qt6ct)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="dconf-editor">
+								<property name="label">Configuration Editor (dconf-editor)</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkMenuItem">
+				<property name="label">Multimedia</property>
+				<child type="submenu">
+					<object class="GtkMenu" id="multimedia-menu">
+						<child>
+							<object class="GtkMenuItem" id="mpv">
+								<property name="label">Media Player (mpv)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="vlc">
+								<property name="label">Media Player (vlc)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/nvlc">
+								<property name="label">Media Player (vt/nvlc)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="delfin">
+								<property name="label">Jellyfin Client (mpv)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/ncspot">
+								<property name="label">Spotify Client (vt/ncspot)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="tenacity">
+								<property name="label">Audio Editor (tenacity)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="ghb">
+								<property name="label">Video Transcoder (ghb)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="mkvtoolnix-gui">
+								<property name="label">Matroska Editor (mkvtoolnix-gui)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="mediaelch">
+								<property name="label">Media Cataloger (mediaelch)</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkMenuItem">
+				<property name="label">Audio &amp; Video</property>
+				<child type="submenu">
+					<object class="GtkMenu" id="audio-video-menu">
+						<child>
+							<object class="GtkMenuItem" id="kooha">
+								<property name="label">Screen Recorder (kooha)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="obs">
+								<property name="label">Screen Recorder (obs)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="pavucontrol">
+								<property name="label">Volume Control (pavucontrol)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/pulsemixer">
+								<property name="label">Volume Control (vt/pulsemixer)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/wiremix">
+								<property name="label">Volume Control (vt/wiremix)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="helvum">
+								<property name="label">Pipewire Patchbay (helvum)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="qpwgraph">
+								<property name="label">Pipewire Patchbay (qpwgraph)</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkMenuItem">
+				<property name="label">System Utilities</property>
+				<child type="submenu">
+					<object class="GtkMenu" id="system-tools-menu">
+						<child>
+							<object class="GtkMenuItem" id="gnome-system-monitor">
+								<property name="label">System Monitor (gnome-system-monitor)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/top">
+								<property name="label">System Monitor (vt/top)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gnome-logs">
+								<property name="label">System Logs (gnome-logs)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/systemctl-tui">
+								<property name="label">System Logs (term/systemctl-tui)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/journalctl">
+								<property name="label">System Logs (vt/journalctl)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/sudo/dmesg">
+								<property name="label">System Logs (vt/sudo/dmesg)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="sudo/gtk-lshw">
+								<property name="label">System Information (sudo/gtk-lshw)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gnome-nettool">
+								<property name="label">Network Tools (gnome-nettool)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gnome-power-statistics">
+								<property name="label">Power Statistics (gnome-power-statistics)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="term/sudo/powertop">
+								<property name="label">Power Monitor (vt/sudo/powertop)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gnome-software">
+								<property name="label">Software Manager (gnome-software)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gnome-firmware">
+								<property name="label">Firmware Manager (gnome-firmware)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gnome-disks">
+								<property name="label">Storage Manager (gnome-disks)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="gnome-font-viewer">
+								<property name="label">Font Viewer (gnome-font-viewer)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="font-manager">
+								<property name="label">Font Manager (font-manager)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="yelp">
+								<property name="label">Help Reader (yelp)</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="foot">
+								<property name="label">Terminal (foot)</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkSeparatorMenuItem" id="separator1"/>
+		</child>
+
+		<child>
+			<object class="GtkMenuItem" id="launch">
+				<property name="label">Launch...</property>
+			</object>
+		</child>
+		<child>
+			<object class="GtkMenuItem" id="run">
+				<property name="label">Run...</property>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkSeparatorMenuItem" id="separator2"/>
+		</child>
+
+		<child>
+			<object class="GtkMenuItem" id="reload">
+				<property name="label">Reload</property>
+			</object>
+		</child>
+
+		<child>
+			<object class="GtkMenuItem">
+				<property name="label">Session</property>
+				<child type="submenu">
+					<object class="GtkMenu" id="session-menu">
+						<child>
+							<object class="GtkMenuItem" id="lock">
+								<property name="label">Lock</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="logout">
+								<property name="label">Logout</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="sleep">
+								<property name="label">Sleep</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="reboot">
+								<property name="label">Reboot</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkMenuItem" id="poweroff">
+								<property name="label">Poweroff</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+	</object>
+</interface>
+
+
+<!--===========================================================================>
+>                                 END OF FILE                                  <
+<============================================================================-->

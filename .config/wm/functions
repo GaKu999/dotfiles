@@ -1,0 +1,116 @@
+#!/hint/bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_CONFIG_HOME/wm/config.bash
+#==============================================================================#
+
+
+function prepare-session { local -r protocol="$1"
+	export CLUTTER_BACKEND="$protocol"
+	export GDK_BACKEND="$protocol"
+	export SDL_VIDEODRIVER="$protocol"
+	export WINIT_UNIX_BACKEND="$protocol"
+	export XDG_SESSION_TYPE="$protocol"
+	case "$protocol" in
+		wayland ) export QT_QPA_PLATFORM="wayland" ;;
+		x11 ) export QT_QPA_PLATFORM="xcb" ;;
+	esac
+	export _JAVA_AWT_WM_NONREPARENTING=1 WINIT_X11_SCALE_FACTOR=1
+	case "$_WM" in
+		sway | cage ) export DESKTOP_SESSION="wlroots" ;;
+		* ) export DESKTOP_SESSION="$_WM" ;;
+	esac
+	export XDG_CURRENT_DESKTOP="${_WM^^}" XDG_MENU_PREFIX="$_WM-"
+	# man:xkeyboard-config(7)
+	export XKB_DEFAULT_LAYOUT="us,es" XKB_DEFAULT_OPTIONS="eurosign:5,grp:alt_space_toggle,lv3:ralt_switch_multikey,terminate:ctrl_alt_bksp"
+	export XCURSOR_THEME="Bibata-Modern-Classic" XCURSOR_SIZE=16
+	export GTK_THEME="Gruvbox-Dark"
+	#export QT_STYLE_OVERRIDE="kvantum"
+	export QT_QPA_PLATFORMTHEME="qt6ct" #QT_WAYLAND_DECORATION="adwaita"
+	export GDK_SCALE=1 GDK_DPI_SCALE=1.0
+	export QT_AUTO_SCREEN_SCALE_FACTOR=0 QT_ENABLE_HIGHDPI_SCALING=0
+	export QT_SCALE_FACTOR=1 QT_FONT_DPI=96
+	# man:ssh(1) man:sudo(8)
+	export SSH_ASKPASS="/usr/lib/seahorse/ssh-askpass"
+	export SUDO_ASKPASS="/usr/lib/seahorse/ssh-askpass"
+	export DRI_PRIME="pci-0000_c5_00_0" MESA_VK_DEVICE_SELECT="1002:15bf"
+	systemctl -q --user import-environment \
+		CLUTTER_BACKEND GDK_BACKEND QT_QPA_PLATFORM SDL_VIDEODRIVER WINIT_UNIX_BACKEND XDG_SESSION_TYPE \
+		DESKTOP_SESSION XDG_CURRENT_DESKTOP XDG_MENU_PREFIX \
+		WINIT_X11_SCALE_FACTOR _JAVA_AWT_WM_NONREPARENTING \
+		XKB_DEFAULT_LAYOUT XKB_DEFAULT_OPTIONS \
+		XCURSOR_SIZE XCURSOR_THEME \
+		GTK_THEME QT_QPA_PLATFORMTHEME \
+		GDK_DPI_SCALE GDK_SCALE \
+		QT_AUTO_SCREEN_SCALE_FACTOR QT_ENABLE_HIGHDPI_SCALING QT_FONT_DPI QT_SCALE_FACTOR \
+		SSH_ASKPASS SUDO_ASKPASS \
+		DRI_PRIME MESA_VK_DEVICE_SELECT
+	dbus-update-activation-environment --systemd \
+		CLUTTER_BACKEND GDK_BACKEND QT_QPA_PLATFORM SDL_VIDEODRIVER WINIT_UNIX_BACKEND XDG_SESSION_TYPE \
+		DESKTOP_SESSION XDG_CURRENT_DESKTOP XDG_MENU_PREFIX \
+		WINIT_X11_SCALE_FACTOR _JAVA_AWT_WM_NONREPARENTING \
+		XKB_DEFAULT_LAYOUT XKB_DEFAULT_OPTIONS \
+		XCURSOR_SIZE XCURSOR_THEME \
+		GTK_THEME QT_QPA_PLATFORMTHEME \
+		GDK_DPI_SCALE GDK_SCALE \
+		QT_AUTO_SCREEN_SCALE_FACTOR QT_ENABLE_HIGHDPI_SCALING QT_FONT_DPI QT_SCALE_FACTOR \
+		SSH_ASKPASS SUDO_ASKPASS \
+		DRI_PRIME MESA_VK_DEVICE_SELECT
+}
+
+function prepare-Xorg {
+	systemctl -q --user import-environment DISPLAY XAUTHORITY
+	dbus-update-activation-environment --systemd DISPLAY XAUTHORITY
+	xrdb -override "$HOME/.Xresources"
+	setxkbmap -layout "$XKB_DEFAULT_LAYOUT" -option "$XKB_DEFAULT_OPTIONS"
+	xset r rate 300 30
+	numlockx
+	xinput set-prop "PIXA3854:00 093A:0274 Touchpad" "libinput Accel Speed" 0.5
+	xinput set-prop "PIXA3854:00 093A:0274 Touchpad" "libinput Disable While Typing Enabled" 0
+	xinput set-prop "PIXA3854:00 093A:0274 Touchpad" "libinput Tapping Drag Lock Enabled" 1
+	xinput set-prop "PIXA3854:00 093A:0274 Touchpad" "libinput Tapping Enabled" 1
+	local o ; for o in $( xrandr --query | awk '$2=="connected" { print $1 }' ) ; do
+		case "$o" in
+			eDP-2 ) xrandr --output "$o" --mode 1280x800 --rate 165 --rotate normal --primary ;;
+			* ) xrandr --output "$o" --off ;;
+		esac
+	done ; unset -v o
+}
+
+function start-session {
+	function _sd-run {
+		exec systemd-run --user -dGq -u "$_WM-session" --wait --send-sighup --slice-inherit --nice=-10 "$@"
+	}
+	case "$_WM" in
+		sway) _sd-run -E WLR_RENDERER=vulkan -- sway "${_WMARGS[@]}" ;;
+		niri) _sd-run -- niri --session "${_WMARGS[@]}" ;;
+		cage) _sd-run -- cage -ds -- "$XDG_CONFIG_HOME/cage/config" "${_WMARGS[@]}" ;;
+		openbox ) _sd-run -- openbox --startup "$XDG_CONFIG_HOME/openbox/autostart" "${_WMARGS[@]}" ;;
+	esac
+}
+
+function stop-session {
+	killall -q at-spi2-registryd
+	systemctl -q --user unset-environment \
+		CLUTTER_BACKEND GDK_BACKEND QT_QPA_PLATFORM SDL_VIDEODRIVER WINIT_UNIX_BACKEND XDG_SESSION_TYPE \
+		DESKTOP_SESSION XDG_CURRENT_DESKTOP XDG_MENU_PREFIX \
+		WINIT_X11_SCALE_FACTOR _JAVA_AWT_WM_NONREPARENTING \
+		XKB_DEFAULT_LAYOUT XKB_DEFAULT_OPTIONS \
+		XCURSOR_SIZE XCURSOR_THEME \
+		GTK_THEME QT_QPA_PLATFORMTHEME \
+		GDK_DPI_SCALE GDK_SCALE \
+		QT_AUTO_SCREEN_SCALE_FACTOR QT_ENABLE_HIGHDPI_SCALING QT_FONT_DPI QT_SCALE_FACTOR \
+		SSH_ASKPASS SUDO_ASKPASS \
+		DRI_PRIME MESA_VK_DEVICE_SELECT
+	case "$_WM" in
+		niri ) systemctl -q --user unset-environment NIRI_SOCKET ;;
+		sway ) systemctl -q --user unset-environment SWAYSOCK ;;
+	esac
+	systemctl -q --user unset-environment DISPLAY WAYLAND_DISPLAY XAUTHORITY
+	systemctl -q --user start --job-mode replace-irreversibly graphical-shutdown.target
+	systemctl -q --user reset-failed
+}
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

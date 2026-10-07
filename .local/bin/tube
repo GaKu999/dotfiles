@@ -1,0 +1,149 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/tube
+#==============================================================================#
+
+
+set -a
+	: ${XDG_DOWNLOAD_DIR:=$HOME/Downloads}
+	: ${XDG_STATE_HOME:=$HOME/.local/state}
+set +a
+
+
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+# [$1: EXIT CODE (0)]
+function _usage { local -ir ec="${1:-0}"
+	local msg
+	IFS='' read -r -d '' msg << ENDUSAGEMSG || : EOF
+Usage: $_SELF [-dpsw] [-E FORMAT] [-F {a[udio],v[ideo]}] [-I INDEX] [-R PIXELS] [-P PATH] [{URI,URL,CODE}...]
+
+  -d                    download
+  -p                    playlist
+  -s                    sixel
+  -w                    worst
+
+  -E FORMAT             format
+  -F {a[udio],v[ideo]}  filter
+  -I INDEX              playlist index
+  -P PATH               download path
+  -R PIXELS             vertical resolution
+
+  -h                    show this information
+ENDUSAGEMSG
+	printf '%s' "$msg"
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: [-dpsw] [-E FORMAT] [-F {a[udio],v[ideo]}] [-R PIXELS] [-P PATH] [{URI,URL,CODE}...]
+function main { local -a query
+	local extension filter index format out path opts OPT OPTARG OPTIND ; local -i download playlist sixel worst resolution ; local -a opts
+	while getopts ':E:F:I:P:R:dpswh' OPT ; do
+		case "$OPT" in
+			'E' ) extension="$OPTARG" ;;
+			'F' )
+				case "$OPTARG" in
+					[Aa]* ) filter="audio" ;;
+					[Vv]* ) filter="video" ;;
+					* )
+						echo "$_SELF: invalid filter -- '$OPTARG'" >&2
+						_usage 2
+					;;
+				esac
+			;;
+			'I' ) index="$OPTARG" ;;
+			'R' ) resolution="$OPTARG" ;;
+			'P' ) path="$OPTARG" ;;
+			'd' ) download=1 ;;
+			'p' ) playlist=1 ;;
+			's' ) sixel=1 ;;
+			'w' ) worst=1 ;;
+			'h' ) _usage ;;
+			'?' )
+				echo "$_SELF: invalid option -- '$OPTARG'" >&2
+				_usage 2
+			;;
+			':' )
+				echo "$_SELF: missing argument -- '$OPTARG'" >&2
+				_usage 2
+			;;
+		esac
+	done ; shift "$(( OPTIND - 1 ))" ; query=( "$@" )
+	: ${resolution:=720}
+	: ${path:=$XDG_DOWNLOAD_DIR}
+	if (( "${#query[@]}" == 0 )) ; then
+		if [[ "$XDG_SESSION_TYPE" == wayland && -n "$WAYLAND_DISPLAY" ]] ; then
+			query=( "$( wl-paste -t text/plain -n )" )
+		elif [[ "$XDG_SESSION_TYPE" == x11 && -n "$DISPLAY" ]] ; then
+			query=( "$( xclip -o -r -selection clipboard )" )
+		else
+			echo "$_SELF: not a graphical session" >&2
+			return 1
+		fi
+		[[ -n "${query[@]}" ]] || _usage 2
+	fi
+	case "$filter" in
+		audio )
+			if (( worst )) ; then
+				format="worstvideo"
+			else
+				format="bestvideo[height<=?$resolution]"
+			fi
+		;;
+		video )
+			if (( worst )) ; then
+				format="worstaudio"
+			else
+				format="bestaudio"
+			fi
+		;;
+		* )
+			if (( worst )) ; then
+				format="worstvideo+worstaudio/worst"
+			else
+				format="bestvideo[height<=?$resolution]+bestaudio/best"
+			fi
+		;;
+	esac
+	if (( download )) ; then
+		if [[ -n "$extension" ]] ; then
+			format="($format)[ext=$extension]"
+		fi
+		if [[ -n "$index" ]] ; then
+			opts+=( "-I" "$index" )
+		fi
+		out="%(title)s.%(ext)s"
+		if (( playlist )) ; then
+			opts+=( "--yes-playlist" )
+			out="%(playlist_title)s/%(playlist_index)s-$out"
+		fi
+		exec yt-dlp -i "${opts[@]}" -f "$format" -o "$path/$out" --cookies "$XDG_STATE_HOME/yt-dlp.cookies" --write-subs --sub-format "ass/srt/best" --sub-langs "en.*" --sleep-subtitles 30 --sleep-requests 30 --sleep-interval 30 --max-sleep-interval 60 -- "${query[@]}"
+	else
+		if [[ ! -t 0 ]] ; then
+			opts+=( "--msg-level=all=warn" )
+		fi
+		if (( sixel )) ; then
+			opts+=( "--really-quiet" "--vo=sixel" )
+		fi
+		if [[ -n "$filter" ]] ; then
+			opts+=( "--$filter=no" )
+		fi
+		if [[ -n "$index" ]] ; then
+			opts+=( "--playlist-start" "$index" )
+		fi
+		exec mpv "${opts[@]}" --save-position-on-quit --ytdl-format="$format" -- "${query[@]}"
+	fi
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

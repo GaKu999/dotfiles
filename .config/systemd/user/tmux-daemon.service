@@ -1,0 +1,22 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/tmux-daemon.service
+#==============================================================================#
+
+
+[Unit]
+Documentation=man:tmux(1)
+
+[Service]
+ExecStart=/usr/bin/tmux -D -S %t/tmux
+
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
