@@ -1,0 +1,19 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/fetch2clip
+#==============================================================================#
+
+
+if [ "$XDG_SESSION_TYPE" = wayland ] && [ -n "$WAYLAND_DISPLAY" ] ; then
+	fetch "$@" | wl-copy
+elif [ "$XDG_SESSION_TYPE" = x11 ] && [ -n "$DISPLAY" ] ; then
+	fetch "$@" | xclip -i -selection clipboard
+else
+	echo "$_SELF: not a graphical session" >&2
+	return 1
+fi
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

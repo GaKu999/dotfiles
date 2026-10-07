@@ -1,0 +1,29 @@
+# vim:ft=conf:
+# file:$XDG_CONFIG_HOME/cava/config
+#==============================================================================#
+
+
+[general]
+framerate = 20
+
+bar_width = 1
+bar_spacing = 1
+
+sleep_timer = 30
+
+[output]
+show_idle_bar_heads = 0
+
+[color]
+theme = 'default'
+
+[smoothing]
+monstercat = 1
+waves = 0
+
+noise_reduction = 85
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

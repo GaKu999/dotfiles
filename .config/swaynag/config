@@ -1,0 +1,50 @@
+# vim:ft=confini:
+# man:swaynag(5)
+# file:$XDG_CONFIG_HOME/swaynag/config
+#==============================================================================#
+
+
+edge=bottom
+layer=top
+font=sans-serif 15
+
+border-bottom-size=2
+button-border-size=2
+button-dismiss-gap=4
+button-gap=2
+button-margin-right=2
+button-padding=0
+details-border-size=2
+message-padding=0
+
+[normal]
+background=1d2021f2
+border-bottom=1d2021f2
+border=1d2021f2
+button-background=282828
+button-text=ebdbb2
+details-background=1d2021f2
+text=ebdbb2
+
+[warning]
+background=1d2021f2
+border-bottom=fabd2f
+border=fabd2f
+button-background=282828
+button-text=ebdbb2
+details-background=282828
+text=ebdbb2
+
+[error]
+background=1d2021f2
+border-bottom=fb4934
+border=fb4934
+button-background=282828
+button-text=ebdbb2
+details-background=282828
+text=ebdbb2
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

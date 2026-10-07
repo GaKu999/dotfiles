@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# vim:ft=bash:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/srtoffset
+#==============================================================================#
+
+
+tmpfile="$( mktemp -u --tmpdir ffmpeg-XXXX.srt )"
+ffmpeg -hide_banner -loglevel 24 -itsoffset "$2" -i "$1" -c copy "$tmpfile"
+if (( "$?" == 0 )) ; then
+	mv -f "$tmpfile" "$1"
+fi ; unset -v tmpfile
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

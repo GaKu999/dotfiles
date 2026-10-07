@@ -1,0 +1,18 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_CONFIG_HOME/cage/config
+#==============================================================================#
+
+
+(
+	systemctl -q --user import-environment DISPLAY WAYLAND_DISPLAY
+	dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY
+	systemctl -q --user start cage-session.target
+) &
+
+exec cool-retro-term
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

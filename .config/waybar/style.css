@@ -1,0 +1,353 @@
+/* vim:ft=css:noet:ts=3:sw=3:
+|* file:$XDG_CONFIG_HOME/waybar/style-sway.css
+\******************************************************************************/
+
+
+@import "themes/default.css" ;
+
+* {
+	background: transparent ;
+	border: none ;
+	font-family: sans-serif ;
+	font-size: 15pt ;
+	margin: 0px 0px 0px 0px ;
+	min-height: 16pt ;
+	min-width: 16pt ;
+	padding: 0px 0px 0px 0px ;
+}
+
+window#waybar {
+	background-color: @background ;
+	border: 2px solid @color0 ;
+	color: @foreground ;
+}
+
+tooltip {
+	background-color: @background ;
+	border: 2px solid @color0 ;
+	color: @foreground ;
+}
+
+button {
+	box-shadow: inset 0 -2px transparent ;
+	color: @foreground ;
+}
+
+button:hover,
+button.focused {
+	background-color: @color0 ;
+	box-shadow: inset 0 -2px transparent ;
+	color: @foreground ;
+}
+
+menu {
+	background-color: @background ;
+	border: 2px solid @color0 ;
+	color: @foreground ;
+}
+
+menu separator {
+	background-color: @color0 ;
+	min-width: 0px ;
+	min-height: 0px ;
+}
+
+menu menuitem:hover {
+	background-color: @color0 ;
+	box-shadow: inset 0 -2px transparent ;
+	color: @foreground ;
+}
+
+#custom-logo {
+	margin-left: 2px ;
+	color: #1793d1 ;
+}
+
+#custom-gamemode {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#custom-gpu {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#custom-separator {
+	background-color: @color0 ;
+	font-size: 2px ;
+	margin-left: 2px ;
+	min-height: 0px ;
+	min-width: 0px ;
+	color: @color0 ;
+}
+
+#custom-mails {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#custom-updates {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#custom-wan {
+	margin-left: 2px ;
+	color: @color10 ;
+}
+
+#custom-weather {
+	margin-left: 2px ;
+	color: @foreground ;
+}
+
+#clock {
+	margin-left: 2px ;
+	color: @color14 ;
+}
+
+#cpu {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#cpu.medium {
+	margin-left: 2px ;
+	color: @color11 ;
+}
+
+#cpu.high {
+	margin-left: 2px ;
+	color: @color9 ;
+}
+
+#backlight {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#battery {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#battery.critical,
+#battery.low {
+	margin-left: 2px ;
+	color: @color9 ;
+}
+
+#battery.medium,
+#battery.high {
+	margin-left: 2px ;
+	color: @color11 ;
+}
+
+#battery.charging,
+#battery.full {
+	margin-left: 2px ;
+	color: @color10 ;
+}
+
+#bluetooth {
+	margin-left: 2px ;
+	color: @color10 ;
+}
+
+#bluetooth.disabled,
+#bluetooth.off {
+	margin-left: 2px ;
+	color: @color9 ;
+}
+
+#bluetooth.connected {
+	margin-left: 2px ;
+	color: @color12 ;
+}
+
+#bluetooth.discovering,
+#bluetooth.pairable {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#disk {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#disk.medium {
+	margin-left: 2px ;
+	color: @color11 ;
+}
+
+#disk.high {
+	margin-left: 2px ;
+	color: @color9 ;
+}
+
+#gamemode.running {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#inhibitor {
+	margin-left: 2px ;
+	color: @color10 ;
+}
+
+#inhibitor.activated {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#language {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#memory {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#memory.medium {
+	margin-left: 2px ;
+	color: @color11 ;
+}
+
+#memory.high {
+	margin-left: 2px ;
+	color: @color9 ;
+}
+
+#mode {
+	background-color: @color0 ;
+	box-shadow: inset 0 -2px @color11 ;
+	margin-left: 2px ;
+}
+
+#mpris {
+	margin-left: 2px ;
+	color: @color10 ;
+}
+
+#mpris.paused {
+	margin-left: 2px ;
+	color: @color11 ;
+}
+
+#network,
+#network.ethernet,
+#network.wifi {
+	margin-left: 2px ;
+	color: @color10 ;
+}
+
+#power-profiles-daemon.performance {
+	margin-left: 2px ;
+	color: @color9 ;
+}
+
+#power-profiles-daemon.balanced {
+	margin-left: 2px ;
+	color: @color11 ;
+}
+
+#power-profiles-daemon.power-saver {
+	margin-left: 2px ;
+	color: @color10 ;
+}
+
+#pulseaudio {
+	margin-left: 2px ;
+	color: @color10 ;
+}
+
+#pulseaudio.bluetooth {
+	margin-left: 2px ;
+	color: @color12 ;
+}
+
+#pulseaudio.output.sink-muted,
+#pulseaudio.input.source-muted {
+	margin-left: 2px ;
+	color: @color9 ;
+}
+
+#privacy {
+	margin-left: 2px ;
+	color: @foreground ;
+}
+
+#privacy-item {
+	margin-left: 2px ;
+	color: @color11 ;
+}
+
+#scratchpad {
+	margin-left: 2px ;
+	color: @color13 ;
+}
+
+#systemd-failed-units {
+	margin-left: 2px ;
+	color: @color9 ;
+}
+
+#temperature {
+	margin-left: 2px ;
+	color: @color11 ;
+}
+
+#temperature.critical {
+	margin-left: 2px ;
+	color: @color9 ;
+}
+
+#tray {
+	margin-left: 2px ;
+	color: @foreground ;
+}
+
+#window {
+	margin-left: 2px ;
+	color: @foreground ;
+}
+
+#workspaces {
+	margin-left: 2px ;
+	color: @foreground ;
+}
+
+#workspaces button {
+	box-shadow: inset 0 -2px transparent ;
+	color: @color7 ;
+}
+
+#workspaces button:hover,
+#workspaces button.focused {
+	background-color: @color0 ;
+	box-shadow: inset 0 -2px transparent ;
+	color: @foreground ;
+}
+
+#workspaces button.urgent {
+	background-color: @color0 ;
+	box-shadow: inset 0 -2px @color11 ;
+	color: @color11 ;
+}
+
+.modules-left > widget:first-child {
+	margin-left: 0px ;
+}
+
+.modules-right > widget:last-child {
+	margin-right: 0px ;
+}
+
+
+/******************************************************************************\
+|*                                END OF FILE                                 *|
+\******************************************************************************/

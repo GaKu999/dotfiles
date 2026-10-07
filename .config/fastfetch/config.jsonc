@@ -1,0 +1,122 @@
+{
+	"$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+	"logo": {
+		"type": "small",
+		"padding": {
+			"top": 1,
+			"right": 1
+		}
+	},
+	"display": {
+		"separator": "│ ",
+		"disableLinewrap": true,
+		"hideCursor": true,
+		//"bar": {
+		//	"border": {
+		//		"left": "\uee00",
+		//		"leftElapsed": "\uee03",
+		//		"right": "\uee02",
+		//		"rightElapsed": "\uee05"
+		//	},
+		//	"char": {
+		//		"total": "\uee01",
+		//		"elapsed": "\uee04"
+		//	},
+		//	"color": {
+		//		"total": null
+		//	}
+		//},
+		//"percent": {
+		//	"type": [ "bar", "bar-monochrome" ]
+		//},
+		"color": {
+			"separator": "95"
+		},
+		"temp": {
+			"ndigits": 0
+		},
+		"constants": [
+			"────────┬───────────────────────────────────────────────────",
+			"────────┼───────────────────────────────────────────────────",
+			"────────┴───────────────────────────────────────────────────",
+			"│\u001b[60C│\u001b[60D"
+		]
+	},
+	"modules": [
+		{
+			"format": "{#95}┌{$1}┐",
+			"type": "custom"
+		},
+		{
+			"key": "{#95}{$4}{#94}{icon} OS   ",
+			"type": "os",
+			"format": "{id} {kernel-release} {arch}"
+		},
+		{
+			"key": "{#95}{$4}{#95}{icon} INIT ",
+			"type": "initsystem",
+			"format": "{name} {version}"
+		},
+		{
+			"key": "{#95}{$4}{#93}{icon} WM   ",
+			"type": "wm",
+			"format": "{process-name} {version}"
+		},
+		{
+			"key": "{#95}{$4}{#91}{icon} TERM ",
+			"type": "terminal",
+			"format": "{process-name} {version}"
+		},
+		{
+			"key": "{#95}{$4}{#92}{icon} SH   ",
+			"type": "shell",
+			"format": "{process-name} {version}"
+		},
+		{
+			"key": "{#95}{$4}{#93}{icon} CPU  ",
+			"type": "cpu",
+			"temp": true,
+			"format": "{name} x{cores-logical}@{freq-max} ({temperature})"
+		},
+		{
+			"key": "{#95}{$4}{#91}{icon} GPU  ",
+			"type": "gpu",
+			"temp": true,
+			"hideType": "integrated",
+			"format": "{name} ({temperature})"
+		},
+		{
+			"key": "{#95}{$4}{#92}{icon} DISK ",
+			"type": "disk",
+			"folders": "/home",
+			"format": "{size-used} / {size-total} ({size-percentage})"
+		},
+		{
+			"key": "{#95}{$4}{#95}{icon} MEM  ",
+			"type": "memory",
+			"format": "{used} / {total} ({percentage})"
+		},
+		{
+			"key": "{#95}{$4}{#96}{icon} NET  ",
+			"type": "localip",
+			"format": "{ipv4}"
+		},
+		{
+			"key": "{#95}{$4}{#93}{icon} BAT  ",
+			"type": "battery",
+			"format": "{status} ({capacity})"
+		},
+		//{
+		//	"format": "{#95}├{$2}┤",
+		//	"type": "custom"
+		//},
+		{
+			"format": "{#95}└{$3}┘",
+			"type": "custom"
+		},
+		{
+			"type": "colors",
+			"symbol": "circle"
+		}
+	]
+}

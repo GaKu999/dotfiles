@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+# vim:ft=python:noet:ts=3:sw=3:
+# file:$XDG_LIB_DIR/xdgd
+#==============================================================================#
+
+
+from gi.repository import GLib
+from pydbus import SessionBus
+from subprocess import Popen
+import signal
+
+class XDGD(object):
+	"""
+		<node>
+			<interface name="net.gaku.XDGD">
+				<method name="Open">
+					<arg type="s" name="arg" direction="in"/>
+				</method>
+				<method name="Menu"/>
+				<method name="Quit"/>
+			</interface>
+		</node>
+	"""
+
+	def __init__( self, loop ):
+		signal.signal( signal.SIGCHLD, signal.SIG_IGN )
+		self.__loop = loop
+
+	def Open( self, *argv ):
+		Popen( [ "xdg-open", argv[0] ] )
+
+	def Menu( self, *argv ):
+		Popen( "xdg-run" )
+
+	def Quit( self ):
+		self.__loop.quit()
+
+if __name__ == "__main__":
+	loop = GLib.MainLoop()
+	SessionBus().publish( "net.gaku.XDGD", XDGD( loop ) )
+	loop.run()
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

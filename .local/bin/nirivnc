@@ -1,0 +1,74 @@
+#!/bin/sh
+# vim:ft=sh:noet:ts=3:sw=3:
+# file:$XDG_BIN_DIR/nirivnc
+#==============================================================================#
+
+
+# Who am I?
+_SELF="${0##*/}"
+
+_herecat() {
+	local msg line lfcr
+	lfcr="$( printf '%b' "\012\015" )"
+	while IFS="$lfcr" read -r line ; do
+		msg="$msg$line$lfcr"
+	done
+	printf '%s' "$msg"
+}
+
+# [$1: EXIT CODE (0)]
+_usage() { local ec="${1:-0}"
+	_herecat << ENDUSAGEMSG
+Usage: $_SELF {start,stop} [{current,OUTPUT} (HEADLESS-1)]
+ENDUSAGEMSG
+	exit "$ec"
+}
+
+
+#==============================================================================#
+
+
+# $@: {start,stop} [{current,OUTPUT} (current)]
+main() { local action="$1" output="${2:-current}"
+	local active
+	if [ -n "$NIRI_SOCKET" ] ; then
+		[ "$output" = current ] && output="$( nirimsg -j workspaces | jq -r '.[] | select(.is_focused==true).output' )"
+		active="$( nirimsg -j workspaces | jq -r ".[] | select(.output==\"$output\") | select(.is_active==true).id" )"
+		case "$action" in
+			start )
+				if ! wayvncctl version > /dev/null 2>&1 ; then
+					rm -f -- "$XDG_RUNTIME_DIR/niri-vnc.sock"
+					if [ -n "$active" ] ; then
+						XKB_DEFAULT_LAYOUT="us" \
+						XKB_DEFAULT_OPTIONS="lv3:ralt_switch_multikey" \
+						exec wayvnc -u -o "$output" -f30 "$XDG_RUNTIME_DIR/niri-vnc.sock"
+					else
+						echo "$_SELF: $output doesn't exist or is disabled" >&2
+						return 1
+					fi
+				else
+					echo "$_SELF: already started"
+				fi
+			;;
+			stop )
+				if wayvncctl version >/dev/null 2>&1 ; then
+					wayvncctl wayvnc-exit >/dev/null 2>&1
+				else
+					echo "$_SELF: already stopped"
+				fi
+			;;
+			* )
+				echo "$_SELF: unknown action -- '$action'" >&2
+				_usage 2
+			;;
+		esac
+	else
+		echo "$_SELF: Unable to retrieve socket path" >&2
+		return 1
+	fi
+} ; main "$@"
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

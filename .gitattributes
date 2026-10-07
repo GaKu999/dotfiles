@@ -1,0 +1,8 @@
+.config/aerc/accounts.conf filter=aerc-redact
+.config/git/config filter=git-redact
+.config/msmtp/config filter=msmtp-redact
+.config/notmuch/default/config filter=notmuch-redact
+.config/pacman/makepkg.conf filter=makepkg-redact
+.config/stig/default.rc filter=stig-redact
+.gnupg/gpg.conf filter=gpg-redact
+.mbsyncrc filter=mbsync-redact

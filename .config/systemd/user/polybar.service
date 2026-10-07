@@ -1,0 +1,25 @@
+# vim:ft=systemd:
+# man:systemd.unit(5)
+# man:systemd.service(5)
+# file:$XDG_CONFIG_HOME/systemd/user/polybar.service
+#==============================================================================#
+
+[Unit]
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+ConditionEnvironment=DISPLAY
+
+[Service]
+ExecStart=/usr/bin/polybar -l warning
+
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#

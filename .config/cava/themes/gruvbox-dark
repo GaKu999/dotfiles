@@ -1,0 +1,18 @@
+# vim:ft=conf:
+# file:$XDG_CONFIG_HOME/cava/themes/gruvbox-dark
+#==============================================================================#
+
+
+[color]
+gradient = 1
+gradient_color_1 = '#83a598'
+gradient_color_2 = '#8ec07c'
+gradient_color_3 = '#b8bb26'
+gradient_color_4 = '#d38698'
+gradient_color_5 = '#fb4934'
+gradient_color_6 = '#d38698'
+
+
+#==============================================================================#
+#                                 END OF FILE                                  #
+#==============================================================================#
